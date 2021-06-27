@@ -257,7 +257,7 @@ def BuildIndexPage():
 		File.write("<!-- END OF ACTUAL CONTENT -->\n")
 		File.write("</span>\n")
 		File.write("<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>\n")
-		File.write("<script src='../menu.js'></script>\n")
+		File.write("<script src='../menu-index.js'></script>\n")
 		File.write("</body>\n")
 		File.write("</html>\n")
 	
