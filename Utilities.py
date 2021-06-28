@@ -206,7 +206,7 @@ def BuildIndexPage():
 		# Variants menu
 		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 190px; max-width: 190px;'>\n")
 		for V, Val in sorted(AllVariants.items(), key = lambda item: item[1]["WebOrder"]):
-			File.write(f"\t\t<input type='radio' name='Variant' value='lichess/rankings/{V}' id='variant-{V}'{' checked' if V == 'all' else ''}><label class='V{V}' for='variant-{V}'><span class='VariantIcon'>{AllVariants[V]['Icon']}</span> {AllVariants[V]['Name'] if V != 'all' else 'All variants'}</label>\n")
+			File.write(f"\t\t<input type='radio' name='Variant' value='rankings/{V}' id='variant-{V}'{' checked' if V == 'all' else ''}><label class='V{V}' for='variant-{V}'><span class='VariantIcon'>{AllVariants[V]['Icon']}</span> {AllVariants[V]['Name'] if V != 'all' else 'All variants'}</label>\n")
 		File.write("\t</span>\n")
 		
 		# Events menu
@@ -257,7 +257,7 @@ def BuildIndexPage():
 		File.write("<!-- END OF ACTUAL CONTENT -->\n")
 		File.write("</span>\n")
 		File.write("<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>\n")
-		File.write("<script src='../menu-index.js'></script>\n")
+		File.write("<script src='../menu.js'></script>\n")
 		File.write("</body>\n")
 		File.write("</html>\n")
 	
