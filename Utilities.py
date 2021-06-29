@@ -328,6 +328,7 @@ def SomeBoxPlot(Function, Filename, Title):
 		if os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\hourly\\{V}_hourly_arenas_newest.ndjson"):
 			with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\hourly\\{V}_hourly_arenas_newest.ndjson", "r") as ArenaFile:
 				for Line in ArenaFile:
+					print(V)
 					ArenaData = json.loads(Line)
 					newval = Function(ArenaData)
 					newlist.append(newval)
