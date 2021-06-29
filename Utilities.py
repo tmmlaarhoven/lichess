@@ -147,12 +147,12 @@ def BuildIndexPage():
 
 	# Build box plots
 	SomeBoxPlot(lambda ArenaData: ArenaData["Players"], "participants", "Participants per hourly arena")
-	SomeBoxPlot(lambda ArenaData: ArenaData["TotalRating"] / ArenaData["Players"], "rating", "Average rating per hourly arena")
-	SomeBoxPlot(lambda ArenaData: ArenaData["Moves"] / ArenaData["Games"] / 2., "moves", "Moves per player per game in hourly arenas")
+	SomeBoxPlot(lambda ArenaData: ArenaData["TotalRating"] / max(1.0, ArenaData["Players"]), "rating", "Average rating per hourly arena")
+	SomeBoxPlot(lambda ArenaData: ArenaData["Moves"] / max(1.0, ArenaData["Games"]) / 2., "moves", "Moves per player per game in hourly arenas")
 	SomeBoxPlot(lambda ArenaData: ArenaData["TopScore"], "topscore", "Top scores in hourly arenas")
-	SomeBoxPlot(lambda ArenaData: 100. * ArenaData["Berserks"] / ArenaData["Games"] / 2., "berserk", "Berserk rates in hourly arenas")
-	SomeBoxPlot(lambda ArenaData: 100. * (ArenaData["Games"] - ArenaData["WhiteWins"] - ArenaData["BlackWins"]) / ArenaData["Games"], "draws", "Draw rates in hourly arenas")
-	SomeBoxPlot(lambda ArenaData: 100. * (ArenaData["WhiteWins"] + 0.5 * (ArenaData["Games"] - ArenaData["WhiteWins"] - ArenaData["BlackWins"])) / ArenaData["Games"], "white", "White's score in hourly arenas")
+	SomeBoxPlot(lambda ArenaData: 100. * ArenaData["Berserks"] / max(1.0, ArenaData["Games"]) / 2., "berserk", "Berserk rates in hourly arenas")
+	SomeBoxPlot(lambda ArenaData: 100. * (ArenaData["Games"] - ArenaData["WhiteWins"] - ArenaData["BlackWins"]) / max(1.0, ArenaData["Games"]), "draws", "Draw rates in hourly arenas")
+	SomeBoxPlot(lambda ArenaData: 100. * (ArenaData["WhiteWins"] + 0.5 * (ArenaData["Games"] - ArenaData["WhiteWins"] - ArenaData["BlackWins"])) / max(1.0, ArenaData["Games"]), "white", "White's score in hourly arenas")
 	
 	FilePlayersSorts = {
 		"points": 		{"Name": "Players by total points",		"Plot": "Total points"},
@@ -328,7 +328,7 @@ def SomeBoxPlot(Function, Filename, Title):
 		if os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\hourly\\{V}_hourly_arenas_newest.ndjson"):
 			with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\hourly\\{V}_hourly_arenas_newest.ndjson", "r") as ArenaFile:
 				for Line in ArenaFile:
-					print(V)
+					#print(V)
 					ArenaData = json.loads(Line)
 					newval = Function(ArenaData)
 					newlist.append(newval)
