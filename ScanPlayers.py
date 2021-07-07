@@ -19,29 +19,22 @@ PathRank = "E:\\lichess\\tournaments\\rankings\\"
 PathWeb = "E:\\lichess\\tmmlaarhoven.github.io\\lichess\\rankings\\"
 
 Events = {
-	"hourly": "Hourly",
+	#"hourly": "Hourly",
 	"2000": "&lt;2000",
 	"1700": "&lt;1700",
 	"1600": "&lt;1600",
 	"1500": "&lt;1500",
-	"1300": "&lt;1300",
-	"daily": "Daily",
-	"weekly": "Weekly",
-	"monthly": "Monthly",
-	"yearly": "Yearly",
-	"eastern": "Eastern",
-	"elite": "Elite",
-	"shield": "Shield",
-	"titled": "Titled",
-	"marathon": "Marathon",
-	"2021": "2021",
-	"2020": "2020",
-	"2019": "2019",
-	"2018": "2018",
-	"2017": "2017",
-	"2016": "2016",
-	"2015": "2015",
-	"2014": "2014"
+	"1300": "&lt;1300"
+	#"daily": "Daily",
+	#"weekly": "Weekly",
+	#"monthly": "Monthly",
+	#"yearly": "Yearly",
+	#"eastern": "Eastern",
+	#"elite": "Elite",
+	#"shield": "Shield",
+	#"titled": "Titled",
+	#"marathon": "Marathon",
+	#"liga": "Liga"
 	}
 
 Variants = {
@@ -64,14 +57,14 @@ Variants = {
 	}
 	
 Order = {
-	"_points": "index.html", 
-	"_trophies": "trophies.html", 
-	"_events": "events.html", 
-	#"_average": "average.html", 
+	"_points": "index.html",
+	"_trophies": "trophies.html",
+	"_events": "events.html",
+	#"_average": "average.html",
 	"_maximum": "maximum.html"
 	}
 	
-TopToCheck = 200		# Check the top TopToCheck from each ranking
+TopToCheck = 500		# Check the top TopToCheck from each ranking
 GroupSize = 50			# API requests in batches of size GroupSize
 	
 def Prefix(V, E):
@@ -88,9 +81,9 @@ PlayersToScan = dict()
 for E in Events:
 	for V in Variants:
 		for O in Order:
-			if os.path.exists(PathRank + Folder(V, E) + V + "_" + E + "_ranking" + O + ".ndjson"):
+			if os.path.exists(PathRank + Folder(V, E) + V + "_" + E + "_players" + O + ".ndjson"):
 				PrintMessage(V, E, "Processing " + Order[O] + ".")
-				with open(PathRank + Folder(V, E) + V + "_" + E + "_ranking" + O + ".ndjson", "r") as RankFile:
+				with open(PathRank + Folder(V, E) + V + "_" + E + "_players" + O + ".ndjson", "r") as RankFile:
 					for Index, Line in enumerate(RankFile):
 						UserRank = json.loads(Line.strip())
 						PlayersToScan[UserRank["Username"].lower()] = 1
@@ -103,8 +96,8 @@ PrintMessage("all", "all", "Total players found: " + str(len(PlayersToScan)) + "
 
 # Load those users which have been checked before
 PlayersChecked = dict()
-if os.path.exists(PathWeb + "PlayersChecked.txt"):
-	with open(PathWeb + "PlayersChecked.txt", "r") as FileChecked:
+if os.path.exists(PathRank + "PlayersChecked.txt"):
+	with open(PathRank + "PlayersChecked.txt", "r") as FileChecked:
 		for Line in FileChecked:
 			PlayersChecked[Line.strip().lower()] = 1
 PlayersChecked = {k: v for k, v in sorted(PlayersChecked.items(), key = lambda item: item[1], reverse = False)}	
@@ -121,7 +114,7 @@ PrintMessage("all", "all", "New players to check: " + str(len(PlayersNew)) + "."
 # Obtain user data via API
 PlayersClosed = dict()
 PlayersTOS = dict()
-PlayersBoost = dict()
+PlayersReturned = dict()
 PrintMessage("all", "all", "Groups to query via the API: " + str(math.ceil(len(PlayersNew) / GroupSize)) + " of " + str(GroupSize) + " users.")
 for i in range(math.ceil(len(PlayersNew) / GroupSize)):
 	
@@ -139,45 +132,41 @@ for i in range(math.ceil(len(PlayersNew) / GroupSize)):
 
 	APIResponse = ndjson.loads(r.content)[0]	# List of dictionaries
 	for PlayerInfo in APIResponse:
-		if ("disabled" in PlayerInfo):
-			PlayersClosed[PlayerInfo["id"].lower()] = 1
+		PlayersReturned[PlayerInfo["id"].lower()] = 1
+		#if ("closed" in PlayerInfo):
+		#	PlayersClosed[PlayerInfo["id"].lower()] = 1
 		if ("tosViolation" in PlayerInfo):
-			PlayersTOS[PlayerInfo["id"].lower()] = 1
-		if ("booster" in PlayerInfo):
-			PlayersBoost[PlayerInfo["id"].lower()] = 1
+			PlayersTOS[PlayerInfo["id"].lower()] = 1			
+
+
+# Closed = New - TOS - Legit
+for Player in PlayersNew:
+	if Player not in PlayersReturned:
+		PlayersClosed[Player.lower()] = 1
+		
 
 # Store closed accounts in file
-if os.path.exists(PathWeb + "PlayersClosed.txt"):
-	with open(PathWeb + "PlayersClosed.txt", "r") as FileClosed:
+if os.path.exists(PathRank + "PlayersClosed.txt"):
+	with open(PathRank + "PlayersClosed.txt", "r") as FileClosed:
 		for Line in FileClosed:
 			PlayersClosed[Line.strip().lower()] = 1
 PlayersClosed = {k: v for k, v in sorted(PlayersClosed.items(), key = lambda item: item[0], reverse = False)}	
 PrintMessage("all", "all", "Exporting " + str(len(PlayersClosed)) + " closed accounts...")
-with open(PathWeb + "PlayersClosed.txt", "w") as FileClosed:
+with open(PathRank + "PlayersClosed.txt", "w") as FileClosed:
 	for Username in PlayersClosed:
 		FileClosed.write(Username + "\n")
 
 # Store TOS accounts in file
-if os.path.exists(PathWeb + "PlayersTOS.txt"):
-	with open(PathWeb + "PlayersTOS.txt", "r") as FileTOS:
+if os.path.exists(PathRank + "PlayersTOS.txt"):
+	with open(PathRank + "PlayersTOS.txt", "r") as FileTOS:
 		for Line in FileTOS:
 			PlayersTOS[Line.strip().lower()] = 1
 PlayersTOS = {k: v for k, v in sorted(PlayersTOS.items(), key = lambda item: item[0], reverse = False)}	
 PrintMessage("all", "all", "Exporting " + str(len(PlayersTOS)) + " TOS accounts...")		
-with open(PathWeb + "PlayersTOS.txt", "w") as FileTOS:
+with open(PathRank + "PlayersTOS.txt", "w") as FileTOS:
 	for Username in PlayersTOS:
 		FileTOS.write(Username + "\n")
 
-# Store boostmarked accounts in file		
-if os.path.exists(PathWeb + "PlayersBoost.txt"):
-	with open(PathWeb + "PlayersBoost.txt", "r") as FileBoost:
-		for Line in FileBoost:
-			PlayersBoost[Line.strip().lower()] = 1
-PlayersBoost = {k: v for k, v in sorted(PlayersBoost.items(), key = lambda item: item[0], reverse = False)}	
-PrintMessage("all", "all", "Exporting " + str(len(PlayersBoost)) + " boost accounts...")
-with open(PathWeb + "PlayersBoost.txt", "w") as FileBoost:
-	for Username in PlayersBoost:
-		FileBoost.write(Username + "\n")
 
 # Store new checked users in files
 # Make list of new users to check
@@ -188,7 +177,7 @@ for Player in PlayersToScan:
 	PlayersAll[Player.lower()] = 1
 PlayersAll = {k: v for k, v in sorted(PlayersAll.items(), key = lambda item: item[0], reverse = False)}	
 PrintMessage("all", "all", "Exporting " + str(len(PlayersAll)) + " total checked accounts...")
-with open(PathWeb + "PlayersChecked.txt", "w") as FileChecked:
+with open(PathRank + "PlayersChecked.txt", "w") as FileChecked:
 	for Player in PlayersAll:
 		FileChecked.write(Player + "\n")
 

@@ -1289,6 +1289,7 @@ class ArenaCategory:
 	# 4a. Update pages of lists/graphs of top players
 	def _UpdatePlayerPages(self):
 
+		# Standard page
 		for SortPlayerOrder in self._FilePlayersSorts:
 
 			# Figure page
@@ -1320,7 +1321,10 @@ class ArenaCategory:
 					WebFile.write(f"In these games, white scored <span class='info' title='{self._RankingInfo['WhiteWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['WhiteWins'] / self._RankingInfo['Games'])}%</span> wins, <span class='info' title='{self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * (self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']) / self._RankingInfo['Games'])}%</span> draws, and <span class='info' title='{self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['BlackWins'] / self._RankingInfo['Games'])}%</span> losses.\n\n")
 					
 					WebFile.write(f"The average berserk rate is <span class='info' title='{self._RankingInfo['Berserks']} berserks in {self._RankingInfo['Games']} games'>{round(500. * self._RankingInfo['Berserks'] / self._RankingInfo['Games']) / 10}%</span>, and the average rating is <span class='info' title='{self._RankingInfo['TotalRating']} over {self._RankingInfo['Participants']} participants'>{round(self._RankingInfo['TotalRating'] / self._RankingInfo['Participants'])}</span>.\n\n")
-					
+
+					if (len(self._E) > 3) and (self._E)[3] == "0":
+						WebFile.write(f"<a href='list_players_{SortPlayerOrder}_clean.html'>Rankings without closed/marked users</a>.\n\n")
+						
 					WebFile.write("<table class='PlayersList'>\n")
 					WebFile.write("\t<thead>\n")
 					WebFile.write("\t<tr height='30px'>\n")
@@ -1367,6 +1371,95 @@ class ArenaCategory:
 				# Write after-code
 				self._WritePost(WebFile)
 
+
+			# Special list page for <XXXX rankings, to only show non-marked players -- first check for irrelevant categories
+			if (len(self._E) < 4) or (self._E)[3] != "0":
+				continue
+
+			
+			# Special list page for <XXXX rankings, to only show non-marked players -- then actually make the clean rankings
+			with open(f"{self._PathWeb}list_players_{SortPlayerOrder}_clean.html", "w") as WebFile:
+				
+				# Write preamble
+				self._WritePre(WebFile, "players_" + SortPlayerOrder, "list")
+						
+				if len(self._DataList) == 0:
+					WebFile.write("No rankings.")
+				
+				else:
+					# Start of ranking list
+					WebFile.write(f"This ranking is based on {strf(len(self._DataList), 'events')} events held between <a title='First event' href='https://lichess.org/tournament/{self._RankingInfo['FirstID']}'>{DateString(self._RankingInfo['FirstStart'][0:10])}</a> and <a title='Last event' href='https://lichess.org/tournament/{self._RankingInfo['LastID']}'>{DateString(self._RankingInfo['LastStart'][0:10])}</a>.\n\n")
+
+					WebFile.write(f"In total, these arenas featured {strf(self._RankingInfo['Games'], 'games')} games (with {strf(self._RankingInfo['Moves'], 'moves')} moves), and the {strf(self._RankingInfo['Participants'], 'participants')} participants ({strf(self._RankingInfo['Players'], 'players')} unique players) scored a total of {strf(self._RankingInfo['TotalPoints'], 'points')} arena points.\n\n")
+					
+					WebFile.write(f"In these games, white scored <span class='info' title='{self._RankingInfo['WhiteWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['WhiteWins'] / self._RankingInfo['Games'])}%</span> wins, <span class='info' title='{self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * (self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']) / self._RankingInfo['Games'])}%</span> draws, and <span class='info' title='{self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['BlackWins'] / self._RankingInfo['Games'])}%</span> losses.\n\n")
+					
+					WebFile.write(f"The average berserk rate is <span class='info' title='{self._RankingInfo['Berserks']} berserks in {self._RankingInfo['Games']} games'>{round(500. * self._RankingInfo['Berserks'] / self._RankingInfo['Games']) / 10}%</span>, and the average rating is <span class='info' title='{self._RankingInfo['TotalRating']} over {self._RankingInfo['Participants']} participants'>{round(self._RankingInfo['TotalRating'] / self._RankingInfo['Participants'])}</span>.\n\n")
+					
+					if (len(self._E) > 3) and (self._E)[3] == "0":
+						WebFile.write(f"<a href='list_players_{SortPlayerOrder}.html'>Regular rankings with all users</a>.\n\n")
+					
+					WebFile.write("<table class='PlayersList'>\n")
+					WebFile.write("\t<thead>\n")
+					WebFile.write("\t<tr height='30px'>\n")
+					WebFile.write("\t\t<td><span class='info' title='Ranking'><b>#</b></span></td>\n")
+					WebFile.write("\t\t<td></td>\n")
+					WebFile.write("\t\t<td><b>Username</b></td>\n")
+					WebFile.write("\t\t<td><span class='info' style='font-family: lichess;' title='1st place finishes'>g</span></td>\n")
+					WebFile.write("\t\t<td><span class='info' style='font-family: lichess;' title='2nd place finishes'>g</span></td>\n")
+					WebFile.write("\t\t<td><span class='info' style='font-family: lichess;' title='3rd place finishes'>g</span></td>\n")
+					WebFile.write("\t\t<td><span class='info' title='Total accumulated points'><b>Points</b></span></td>\n")
+					WebFile.write("\t\t<td>/ <span class='info' title='Events with at least 1 point'><b>Events</b></span></td>\n")
+					WebFile.write("\t\t<td><span class='info' title='Dates of first/last events'><b>First - Last</b></span></td>\n")
+					WebFile.write("\t\t<td><span class='info' title='Average points per event'><b>Avg</b></span></td>\n")
+					WebFile.write("\t\t<td><span class='info' title='Maximum score in one event'><b>Max</b></span></td>\n")
+					WebFile.write("\t</tr>\n")
+					WebFile.write("\t</thead>\n")
+					WebFile.write("\t<tbody>\n")
+					
+					# Load bad users
+					BadUsers = dict()
+					with open("E:\\lichess\\tournaments\\rankings\\PlayersTOS.txt", "r") as BadPlayersFile:
+						for Line in BadPlayersFile:
+							BadUsers[Line.strip().lower()] = 1
+					with open("E:\\lichess\\tournaments\\rankings\\PlayersClosed.txt", "r") as BadPlayersFile2:
+						for Line in BadPlayersFile2:
+							BadUsers[Line.strip().lower()] = 1
+					
+					with open(f"{self._PathRanking}{self._Prefix}_players_{SortPlayerOrder}.ndjson", "r") as PlayersFile:
+						Listed = 0
+						for Index, Line in enumerate(PlayersFile):
+							PlayerData = json.loads(Line)
+							UserID = PlayerData["Username"]
+							if UserID.lower() in BadUsers:
+								continue
+								
+							Listed = Listed + 1
+							
+							WebFile.write("\t<tr>\n")
+							WebFile.write(f"\t\t<td>{Index + 1}.</td>\n")
+							WebFile.write(f"\t\t<td>{PlayerData.get('Title', '')}</td>\n")
+							WebFile.write(f"\t\t<td><a href='https://lichess.org/@/{PlayerData['Username'].lower()}'>{PlayerData['Username'].lower()}</a></td>\n")
+							WebFile.write(f"\t\t<td>{PlayerData['Trophies'][0] if PlayerData['Trophies'][0] > 0 else ''}</td>\n")
+							WebFile.write(f"\t\t<td>{PlayerData['Trophies'][1] if PlayerData['Trophies'][1] > 0 else ''}</td>\n")
+							WebFile.write(f"\t\t<td>{PlayerData['Trophies'][2] if PlayerData['Trophies'][2] > 0 else ''}</td>\n")
+							WebFile.write(f"\t\t<td>{PlayerData['Score']}</td>\n")
+							WebFile.write(f"\t\t<td>/ {PlayerData['Events'] - PlayerData['Zeros']}</td>\n")
+							WebFile.write(f"\t\t<td><!--<a href='https://lichess.org/tournament/{PlayerData['FirstID']}'>-->{self.TimeRange1(PlayerData['First'])}<!--</a>--> - ")
+							WebFile.write(f"<!--<a href='https://lichess.org/tournament/{PlayerData['LastID']}'>-->{self.TimeRange2(PlayerData['Last'])}<!--</a>--></td>\n")
+							#WebFile.write(f"\t<td><a href='https://lichess.org/tournament/{PlayerData['FirstID']}'>{self.TimeRange1(PlayerData['First'])}</a> - ")
+							#WebFile.write(f"<a href='https://lichess.org/tournament/{PlayerData['LastID']}'>{self.TimeRange2(PlayerData['Last'])}</a></td>\n")
+							WebFile.write(f"\t\t<td>{round(PlayerData['Score'] / max(1, (PlayerData['Events'] - PlayerData['Zeros'])))}</td>\n")
+							WebFile.write(f"\t\t<td><a href='https://lichess.org/tournament/{PlayerData['TopScoreID']}'>{PlayerData['TopScore']}</a></td>\n")
+							WebFile.write("\t</tr>\n")
+							if Listed == self._WebListLength:
+								break
+					
+					WebFile.write("\t</tbody>\n")
+					WebFile.write("</table>\n")
+			
+				# Write after-code
+				self._WritePost(WebFile)
 
 	# 4b. Update pages of lists/graphs of arenas
 	def _UpdateArenaPages(self):
