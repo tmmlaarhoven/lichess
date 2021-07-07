@@ -17,6 +17,7 @@ timeout !delay!
 :loop
 set updtime=%date%, %time%
 git pull
+LigaUpdater.py
 FetchData.py
 Caller.py
 git add --all --verbose
