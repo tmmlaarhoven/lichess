@@ -37,6 +37,7 @@ Variants = {
 }
 
 Events = {
+	"thematic": "Thematic",
 	"1300": "&lt;1300",
 	"1500": "&lt;1500",
 	"1600": "&lt;1600",
@@ -68,6 +69,12 @@ def PrintMessage(V, E, Message):
 # Process each event type separately
 #=========================================================================
 
+ThematicNames = dict()
+with open("thematicnames.txt") as ThematicNamesFile:
+	for Line in ThematicNamesFile:
+		ThematicNames[Line.strip()] = 1
+		
+
 ArenaIDs = dict()
 for V in Variants:
 	ArenaIDs[V] = dict()
@@ -94,65 +101,6 @@ for E in Events:
 	#=========================================================================
 	# 2. Scrape potentially new tournament IDs from internet
 	#=========================================================================	
-
-	# Scrape webpages for tournament ids
-	#if (E == "liga"):
-	
-	#	pass
-	
-		# TotalIDs = 0
-		# EmptyPages = 0
-		# PrintMessage("all", E, "Fetching new tournaments...")
-		
-		# for Page in range(1, 100000):
-			
-			# r = requests.get(f"https://lichess.org/@/jeffforever/tournaments/created?page={Page}", headers = {"Authorization": f"Bearer {APIToken}"})		# pages start at 1
-				
-			# # In the unlikely/impossible Events of rate limit, just indicate this and stop until the user notices
-			# if r.status_code == 429:
-				# print("RATE LIMIT!")
-				# time.sleep(1000000)
-			
-			# # If no tournaments at all, quit
-			# if len(re.findall("/tournament/[0-9a-zA-Z]{8}\">", r.text)) == 0:
-				# break
-			
-			# # Partition the tournaments over the right files
-			# NewOnPage = 0
-			# TotalIDs += len(re.findall("/tournament/[0-9a-zA-Z]{8}\">", r.text))
-			# IDs = re.findall(f"/tournament/[0-9a-zA-Z]{{8}}\"><span class=\"name\">", r.text)
-				
-			# # Add newly found tournament IDs to file
-			# for ID in IDs:		# ID: '/tournament/d09wfkjs">...', need entries 12-19
-			
-				# RealID = ID[12:20]
-				# PosInText = r.text.find(RealID)
-				# TimeControlPos = r.text.find("+", PosInText) - 1
-				# TimeControl = r.text[TimeControlPos:TimeControlPos+3]
-				# if TimeControl == "3+0":
-					# V == "superblitz"
-				# else:
-					# V == "blitz"
-					
-				# if not RealID in ArenaIDs[V][E]:
-					# ArenaIDs[V][E].append(RealID)
-					# NewOnPage += 1
-			
-			# # Count collisions to stop fetching when we do not find new entries
-			# PrintMessage("all", E, f"Page {Page} - {NewOnPage} new events found.")
-			# if NewOnPage == 0:
-				# EmptyPages += 1
-				# if EmptyPages >= 5:
-					# break
-			# else:
-				# EmptyPages = 0
-			
-			# # Pause to avoid rate limit
-			# if Page % 2 == 0:
-				# time.sleep(1)
-	
-	
-		# pass
 	
 	if (not E == "titled") and (not E == "marathon") and not (E == "liga"):
 
@@ -164,7 +112,7 @@ for E in Events:
 			
 			if E == "elite":	# Special URL for elite tournaments
 				r = requests.get(f"https://lichess.org/tournament/history/weekend?page={Page}", headers = {"Authorization": f"Bearer {APIToken}"})		# pages start at 1
-			elif E[3] == "0": 	# Rating-restricted hourly events
+			elif E[3] == "0" or E == "thematic": 	# Rating-restricted hourly events, thematic events
 				r = requests.get(f"https://lichess.org/tournament/history/hourly?page={Page}", headers = {"Authorization": f"Bearer {APIToken}"})	# pages start at 1
 			else:				# All other events
 				r = requests.get(f"https://lichess.org/tournament/history/{E}?page={Page}", headers = {"Authorization": f"Bearer {APIToken}"})	# pages start at 1
@@ -185,20 +133,32 @@ for E in Events:
 				
 				if E == "shield":		# Format on webpage for shield events
 					IDs = re.findall(f"/tournament/[0-9a-zA-Z]{{8}}\"><span class=\"name\">{Variants[V]} {Events[E]} Arena", r.text)	# Shield formatting
-				else:					# Format on webpage for all other events
+				elif E != "thematic":					# Format on webpage for all other events
 					IDs = re.findall(f"/tournament/[0-9a-zA-Z]{{8}}\"><span class=\"name\">{Events[E]} {Variants[V]} Arena", r.text)	# Monthly, Weekly, Yearly, etc.
+				else: # if E == "thematic"
+					# do more work for thematic
+					IDs = re.findall(f"/tournament/[0-9a-zA-Z]{{8}}\"><span class=\"name\">.{{0,40}} {Variants[V]} Arena", r.text)
+					
+					for ID in IDs:
+						if any(x in ID[41:-6] for x in {"Hourly", "&lt;1300", "&lt;1500", "&lt;1600", "&lt;1700", "&lt;2000"}):
+							continue
+						#print(f"{ID[41:-6]} is a {V} arena!")
+						if not ID[12:20] in ArenaIDs[V][E]:
+							ArenaIDs[V][E].append(ID[12:20])
+							NewOnPage += 1
 				
 				# Add newly found tournament IDs to file
-				for ID in IDs:		# ID: '/tournament/d09wfkjs">...', need entries 12-19
-					if not ID[12:20] in ArenaIDs[V][E]:
-						ArenaIDs[V][E].append(ID[12:20])
-						NewOnPage += 1
+				if E != "thematic":
+					for ID in IDs:		# ID: '/tournament/d09wfkjs">...', need entries 12-19
+						if not ID[12:20] in ArenaIDs[V][E]:
+							ArenaIDs[V][E].append(ID[12:20])
+							NewOnPage += 1
 			
 			# Count collisions to stop fetching when we do not find new entries
 			PrintMessage("all", E, f"Page {Page} - {NewOnPage} new events found.")
 			if NewOnPage == 0:
 				EmptyPages += 1
-				if EmptyPages >= 5:
+				if EmptyPages >= 11:
 					break
 			else:
 				EmptyPages = 0

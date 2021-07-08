@@ -1,0 +1,49 @@
+Alekhine's Defence
+Benko Gambit
+Benoni Defence
+Bird's Opening
+Bishop's Opening
+Blackmar Gambit
+Bogo-Indian Defence
+Caro-Kann Defence
+Catalan Opening
+Danish Gambit
+Dutch Defence
+English Opening
+Evans Gambit
+Four Knights Game
+Frankenstein-Dracula Variation
+French Defence
+Giuoco Piano
+Grünfeld Defence
+Halloween Gambit
+Italian Game
+King's Gambit
+King's Gambit Accepted
+King's Gambit Declined
+King's Indian Attack
+King's Indian Defence
+King's Pawn Game
+Lion Variation
+London System
+Modern Defence
+Nimzo-Indian Defence
+Old Indian Defence
+Petrov's Defence
+Philidor Defence
+Pirc Defence
+Queen's Gambit
+Queen's Gambit Accepted
+Queen's Gambit Declined
+Queen's Indian Defence
+Queens's Pawn Game
+Rapport-Jobava System
+Richter-Veresov Attack
+Ruy Lopez
+Réti Opening
+Scandinavian Defence
+Scotch Game
+Sicilian Defence
+Torre Attack
+Trompowsky Attack
+Vienna Game

@@ -46,16 +46,17 @@ PureEvents = {
 	"1600": 		{"Name": "<1600",				"RGB": (  0,158,115),	"WebOrder": 4,		"Code": "16"},
 	"1500": 		{"Name": "<1500",				"RGB": (  0,158,115),	"WebOrder": 5,		"Code": "15"},
 	"1300": 		{"Name": "<1300",				"RGB": (  0,158,115),	"WebOrder": 6,		"Code": "13"},
-	"daily": 		{"Name": "Daily",				"RGB": (  0,158,115),	"WebOrder": 7,		"Code": "da"},
-	"weekly": 		{"Name": "Weekly",				"RGB": (  0,158,115),	"WebOrder": 8,		"Code": "we"},
-	"monthly": 		{"Name": "Monthly",				"RGB": (  0,158,115),	"WebOrder": 9,		"Code": "mo"},
-	"yearly": 		{"Name": "Yearly",				"RGB": (  0,158,115),	"WebOrder": 10,		"Code": "ye"},
-	"eastern": 		{"Name": "Eastern",				"RGB": (  0,158,115),	"WebOrder": 11,		"Code": "ea"},
-	"elite": 		{"Name": "Elite",				"RGB": (  0,158,115),	"WebOrder": 12,		"Code": "el"},
-	"shield": 		{"Name": "Shield",				"RGB": (  0,158,115),	"WebOrder": 13,		"Code": "sh"},
-	"titled": 		{"Name": "Titled",				"RGB": (  0,158,115),	"WebOrder": 14,		"Code": "ti"},
-	"marathon": 	{"Name": "Marathon",			"RGB": (  0,158,115),	"WebOrder": 15,		"Code": "ma"},
-	"liga": 		{"Name": "Liga",				"RGB": (  0,158,115),	"WebOrder": 16,		"Code": "li"}
+	"thematic":		{"Name": "Thematic",			"RGB": (  0,158,115),	"WebOrder": 7,		"Code": "th"},
+	"daily": 		{"Name": "Daily",				"RGB": (  0,158,115),	"WebOrder": 8,		"Code": "da"},
+	"weekly": 		{"Name": "Weekly",				"RGB": (  0,158,115),	"WebOrder": 9,		"Code": "we"},
+	"monthly": 		{"Name": "Monthly",				"RGB": (  0,158,115),	"WebOrder": 10,		"Code": "mo"},
+	"yearly": 		{"Name": "Yearly",				"RGB": (  0,158,115),	"WebOrder": 11,		"Code": "ye"},
+	"eastern": 		{"Name": "Eastern",				"RGB": (  0,158,115),	"WebOrder": 12,		"Code": "ea"},
+	"elite": 		{"Name": "Elite",				"RGB": (  0,158,115),	"WebOrder": 13,		"Code": "el"},
+	"shield": 		{"Name": "Shield",				"RGB": (  0,158,115),	"WebOrder": 14,		"Code": "sh"},
+	"titled": 		{"Name": "Titled",				"RGB": (  0,158,115),	"WebOrder": 15,		"Code": "ti"},
+	"marathon": 	{"Name": "Marathon",			"RGB": (  0,158,115),	"WebOrder": 16,		"Code": "ma"},
+	"liga": 		{"Name": "Liga",				"RGB": (  0,158,115),	"WebOrder": 17,		"Code": "li"}
 }
 AllEvents = dict(PureEvents)
 AllEvents["all"] = 	{"Name": "All",					"RGB": (200,200,200),	"WebOrder": 0,		"Code": "al"}
@@ -87,7 +88,7 @@ for V in PureVariants:
 	else:
 		PureVariants[V]["RGB"] = ColorsA100[PureVariants[V]["WebOrder"]]
 
-# Events: Use 100 series, skip 12th entry
+# Events: Use 100 series
 for E in PureEvents:
 	PureEvents[E]["RGB"] = Colors100[PureEvents[E]["WebOrder"] - 1]
 
@@ -204,19 +205,19 @@ def BuildIndexPage():
 		File.write("\t<span class='VariantIcon' style='font-size: 16pt; position: absolute; left: 0px;'><a href='index.html'>&#xe005;</a></span>\n")
 		
 		# Variants menu
-		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 190px; max-width: 190px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 190px; max-width: 185px;'>\n")
 		for V, Val in sorted(AllVariants.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Variant' value='rankings/{V}' id='variant-{V}'{' checked' if V == 'all' else ''}><label class='V{V}' for='variant-{V}'><span class='VariantIcon'>{AllVariants[V]['Icon']}</span> {AllVariants[V]['Name'] if V != 'all' else 'All variants'}</label>\n")
 		File.write("\t</span>\n")
 		
 		# Events menu
-		File.write("\t<span class='dropdown-el' style='left: 230px; min-width: 170px; max-width: 170px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 230px; min-width: 170px; max-width: 180px;'>\n")
 		for E, Val in sorted(AllEvents.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Event' value='{E}' id='events-{E}'{' checked' if E == 'all' else ''}><label class='E{E}' for='events-{E}'>{AllEvents[E]['Name'] + ' Arenas' if E not in ['marathon', 'liga'] else ('Marathons' if E == 'marathon' else 'Bundesliga')}</label>\n")
 		File.write("\t</span>\n")
 		
 		# Sorting menu
-		File.write("\t<span class='dropdown-el' style='left: 410px; min-width: 260px; max-width: 260px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 410px; min-width: 260px; max-width: 255px;'>\n")
 		for O in FilePlayersSorts:
 			File.write(f"\t\t<input type='radio' name='Page' value='players_{O}' id='players_{O}'{' checked' if ('players_' + O) == 'players_trophies' else ''}><label for='players_{O}'>{FilePlayersSorts[O]['Name']}</label>\n")
 		for O in FileArenasSorts:
@@ -1576,19 +1577,19 @@ class ArenaCategory:
 		File.write("\t<span class='VariantIcon' style='font-size: 16pt; position: absolute; left: 0px;'><a href='../../index.html'>&#xe005;</a></span>\n")
 		
 		# Variants menu
-		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 190px; max-width: 190px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 190px; max-width: 185px;'>\n")
 		for V, Val in sorted(AllVariants.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Variant' value='{V}' id='variant-{V}'{' checked' if V == self._V else ''}><label class='V{V}' for='variant-{V}'><span class='VariantIcon'>{AllVariants[V]['Icon']}</span> {AllVariants[V]['Name'] if V != 'all' else 'All variants'}</label>\n")
 		File.write("\t</span>\n")
 		
 		# Events menu
-		File.write("\t<span class='dropdown-el' style='left: 230px; min-width: 170px; max-width: 170px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 230px; min-width: 170px; max-width: 180px;'>\n")
 		for E, Val in sorted(AllEvents.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Event' value='{E}' id='events-{E}'{' checked' if E == self._E else ''}><label class='E{E}' for='events-{E}'>{AllEvents[E]['Name'] + ' Arenas' if E not in ['marathon', 'liga'] else ('Marathons' if E == 'marathon' else 'Bundesliga')}</label>\n")
 		File.write("\t</span>\n")
 		
 		# Sorting menu
-		File.write("\t<span class='dropdown-el' style='left: 410px; min-width: 260px; max-width: 260px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 410px; min-width: 260px; max-width: 255px;'>\n")
 		for O in self._FilePlayersSorts:
 			File.write(f"\t\t<input type='radio' name='Page' value='players_{O}' id='players_{O}'{' checked' if ('players_' + O) == Page else ''}><label for='players_{O}'>{self._FilePlayersSorts[O]['Name']}</label>\n")
 		for O in self._FileArenasSorts:
