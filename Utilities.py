@@ -1583,13 +1583,13 @@ class ArenaCategory:
 		File.write("\t</span>\n")
 		
 		# Events menu
-		File.write("\t<span class='dropdown-el' style='left: 230px; min-width: 180px; max-width: 180px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 225px; min-width: 180px; max-width: 180px;'>\n")
 		for E, Val in sorted(AllEvents.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Event' value='{E}' id='events-{E}'{' checked' if E == self._E else ''}><label class='E{E}' for='events-{E}'>{AllEvents[E]['Name'] + ' Arenas' if E not in ['marathon', 'liga'] else ('Marathons' if E == 'marathon' else 'Bundesliga')}</label>\n")
 		File.write("\t</span>\n")
 		
 		# Sorting menu
-		File.write("\t<span class='dropdown-el' style='left: 410px; min-width: 255px; max-width: 255px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 415px; min-width: 255px; max-width: 255px;'>\n")
 		for O in self._FilePlayersSorts:
 			File.write(f"\t\t<input type='radio' name='Page' value='players_{O}' id='players_{O}'{' checked' if ('players_' + O) == Page else ''}><label for='players_{O}'>{self._FilePlayersSorts[O]['Name']}</label>\n")
 		for O in self._FileArenasSorts:
