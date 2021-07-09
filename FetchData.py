@@ -38,22 +38,22 @@ Variants = {
 
 Events = {
 	"thematic": "Thematic",
-	"1300": "&lt;1300",
-	"1500": "&lt;1500",
-	"1600": "&lt;1600",
-	"1700": "&lt;1700",
-	"2000": "&lt;2000",
-	"hourly": "Hourly",
-	"daily": "Daily",
-	"weekly": "Weekly",
-	"monthly": "Monthly",
-	"yearly": "Yearly",
-	"eastern": "Eastern",
-	"elite": "Elite",
-	"shield": "Shield",
-	"titled": "Titled",
-	"marathon": "Marathon",
-	"liga": "Liga"
+	# "1300": "&lt;1300",
+	# "1500": "&lt;1500",
+	# "1600": "&lt;1600",
+	# "1700": "&lt;1700",
+	# "2000": "&lt;2000",
+	# "hourly": "Hourly",
+	# "daily": "Daily",
+	# "weekly": "Weekly",
+	# "monthly": "Monthly",
+	# "yearly": "Yearly",
+	# "eastern": "Eastern",
+	# "elite": "Elite",
+	# "shield": "Shield",
+	# "titled": "Titled",
+	# "marathon": "Marathon",
+	# "liga": "Liga"
 }
 
 def Prefix(V, E):
@@ -158,7 +158,7 @@ for E in Events:
 			PrintMessage("all", E, f"Page {Page} - {NewOnPage} new events found.")
 			if NewOnPage == 0:
 				EmptyPages += 1
-				if EmptyPages >= 11:
+				if (E != thematic and EmptyPages >= 11) or (E == thematic and EmptyPages >= 50):
 					break
 			else:
 				EmptyPages = 0
