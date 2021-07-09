@@ -8,6 +8,8 @@ import ndjson
 import shutil
 from Utilities import *
 
+print("\n=== Starting Caller.py ===\n")
+
 # Default: No plots
 DrawPlots = False
 
@@ -35,3 +37,5 @@ for V in AllVariants:
 			Cat[V][E].UpdatePlots()
 			Cat[V][E].UpdateWebsite()
 			del Cat[V][E]
+
+print("\n=== Finished Caller.py ===\n")

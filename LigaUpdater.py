@@ -11,7 +11,7 @@ with open("E:\\lichess\\APIToken.txt", "r") as TokenFile:
 sblist = dict()
 blist = dict()
 
-
+print("\n=== Starting LigaUpdater.py ===\n")
 
 # Load previous IDs
 
@@ -78,3 +78,5 @@ templist.sort()
 with open("E:\\lichess\\tournaments\\data\\blitz\\liga\\blitz_liga.txt", "w") as bfile:
 	for ID in templist:
 		bfile.write(ID + "\n")
+		
+print("\n=== Finished LigaUpdater.py ===\n")
