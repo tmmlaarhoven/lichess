@@ -11,7 +11,7 @@ from Utilities import *
 print("\n=== Starting Caller.py ===\n")
 
 # Default: No plots
-DrawPlots = False
+DrawPlots = True
 
 BuildIndexPage()
 

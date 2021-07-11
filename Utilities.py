@@ -829,6 +829,12 @@ class ArenaCategory:
 		with open(f"{self._PathPlayers}{self._V}_{self._E}.txt", "w") as UsernameFile:
 			for Username in self._PlayerList:
 				UsernameFile.write(Username.lower() + "\n")
+				
+		# Print list of tournament IDs to file
+		SortedIDList = OrderedDict(sorted(self._RankingList.items(), key = lambda item: item[0]))
+		with open(f"{self._PathPlayers}{self._V}_{self._E}__events.txt", "w") as ListFile:
+			for ID in SortedIDList:
+				ListFile.write(ID + "\n")
 					
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
