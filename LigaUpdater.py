@@ -38,13 +38,13 @@ s = requests.Session()
 with s.get("https://lichess.org/api/user/jeffforever/tournament/created", headers = {"Authorization": f"Bearer {APIToken}"}, stream = True) as Response:
 	for Line in Response.iter_lines():
 		dict = json.loads(Line)
-		PrintMessage(f"New ID ({dict.get('id', 'Nothing')}) at {datetime.datetime.fromtimestamp(dict['startsAt']/1000).strftime('%Y-%m-%d %H:%M:%S')}")
+		PrintMessage(f"New ID ({dict.get('id', 'Nothing')}) at {datetime.datetime.fromtimestamp(dict['startsAt']/1000).strftime('%Y-%m-%d %H:%M:%S. ')}")
 		
 		if ("liga" not in dict["fullName"].lower()):
 			print("Skipping (not bundesliga).")
 			continue
 		
-		if ("secondsToStart" in dict):
+		if ("secondsToStart" in dict) or ("secondsToFinish" in dict):
 			print("Skipping (future ID).")
 			continue
 

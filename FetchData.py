@@ -257,7 +257,7 @@ for E in Events:
 					with open(f"{PathData}{Folder(V, E)}{Prefix(V, E)}{ID}.json", "r", encoding = "utf-8") as ArenaInfoFile:
 						#print(ID)
 						ArenaInfo = json.load(ArenaInfoFile)
-					if ("secondsToStart" in ArenaInfo) or not ArenaInfo.get("isFinished", False):
+					if ("secondsToStart" in ArenaInfo) or ("secondsToFinish" in ArenaInfo) or not ArenaInfo.get("isFinished", False):
 						ArenaIDs[V][E].remove(ID)
 						os.remove(f"{PathData}{Folder(V, E)}{Prefix(V, E)}{ID}.ndjson")
 						os.remove(f"{PathData}{Folder(V, E)}{Prefix(V, E)}{ID}.json")
