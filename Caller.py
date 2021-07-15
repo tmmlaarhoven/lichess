@@ -24,18 +24,9 @@ for V in AllVariants:
 		Cat[V][E] = ArenaCategory(V, E)
 		Cat[V][E].LoadRankings()
 		Cat[V][E].UpdateRankings()
-		#Cat[V][E].UpdatePlots()
+		if DrawPlots:
+			Cat[V][E].UpdatePlots()
 		Cat[V][E].UpdateWebsite()
 		del Cat[V][E]
-
-		# Only draw plots when everything is already up to date -- otherwise player list may again be outdated
-		if DrawPlots:
-			shutil.rmtree(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\players\\")			
-			Cat[V][E] = ArenaCategory(V, E)
-			Cat[V][E].LoadRankings()
-			Cat[V][E].UpdateRankings()
-			Cat[V][E].UpdatePlots()
-			Cat[V][E].UpdateWebsite()
-			del Cat[V][E]
 
 print("\n=== Finished Caller.py ===\n")

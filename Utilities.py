@@ -790,7 +790,8 @@ class ArenaCategory:
 						UserID = UserResult["username"].lower()
 						if UserJSON[UserID]["FirstID"] == "-":
 							UserJSON[UserID]["FirstID"] = ID
-						UserJSON[UserID]["LastID"] = ID
+						if len(UserJSON[UserID]["LastID"]) < 8 or (self._RankingList[ID]["Start"] > self._RankingList[UserJSON[UserID]["LastID"]]["Start"]):
+							UserJSON[UserID]["LastID"] = ID
 						if UserResult["rank"] == 1:
 							UserJSON[UserID]["CumTrophies"][0] = UserJSON[UserID]["CumTrophies"][0] + 1
 						elif UserResult["rank"] == 2:
@@ -919,7 +920,11 @@ class ArenaCategory:
 						self._PlayerStatus[UserID]["CumPoints"] = self._PlayerStatus[UserID]["CumPoints"] + UserResult["score"]
 						self._PlayerStatus[UserID]["CumEvents"] = self._PlayerStatus[UserID]["CumEvents"] + 1
 						self._PlayerStatus[UserID]["CumTopScore"] = max(self._PlayerStatus[UserID]["CumTopScore"], UserResult["score"])
-
+						
+						# Save new entry to user files
+						with open(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.json", "w") as JSONFile:
+							json.dump(self._PlayerStatus[UserID], JSONFile)	
+						
 						# Save new entry to user files
 						with open(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.ndjson", "a+") as NDJSONFile:
 							newdict = dict()
@@ -957,7 +962,10 @@ class ArenaCategory:
 			for Index, (ID, Arena) in enumerate(self._DataList.items()):
 				Arena["Number"] = Index + 1
 				RankListFile.write(json.dumps(Arena) + "\n")	
-				
+		with open(f"{self._PathPlayers}{self._V}_{self._E}__events.txt", "w") as ArenaIDFile:
+			for ID in self._DataList:
+				ArenaIDFile.write(ID + "\n")
+		
 		# Also store arenas in different orders
 		self._StoreArenaRankings()
 		
