@@ -211,13 +211,13 @@ def BuildIndexPage():
 		File.write("\t</span>\n")
 		
 		# Events menu
-		File.write("\t<span class='dropdown-el' style='left: 230px; min-width: 180px; max-width: 180px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 225px; min-width: 180px; max-width: 180px;'>\n")
 		for E, Val in sorted(AllEvents.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Event' value='{E}' id='events-{E}'{' checked' if E == 'all' else ''}><label class='E{E}' for='events-{E}'>{AllEvents[E]['Name'] + ' Arenas' if E not in ['marathon', 'liga'] else ('Marathons' if E == 'marathon' else 'Bundesliga')}</label>\n")
 		File.write("\t</span>\n")
 		
 		# Sorting menu
-		File.write("\t<span class='dropdown-el' style='left: 410px; min-width: 255px; max-width: 255px;'>\n")
+		File.write("\t<span class='dropdown-el' style='left: 415px; min-width: 255px; max-width: 255px;'>\n")
 		for O in FilePlayersSorts:
 			File.write(f"\t\t<input type='radio' name='Page' value='players_{O}' id='players_{O}'{' checked' if ('players_' + O) == 'players_trophies' else ''}><label for='players_{O}'>{FilePlayersSorts[O]['Name']}</label>\n")
 		for O in FileArenasSorts:
@@ -236,7 +236,7 @@ def BuildIndexPage():
 		File.write("<span class='maincontent'>\n")
 		File.write("<!-- START OF ACTUAL CONTENT -->\n\n")
 		
-		File.write("The rankings on this webpage are based on all official regularly-scheduled arenas played on <a href='https://lichess.org'>lichess.org</a> (hourly, <2000, <1700, <1600, <1500, <1300, daily, weekly, monthly, yearly, eastern, elite, and shield arenas) as well as the seasonal 24h marathons and the titled arenas. These rankings exclude irregular themed arenas (King's Gambit Blitz Arena, ...), and custom arenas created by users. In total these rankings cover over 400.000 events, in which over 200.000.000 games were played by over 80.000.000 arena participants (over 1.500.000 unique users), and together in all these games the users made over 14.000.000.000 moves. <br/><br/>\n\n")
+		File.write("The rankings on this webpage are based on all official regularly-scheduled arenas played on <a href='https://lichess.org'>lichess.org</a> (hourly, <2000, <1700, <1600, <1500, <1300, thematic, daily, weekly, monthly, yearly, eastern, elite, and shield arenas) as well as the seasonal 24h marathons, the titled arenas, and the bundesliga events. These rankings exclude custom arenas created by users. In total these rankings cover over 400.000 events, in which over 200.000.000 games were played by over 80.000.000 arena participants (over 1.500.000 unique users), and together in all these games the users made over 14.000.000.000 moves. <br/><br/>\n\n")
 		File.write("Some additional, detailed statistics about the rankings can be found below.")
 		
 		File.write("<img src='pie_participants.png' class='Graph'>\n")

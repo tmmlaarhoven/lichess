@@ -21,8 +21,8 @@ def PrintMessage(V: str, E: str, Message: str):
 for V in AllVariants:
 	for E in AllEvents:
 		
-		if V == "all" and E == "all":
-			break
+		#if V == "all" and E == "all":
+		#	break
 		
 		if not os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_arenas.ndjson") or not os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\players\\{V}_{E}__events.txt"):
 			continue
