@@ -9,7 +9,7 @@ import math
 import datetime
 
 import matplotlib.pyplot as mpl
-from matplotlib.colors import BoundaryNorm
+from matplotlib.colors import BoundaryNorm, LogNorm
 from matplotlib.ticker import MaxNLocator
 import numpy as np
 
@@ -97,6 +97,10 @@ def Participants(dict):
 # Total people ever participated
 def TotalPlayers(dict):
 	return dict["Players"]
+	
+# Total events ever happened
+def TotalEvents(dict):
+	return dict["Events"]
 
 # How long have these tournaments been running?
 def TimeRange(dict):
@@ -105,14 +109,21 @@ def TimeRange(dict):
 	l = dict["LastStart"]
 	Last = datetime.datetime(int(l[0:4]), int(l[5:7]), int(l[8:10]), 0, 0, 0)
 	Duration = Last - First
-	return Duration / datetime.timedelta(days = 1)
+	return Duration / datetime.timedelta(days = 365)
+
+def TopScore(dict):
+	return dict["TopScore"]
+	
+
+#TopScore
+#MaxUsers
+#TotalPoints
+#Moves
+#Games
 
 
-
-
-
-va = ["3check", "antichess", "atomic", "blitz", "bullet", "chess960", "classical", "crazyhouse", "horde", "hyperbullet", "koth", "racingkings", "rapid", "superblitz", "ultrabullet"]
-ev = ["hourly", "2000", "1700", "1600", "1500", "1300", "thematic", "daily", "weekly", "monthly", "yearly", "eastern", "elite", "shield", "titled", "marathon", "liga"]
+va = ["ultrabullet", "hyperbullet", "bullet", "superblitz", "blitz", "rapid", "classical", "crazyhouse", "chess960", "koth", "3check", "antichess", "atomic", "horde", "racingkings"]
+ev = ["2000", "1700", "1600", "1500", "1300", "thematic", "hourly", "daily", "weekly", "monthly", "yearly", "eastern", "shield", "elite", "titled", "marathon", "liga"]
 ev.reverse()
 
 XTicks = []
@@ -123,12 +134,30 @@ YTicks = []
 for i in range(len(ev)):
 	YTicks.append(PureEvents[ev[i]]["Name"])
 
-np.random.seed(19680801)
 
 x = np.arange(-0.5, len(va), 1)  # len = 11
 y = np.arange(-0.5, len(ev), 1)  # len = 7
 Z = np.random.rand(len(ev), len(va))
 
+
+
+params = [TimeRange, "Time span of events (years)", "time"]
+params = [WhiteScore, "White's score (percentage)", "white"]
+params = [Draws, "Percentage of draws", "draws"]
+params = [Berserks, "Percentage of berserks", "berserks"]
+params = [Rating, "Average ratings", "rating"]
+params = [Participants, "Average number of participants", "participants"]
+#params = [TotalPlayers, "Total number of (unique) players", "players"]
+#params = [TotalEvents, "Total number of events", "events"]
+params = [TopScore, "All-time high score", "highscore"]
+
+
+
+
+mpl.close()
+
+minZ = 10000000000
+maxZ = -10000000000
 for i in range(len(PureVariants)):
 	V = va[i]
 	for j in range(len(PureEvents)):
@@ -138,16 +167,19 @@ for i in range(len(PureVariants)):
 		else:
 			with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json") as File:
 				dict = json.load(File)
-			Z[j][i] = 1. * dict["WhiteWins"] / dict["Games"]
-			Z[j][i] = TotalPlayers(dict)
+			#Z[j][i] = 1. * dict["WhiteWins"] / dict["Games"]
+			#Z[j][i] = TotalPlayers(dict)
 			#Z[j][i] = 0.5 * dict["Berserks"] / dict["Games"]
 			#Z[j][i] = Rating(dict)
-			#Z[j][i] = TimeRange(dict)
+			Z[j][i] = params[0](dict)
+			minZ = minZ if (minZ < Z[j][i]) else Z[j][i]
+			maxZ = maxZ if (maxZ > Z[j][i]) else Z[j][i]
 
 
 
 fig, ax = mpl.subplots()
-ax.pcolormesh(x, y, Z, cmap="Greens")
+im = ax.pcolormesh(x, y, Z, cmap="Oranges", norm=LogNorm(vmin=minZ, vmax=maxZ), alpha=0.5, antialiased=False, linewidth=0.0, rasterized=True)
+fig.colorbar(im, ax=ax)
 
 ax.set_xticks(np.arange(len(va)), minor=False)
 ax.set_yticks(np.arange(len(ev)), minor=False)
@@ -155,8 +187,13 @@ ax.set_yticks(np.arange(len(ev)), minor=False)
 ax.set_xticklabels(XTicks, minor=False, rotation=90)
 ax.set_yticklabels(YTicks, minor=False)
 
-ax.set(aspect="equal")
-ax.set_title("Distribution of events", fontdict={'fontsize': 14})
+#ax.set(aspect = 0.5)
+ax.set_title(params[1], fontdict={'fontsize': 14})
 mpl.tight_layout()
 
-mpl.show()
+#mpl.show()
+
+mpl.savefig(f"E:\\GitHub\\lichess\\rankings\\density_{params[2]}.png")
+print(f"Saving density_{params[2]}.png")
+
+
