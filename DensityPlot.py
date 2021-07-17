@@ -76,15 +76,15 @@ PureEvents = {
 
 # White scoring percentage
 def WhiteScore(dict):
-	return 0.5 * (dict["Games"] + dict["WhiteWins"] - dict["BlackWins"]) / dict["Games"]
+	return 50. * (dict["Games"] + dict["WhiteWins"] - dict["BlackWins"]) / dict["Games"]
 
 # Percentage of draws
 def Draws(dict):
-	return (dict["Games"] - dict["WhiteWins"] - dict["BlackWins"]) / dict["Games"]
+	return 100. * (dict["Games"] - dict["WhiteWins"] - dict["BlackWins"]) / dict["Games"]
 
 # Percentage of berserks
 def Berserks(dict):
-	return 0.5 * dict["Berserks"] / dict["Games"]
+	return 50. * dict["Berserks"] / dict["Games"]
 
 # Average rating
 def Rating(dict):
@@ -109,11 +109,23 @@ def TimeRange(dict):
 	l = dict["LastStart"]
 	Last = datetime.datetime(int(l[0:4]), int(l[5:7]), int(l[8:10]), 0, 0, 0)
 	Duration = Last - First
-	return Duration / datetime.timedelta(days = 365)
+	return Duration / datetime.timedelta(days = 1)
 
 def TopScore(dict):
 	return dict["TopScore"]
 	
+# Total events ever happened
+def MovesPerGame(dict):
+	return dict["Moves"] / dict["Games"] / 2.
+
+# Total events ever happened
+def PointsPerPlayer(dict):
+	return dict["TotalPoints"] / dict["Participants"]
+	
+# Total events ever happened
+def MaxUsers(dict):
+	return dict["MaxUsers"]
+
 
 #TopScore
 #MaxUsers
@@ -123,7 +135,7 @@ def TopScore(dict):
 
 
 va = ["ultrabullet", "hyperbullet", "bullet", "superblitz", "blitz", "rapid", "classical", "crazyhouse", "chess960", "koth", "3check", "antichess", "atomic", "horde", "racingkings"]
-ev = ["2000", "1700", "1600", "1500", "1300", "thematic", "hourly", "daily", "weekly", "monthly", "yearly", "eastern", "shield", "elite", "titled", "marathon", "liga"]
+ev = ["1300", "1500", "1600", "1700", "2000", "thematic", "eastern", "hourly", "daily", "weekly", "monthly", "yearly", "shield", "elite", "titled", "marathon", "liga"]
 ev.reverse()
 
 XTicks = []
@@ -140,60 +152,78 @@ y = np.arange(-0.5, len(ev), 1)  # len = 7
 Z = np.random.rand(len(ev), len(va))
 
 
+def MakePlot(params):
 
-params = [TimeRange, "Time span of events (years)", "time"]
-params = [WhiteScore, "White's score (percentage)", "white"]
-params = [Draws, "Percentage of draws", "draws"]
-params = [Berserks, "Percentage of berserks", "berserks"]
-params = [Rating, "Average ratings", "rating"]
-params = [Participants, "Average number of participants", "participants"]
-#params = [TotalPlayers, "Total number of (unique) players", "players"]
-#params = [TotalEvents, "Total number of events", "events"]
-params = [TopScore, "All-time high score", "highscore"]
+	mpl.close()
 
-
-
-
-mpl.close()
-
-minZ = 10000000000
-maxZ = -10000000000
-for i in range(len(PureVariants)):
-	V = va[i]
-	for j in range(len(PureEvents)):
-		E = ev[j]
-		if not os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_players.ndjson"):
-			Z[j][i] = None
-		else:
-			with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json") as File:
-				dict = json.load(File)
-			#Z[j][i] = 1. * dict["WhiteWins"] / dict["Games"]
-			#Z[j][i] = TotalPlayers(dict)
-			#Z[j][i] = 0.5 * dict["Berserks"] / dict["Games"]
-			#Z[j][i] = Rating(dict)
-			Z[j][i] = params[0](dict)
-			minZ = minZ if (minZ < Z[j][i]) else Z[j][i]
-			maxZ = maxZ if (maxZ > Z[j][i]) else Z[j][i]
+	minZ = 10000000000
+	maxZ = -10000000000
+	for i in range(len(PureVariants)):
+		V = va[i]
+		for j in range(len(PureEvents)):
+			E = ev[j]
+			if not os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_players.ndjson"):
+				Z[j][i] = None
+			else:
+				with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json") as File:
+					dict = json.load(File)
+				#Z[j][i] = 1. * dict["WhiteWins"] / dict["Games"]
+				#Z[j][i] = TotalPlayers(dict)
+				#Z[j][i] = 0.5 * dict["Berserks"] / dict["Games"]
+				#Z[j][i] = Rating(dict)
+				Z[j][i] = params[0](dict)
+				minZ = minZ if (minZ < Z[j][i]) else Z[j][i]
+				maxZ = maxZ if (maxZ > Z[j][i]) else Z[j][i]
 
 
 
-fig, ax = mpl.subplots()
-im = ax.pcolormesh(x, y, Z, cmap="Oranges", norm=LogNorm(vmin=minZ, vmax=maxZ), alpha=0.5, antialiased=False, linewidth=0.0, rasterized=True)
-fig.colorbar(im, ax=ax)
+	fig, ax = mpl.subplots()
+	
+	if params[3]:
+		im = ax.pcolormesh(x, y, Z, cmap = params[4], norm = LogNorm(vmin = minZ + 0.01, vmax=maxZ), alpha = 0.5, antialiased = False, linewidth = 0.0, rasterized = True)
+	else:
+		im = ax.pcolormesh(x, y, Z, cmap = params[4], alpha = 0.5, antialiased = False, linewidth = 0.0, rasterized=True)
+	cbar = fig.colorbar(im, ax = ax)
 
-ax.set_xticks(np.arange(len(va)), minor=False)
-ax.set_yticks(np.arange(len(ev)), minor=False)
+	ax.set_xticks(np.arange(len(va)), minor=False)
+	ax.set_yticks(np.arange(len(ev)), minor=False)
 
-ax.set_xticklabels(XTicks, minor=False, rotation=90)
-ax.set_yticklabels(YTicks, minor=False)
+	ax.set_xticklabels(XTicks, minor=False, rotation=90)
+	ax.set_yticklabels(YTicks, minor=False)
 
-#ax.set(aspect = 0.5)
-ax.set_title(params[1], fontdict={'fontsize': 14})
-mpl.tight_layout()
+	#ax.set(aspect = 0.5)
+	ax.set_title(params[1], fontdict={'fontsize': 14})
+	mpl.tight_layout()
 
-#mpl.show()
+	#mpl.show()
 
-mpl.savefig(f"E:\\GitHub\\lichess\\rankings\\density_{params[2]}.png")
-print(f"Saving density_{params[2]}.png")
+	mpl.savefig(f"E:\\GitHub\\lichess\\rankings\\density_{params[2]}.png")
+	print(f"Saving density_{params[2]}.png")
+
+
+
+# params: (1) function, (2) plot title, (3) filename, (4) logscale?, (5) colors
+# cmaps['Sequential'] = [
+#            'Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
+#            'YlOrBr', 'YlOrRd', 'OrRd', 'PuRd', 'RdPu', 'BuPu',
+#            'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn']
+
+paramsets = [
+	[TimeRange, 	"Time span of events (days)", 			"time", 		True,		"Blues"],
+	[WhiteScore, 	"White's score (percentage)", 			"white", 		False,		"Purples"],
+	[Draws, 		"Number of draws (percentage)", 		"draws", 		False,		"Greens"],
+	[Berserks, 		"Number of berserks (percentage)", 		"berserks", 	False,		"Oranges"],
+	[Rating, 		"Average ratings", 						"rating", 		False,		"Reds"],
+	[Participants, 	"Average number of participants", 		"participants", True,		"OrRd"],
+	[TotalPlayers, 	"Total number of (unique) players", 	"players", 		True,		"BuPu"],
+	[TotalEvents, 	"Total number of events", 				"events", 		True,		"YlGn"],
+	[MovesPerGame, 	"Average moves per game", 				"moves", 		False,		"RdPu"],
+	[PointsPerPlayer, 	"Average points per player", 		"points", 		False,		"PuRd"],
+	[MaxUsers, 		"All-time maximum participants", 		"maxusers", 	True,		"GnBu"],
+	[TopScore, 		"All-time high score", 					"highscore", 	True,		"PuBu"]
+]
+
+for params in paramsets:
+	MakePlot(params)
 
 
