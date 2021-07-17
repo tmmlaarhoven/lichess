@@ -101,6 +101,10 @@ def TotalPlayers(dict):
 # Total events ever happened
 def TotalEvents(dict):
 	return dict["Events"]
+	
+# Total events ever happened
+def TotalGames(dict):
+	return dict["Games"]
 
 # How long have these tournaments been running?
 def TimeRange(dict):
@@ -214,6 +218,7 @@ paramsets = [
 	[Draws, 		"Number of draws (percentage)", 		"draws", 		False,		"Greens"],
 	[Berserks, 		"Number of berserks (percentage)", 		"berserks", 	False,		"Oranges"],
 	[Rating, 		"Average ratings", 						"rating", 		False,		"Reds"],
+	[TotalGames, 	"Total number of games", 				"games", 		True,		"YlOrBr"],
 	[Participants, 	"Average number of participants", 		"participants", True,		"OrRd"],
 	[TotalPlayers, 	"Total number of (unique) players", 	"players", 		True,		"BuPu"],
 	[TotalEvents, 	"Total number of events", 				"events", 		True,		"YlGn"],
