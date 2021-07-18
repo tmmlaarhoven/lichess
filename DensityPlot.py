@@ -76,7 +76,7 @@ PureEvents = {
 
 # White scoring percentage
 def WhiteScore(dict):
-	return 50. * (dict["Games"] + dict["WhiteWins"] - dict["BlackWins"]) / dict["Games"]
+	return 0.5 * (dict["Games"] + dict["WhiteWins"] - dict["BlackWins"]) / dict["Games"]
 
 # Percentage of draws
 def Draws(dict):
@@ -213,10 +213,10 @@ def MakePlot(params):
 #            'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn']
 
 paramsets = [
-	[TimeRange, 	"Time span of events (days)", 			"time", 		True,		"Blues"],
-	[WhiteScore, 	"White's score (percentage)", 			"white", 		False,		"Purples"],
-	[Draws, 		"Number of draws (percentage)", 		"draws", 		False,		"Greens"],
-	[Berserks, 		"Number of berserks (percentage)", 		"berserks", 	False,		"Oranges"],
+	[TimeRange, 	"Days between first and last events", 	"time", 		True,		"Blues"],
+	[WhiteScore, 	"White's average score per game", 		"white", 		False,		"Purples"],
+	[Draws, 		"Percentage of draws", 					"draws", 		False,		"Greens"],
+	[Berserks, 		"Percentage of berserks",		 		"berserks", 	False,		"Oranges"],
 	[Rating, 		"Average ratings", 						"rating", 		False,		"Reds"],
 	[TotalGames, 	"Total number of games", 				"games", 		True,		"YlOrBr"],
 	[Participants, 	"Average number of participants", 		"participants", True,		"OrRd"],
