@@ -40,20 +40,20 @@ AllVariants = dict(PureVariants)
 AllVariants["all"] = {"Name": "All",				"RGB": (200,200,200),	"WebOrder": 0,		"Code": "al",	"Icon": "O"}
 
 PureEvents = {
-	"hourly": 		{"Name": "Hourly",				"RGB": (  0,158,115),	"WebOrder": 1,		"Code": "ho"},
-	"2000": 		{"Name": "<2000",				"RGB": (  0,158,115),	"WebOrder": 2,		"Code": "20"},
-	"1700": 		{"Name": "<1700",				"RGB": (  0,158,115),	"WebOrder": 3,		"Code": "17"},
-	"1600": 		{"Name": "<1600",				"RGB": (  0,158,115),	"WebOrder": 4,		"Code": "16"},
-	"1500": 		{"Name": "<1500",				"RGB": (  0,158,115),	"WebOrder": 5,		"Code": "15"},
-	"1300": 		{"Name": "<1300",				"RGB": (  0,158,115),	"WebOrder": 6,		"Code": "13"},
-	"thematic":		{"Name": "Thematic",			"RGB": (  0,158,115),	"WebOrder": 7,		"Code": "th"},
-	"daily": 		{"Name": "Daily",				"RGB": (  0,158,115),	"WebOrder": 8,		"Code": "da"},
-	"weekly": 		{"Name": "Weekly",				"RGB": (  0,158,115),	"WebOrder": 9,		"Code": "we"},
-	"monthly": 		{"Name": "Monthly",				"RGB": (  0,158,115),	"WebOrder": 10,		"Code": "mo"},
-	"yearly": 		{"Name": "Yearly",				"RGB": (  0,158,115),	"WebOrder": 11,		"Code": "ye"},
-	"eastern": 		{"Name": "Eastern",				"RGB": (  0,158,115),	"WebOrder": 12,		"Code": "ea"},
-	"elite": 		{"Name": "Elite",				"RGB": (  0,158,115),	"WebOrder": 13,		"Code": "el"},
-	"shield": 		{"Name": "Shield",				"RGB": (  0,158,115),	"WebOrder": 14,		"Code": "sh"},
+	"1300": 		{"Name": "<1300",				"RGB": (  0,158,115),	"WebOrder": 1,		"Code": "13"},
+	"1500": 		{"Name": "<1500",				"RGB": (  0,158,115),	"WebOrder": 2,		"Code": "15"},
+	"1600": 		{"Name": "<1600",				"RGB": (  0,158,115),	"WebOrder": 3,		"Code": "16"},
+	"1700": 		{"Name": "<1700",				"RGB": (  0,158,115),	"WebOrder": 4,		"Code": "17"},
+	"2000": 		{"Name": "<2000",				"RGB": (  0,158,115),	"WebOrder": 5,		"Code": "20"},
+	"thematic":		{"Name": "Thematic",			"RGB": (  0,158,115),	"WebOrder": 6,		"Code": "th"},
+	"eastern": 		{"Name": "Eastern",				"RGB": (  0,158,115),	"WebOrder": 7,		"Code": "ea"},
+	"hourly": 		{"Name": "Hourly",				"RGB": (  0,158,115),	"WebOrder": 8,		"Code": "ho"},
+	"daily": 		{"Name": "Daily",				"RGB": (  0,158,115),	"WebOrder": 9,		"Code": "da"},
+	"weekly": 		{"Name": "Weekly",				"RGB": (  0,158,115),	"WebOrder": 10,		"Code": "we"},
+	"monthly": 		{"Name": "Monthly",				"RGB": (  0,158,115),	"WebOrder": 11,		"Code": "mo"},
+	"yearly": 		{"Name": "Yearly",				"RGB": (  0,158,115),	"WebOrder": 12,		"Code": "ye"},
+	"shield": 		{"Name": "Shield",				"RGB": (  0,158,115),	"WebOrder": 13,		"Code": "sh"},
+	"elite": 		{"Name": "Elite",				"RGB": (  0,158,115),	"WebOrder": 14,		"Code": "el"},
 	"titled": 		{"Name": "Titled",				"RGB": (  0,158,115),	"WebOrder": 15,		"Code": "ti"},
 	"marathon": 	{"Name": "Marathon",			"RGB": (  0,158,115),	"WebOrder": 16,		"Code": "ma"},
 	"liga": 		{"Name": "Liga",				"RGB": (  0,158,115),	"WebOrder": 17,		"Code": "li"}
@@ -1448,10 +1448,10 @@ class ArenaCategory:
 					
 					# Load bad users
 					BadUsers = dict()
-					with open("E:\\lichess\\tournaments\\rankings\\PlayersTOS.txt", "r") as BadPlayersFile:
+					with open("E:\\GitHub\\lichess\\PlayersTOS.txt", "r") as BadPlayersFile:
 						for Line in BadPlayersFile:
 							BadUsers[Line.strip().lower()] = 1
-					with open("E:\\lichess\\tournaments\\rankings\\PlayersClosed.txt", "r") as BadPlayersFile2:
+					with open("E:\\GitHub\\lichess\\PlayersClosed.txt", "r") as BadPlayersFile2:
 						for Line in BadPlayersFile2:
 							BadUsers[Line.strip().lower()] = 1
 					

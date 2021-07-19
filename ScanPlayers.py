@@ -16,7 +16,7 @@ with open("E:\\lichess\\APIToken.txt", "r") as TokenFile:
 
 PathData = "E:\\lichess\\tournaments\\data\\"
 PathRank = "E:\\lichess\\tournaments\\rankings\\"
-PathWeb = "E:\\lichess\\tmmlaarhoven.github.io\\lichess\\rankings\\"
+PathWeb = "E:\\GitHub\\lichess\\rankings\\"
 
 Events = {
 	#"hourly": "Hourly",
@@ -96,10 +96,10 @@ PrintMessage("all", "all", "Total players found: " + str(len(PlayersToScan)) + "
 
 # Load those users which have been checked before
 PlayersChecked = dict()
-if os.path.exists(PathRank + "PlayersChecked.txt"):
-	with open(PathRank + "PlayersChecked.txt", "r") as FileChecked:
-		for Line in FileChecked:
-			PlayersChecked[Line.strip().lower()] = 1
+#if os.path.exists(PathWeb + "PlayersChecked.txt"):
+#	with open(PathWeb + "PlayersChecked.txt", "r") as FileChecked:
+#		for Line in FileChecked:
+#			PlayersChecked[Line.strip().lower()] = 1
 PlayersChecked = {k: v for k, v in sorted(PlayersChecked.items(), key = lambda item: item[1], reverse = False)}	
 PrintMessage("all", "all", "Previously checked players: " + str(len(PlayersChecked)) + ".")
 
@@ -146,19 +146,19 @@ for Player in PlayersNew:
 		
 
 # Store closed accounts in file
-if os.path.exists(PathRank + "PlayersClosed.txt"):
-	with open(PathRank + "PlayersClosed.txt", "r") as FileClosed:
+if os.path.exists(PathWeb + "PlayersClosed.txt"):
+	with open(PathWeb + "PlayersClosed.txt", "r") as FileClosed:
 		for Line in FileClosed:
 			PlayersClosed[Line.strip().lower()] = 1
 PlayersClosed = {k: v for k, v in sorted(PlayersClosed.items(), key = lambda item: item[0], reverse = False)}	
 PrintMessage("all", "all", "Exporting " + str(len(PlayersClosed)) + " closed accounts...")
-with open(PathRank + "PlayersClosed.txt", "w") as FileClosed:
+with open(PathWeb + "PlayersClosed.txt", "w") as FileClosed:
 	for Username in PlayersClosed:
 		FileClosed.write(Username + "\n")
 
 # Store TOS accounts in file
-if os.path.exists(PathRank + "PlayersTOS.txt"):
-	with open(PathRank + "PlayersTOS.txt", "r") as FileTOS:
+if os.path.exists(PathWeb + "PlayersTOS.txt"):
+	with open(PathWeb + "PlayersTOS.txt", "r") as FileTOS:
 		for Line in FileTOS:
 			PlayersTOS[Line.strip().lower()] = 1
 PlayersTOS = {k: v for k, v in sorted(PlayersTOS.items(), key = lambda item: item[0], reverse = False)}	
@@ -177,7 +177,7 @@ for Player in PlayersToScan:
 	PlayersAll[Player.lower()] = 1
 PlayersAll = {k: v for k, v in sorted(PlayersAll.items(), key = lambda item: item[0], reverse = False)}	
 PrintMessage("all", "all", "Exporting " + str(len(PlayersAll)) + " total checked accounts...")
-with open(PathRank + "PlayersChecked.txt", "w") as FileChecked:
+with open(PathWeb + "PlayersChecked.txt", "w") as FileChecked:
 	for Player in PlayersAll:
 		FileChecked.write(Player + "\n")
 

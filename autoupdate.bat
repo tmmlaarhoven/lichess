@@ -1,6 +1,7 @@
 @ECHO OFF
 setlocal enabledelayedexpansion
 
+rem Wait at least 6 hours (=21600 seconds) until quarter past an hour
 :wait
 set /a "hour=%hour:~0,2%"
 set /a "hour=!hour: =!"
@@ -14,9 +15,11 @@ if !minu! GTR 15 (
 )
 timeout !delay!
 
+rem Main loop: pull, fetch data, update rankings, and push
 :loop
 set updtime=%date%, %time%
 git pull
+rem ScanPlayers.py
 LigaUpdater.py
 FetchData.py
 Caller.py
