@@ -71,12 +71,6 @@ def PrintMessage(V, E, Message):
 # Process each event type separately
 #=========================================================================
 
-ThematicNames = dict()
-with open("thematicnames.txt") as ThematicNamesFile:
-	for Line in ThematicNamesFile:
-		ThematicNames[Line.strip()] = 1
-		
-
 ArenaIDs = dict()
 for V in Variants:
 	ArenaIDs[V] = dict()
