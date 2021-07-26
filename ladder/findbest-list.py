@@ -9,7 +9,7 @@ with open("E:\\lichess\\APIToken.txt", "r") as TokenFile:
 		APIToken = Line.strip()
 
 Players = dict()
-with open("2700games.csv", "r") as InFile:
+with open("2700games-new.csv", "r") as InFile:
 	for Number, Line in enumerate(InFile):
 		if Number % 10000 == 0:
 			print(f"Line {Number}.")
@@ -33,7 +33,7 @@ with open("ignorelist.txt", "r") as InFile:
 		IgnoreList[Line.strip().lower()] = 1
 
 CrossTableList = dict()
-with open("E:\\lichess\\crosstable\\highestbulletsorted.txt", "r") as AllFile:
+with open("E:\\GitHub\\lichess\\ladder\\highestbulletsorted.txt", "r") as AllFile:
 	for Line in AllFile:
 		Dict = json.loads(Line)
 		CrossTableList[Dict["Username"].lower()] = 1

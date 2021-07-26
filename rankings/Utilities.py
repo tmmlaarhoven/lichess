@@ -395,7 +395,7 @@ mpl.rcParams.update({
 })
 
 # Load horsey background for plots
-LichessLogo = mpl.imread("E:\\GitHub\\lichess\\rankings\\logo.png")
+LichessLogo = mpl.imread("E:\\GitHub\\lichess\\logo.png")
 
 # User plot colors: Use 500 series
 UserPlotColors = Colors500 + Colors800
