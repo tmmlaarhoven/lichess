@@ -5,7 +5,7 @@ rootdir = "E:\\lichess\\gamesdb-out\\"
 with open("2700games-new.csv", "a") as TopFile:
 	for subdir, dirs, files in os.walk(rootdir):
 		for file in files:
-			if len(file) < 8 or file[26:33] != "2020-09":
+			if len(file) < 8 or file[26:33] in {"2021-05", "2021-06"}:
 				continue
 			print(os.path.join(subdir, file))
 			with open(os.path.join(subdir, file), "r") as InFile:
