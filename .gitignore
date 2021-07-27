@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 ladder/2700games.csv
+ladder/2700games-new.csv
