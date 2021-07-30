@@ -12,90 +12,116 @@ with open("E:\\lichess\\APIToken.txt", "r") as TokenFile:
 	for Line in TokenFile:
 		APIToken = Line.strip()
 
+# Load list of players in order of relevance
+PlayersDict = dict()
+with open("2021-06--bullet-ladder-tweak.ndjson", "r") as PlayerListFile:
+	for Line in PlayerListFile:
+		Dictio = json.loads(Line)
+		PlayerID = Dictio["Username"].lower()
+		PlayersDict[PlayerID] = Dictio
 
-if True:
-	# Expand the table
-	
-	Players = []
-	PlayersDict = dict()
-	with open("highestbulletsorted.txt", "r") as HighestFile:
-		for Line in HighestFile:
-			Players.append(json.loads(Line))
-			PlayersDict[Players[-1]["Username"]] = 1
-			
-	with open("rivalries-all-triangle.txt", "r") as RivalriesFile:
-		Completed = 0
-		for Line in RivalriesFile:
-			Completed = Completed + 1
+# Initialize empty matchup dictionary
+MatchesDict = dict()
+for User1 in PlayersDict:
+	MatchesDict[User1.lower()] = dict()
+	for User2 in PlayersDict:
+		MatchesDict[User1.lower()][User2.lower()] = dict()
 
-	TableSize = 1000
-	PlayerScores = []
-	for Index1 in range(TableSize):
-		PlayerScores.append([0 for _ in range(TableSize)])
+# Load past match scores
+with open("matches.txt", "r") as MatchesFile:
+	for Line in MatchesFile:
+		Parts = Line.split(",", 2)
+		if (Parts[0].lower() in PlayersDict) and (Parts[1].lower() in PlayersDict):
+			MatchesDict[Parts[0].lower()][Parts[1].lower()] = json.loads(Parts[2])
 
-	while True:
-		print("\n\nDoing: " + Players[Completed]["Username"])
-			
-		Index1 = Completed
-		User1 = Players[Completed]
-		for Index2 in range(Index1):
-			User2 = Players[Index2]
-			print("\nRivalry: " + User1["Username"] + " vs. " + User2["Username"])
-			s = requests.Session()
-			with s.get(f"https://lichess.org/api/games/user/{User1['Username']}?vs={User2['Username']}&perfType=bullet&pgnInJson=false&tags=true", headers = {"Authorization": f"Bearer {APIToken}", "Accept": "application/x-ndjson"}, stream = True) as Response:
-				for Line in Response.iter_lines():
-					GameInfo = json.loads(Line)
-					#print(GameInfo)
+
+# Expand one by one
+for Index1, User1 in enumerate(PlayersDict):
+	#if (Index1 >= 10):
+	#	break
+	
+	print(f"-------------------\nDoing {User1}.")
+		
+	# Loop over other previous candidates
+	for Index2, User2 in enumerate(PlayersDict):
+		if Index2 >= Index1:
+			break
+		
+		if "Games" in MatchesDict[User1][User2]:
+			print(f"\nRivalry: {User1} vs. {User2} -- Already processed.")
+			print(f"Rivalry: {User1} vs. {User2} -- Overall score: {MatchesDict[User1][User2]['Score'][0]} - {MatchesDict[User1][User2]['Score'][1]}.")
+			continue
+		
+		MatchesDict[User1][User2] = dict()
+		MatchesDict[User2][User1] = dict()
+		MatchesDict[User1][User2]["Games"] = 0
+		MatchesDict[User2][User1]["Games"] = 0
+		MatchesDict[User1][User2]["Score"] = [0, 0]
+		MatchesDict[User2][User1]["Score"] = [0, 0]
+		
+		print(f"\nRivalry: {User1} vs. {User2} -- Downloading...")
+		
+		s = requests.Session()
+		with s.get(f"https://lichess.org/api/games/user/{User1}?vs={User2}&perfType=bullet&pgnInJson=false&tags=true", headers = {"Authorization": f"Bearer {APIToken}", "Accept": "application/x-ndjson"}, stream = True) as Response:
+			for Line in Response.iter_lines():
+				GameInfo = json.loads(Line)
+				#print(GameInfo)
+				
+				# Weird exception?
+				if "id" not in GameInfo or "winner" not in GameInfo and GameInfo["status"] not in {"draw", "outoftime", "timeout", "stalemate"}:
+					print("Hmmm?")
+					print(GameInfo)
+					time.sleep(100000)
 					
-					# Weird exception?
-					if "id" not in GameInfo or "winner" not in GameInfo and GameInfo["status"] not in {"draw", "outoftime", "timeout", "stalemate"}:
-						print("Hmmm?")
-						print(GameInfo)
-						time.sleep(100000)
-						
-					print(GameInfo["id"] + ": " + GameInfo["players"]["white"]["user"]["id"] + " vs. " + GameInfo["players"]["black"]["user"]["id"] + ": " + GameInfo.get("winner", "draw"))
+				print(f"{GameInfo['id']}: {GameInfo['players']['white']['user']['id']} vs. {GameInfo['players']['black']['user']['id']}: {GameInfo.get('winner', 'draw')}.")
+				
+				# Parse text as white's score
+				GameResult = GameInfo.get("winner", "draw")
+				if GameResult == "white":
+					GameScore = 1.0
+				elif GameResult == "draw":
+					GameScore = 0.5
+				else: # GameResult == "black":
+					GameScore = 0.0
+				
+				# Store game result in user scores
+				MatchesDict[User1][User2]["Games"] = MatchesDict[User1][User2]["Games"] + 1
+				MatchesDict[User2][User1]["Games"] = MatchesDict[User2][User1]["Games"] + 1
+				if GameInfo["players"]["white"]["user"]["id"].lower() == User1.lower():
+					MatchesDict[User1][User2]["Score"][0] += GameScore
+					MatchesDict[User1][User2]["Score"][1] += (1 - GameScore)
+					MatchesDict[User2][User1]["Score"][0] += (1 - GameScore)
+					MatchesDict[User2][User1]["Score"][1] += GameScore
+				else:
+					MatchesDict[User1][User2]["Score"][0] += (1 - GameScore)
+					MatchesDict[User1][User2]["Score"][1] += GameScore
+					MatchesDict[User2][User1]["Score"][0] += GameScore
+					MatchesDict[User2][User1]["Score"][1] += (1 - GameScore)
 					
-					# Parse text as white's score
-					GameResult = GameInfo.get("winner", "draw")
-					if GameResult == "white":
-						GameScore = 1.0
-					elif GameResult == "draw":
-						GameScore = 0.5
-					else:
-						GameScore = 0.0
-					
-					# Store game result in user scores
-					if GameInfo["players"]["white"]["user"]["id"].lower() == User1["Username"].lower():
-						PlayerScores[Index1][Index2] += GameScore
-						PlayerScores[Index2][Index1] += (1 - GameScore)
-					else:
-						PlayerScores[Index1][Index2] += (1 - GameScore)
-						PlayerScores[Index2][Index1] += GameScore
-			
-			print("Rivalry: " + User1["Username"] + " vs. " + User2["Username"] + " -- Overall score: " + str(PlayerScores[Index1][Index2]) + " - " + str(PlayerScores[Index2][Index1]) + ".")
-			
-			time.sleep(5)		
+		print(f"Rivalry: {User1} ({Index1}) vs. {User2} ({Index2}) -- Overall score: {MatchesDict[User1][User2]['Score'][0]} - {MatchesDict[User1][User2]['Score'][1]}.")
+		
+		# Store results in files immediately
+		with open("matches.txt", "a") as SaveFile:
+			SaveFile.write(f"{User1},{User2},{json.dumps(MatchesDict[User1][User2])}\n")
+			SaveFile.write(f"{User2},{User1},{json.dumps(MatchesDict[User2][User1])}\n")
+		
+		time.sleep(2)
+
+	print(f"\nFinished {User1}.\n")
+
+	#time.sleep(10)
 	
 	
-		print("Appending to file...")
-		
-		with open("rivalries-all-triangle.txt", "a") as RivalriesFile:
-			PlayerScoresWon = [str(PlayerScores[Index1][x]) for x in range(Index1)]
-			PlayerScoresLost = [str(PlayerScores[x][Index1]) for x in range(Index1)]
-			PlayerScoresGames = [str(PlayerScores[Index1][x] + PlayerScores[x][Index1]) for x in range(Index1)]
-			Opponents = [Players[x]["Username"] for x in range(Index1)]
-			RivalriesFile.write("{\"Number\": " + str(Index1 + 1) + ", \"Username\": \"" + User1["Username"] + "\", \"Highest\": " + str(User1["Highest"]) + ", \"Scores\": {")
-			for x in range(Index1):
-				RivalriesFile.write("\"" + Opponents[x] + "\": {\"Total\": " + PlayerScoresGames[x] + ", \"Won\": " + PlayerScoresWon[x] + ", \"Lost\": " + PlayerScoresLost[x] + "}")
-				if x < Index1 - 1:
-					RivalriesFile.write(", ")
-			RivalriesFile.write("}}\n")
-		
-		time.sleep(10)
-		
-		
-		Completed = Completed + 1
-		
-		
+
+# Write final matches to file
+with open("matches-new.txt", "w") as MatchesFile2:
+	for Index1, User1 in enumerate(PlayersDict):
+		#if Index1 >= 10:
+		#	break
+		for Index2, User2 in enumerate(PlayersDict):
+			if Index2 >= Index1:
+				break
+			MatchesFile2.write(f"{User1},{User2},{json.dumps(MatchesDict[User1][User2])}\n")
+			MatchesFile2.write(f"{User2},{User1},{json.dumps(MatchesDict[User2][User1])}\n")
 	
-	
+
