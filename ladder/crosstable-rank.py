@@ -14,7 +14,7 @@ with open("E:\\lichess\\APIToken.txt", "r") as TokenFile:
 
 # Load list of players in order of relevance
 PlayersDict = dict()
-with open("2021-06--bullet-ladder-tweak.ndjson", "r") as PlayerListFile:
+with open("2021-06--bullet-ladder-newer.ndjson", "r") as PlayerListFile:
 	for Line in PlayerListFile:
 		Dictio = json.loads(Line)
 		PlayerID = Dictio["Username"].lower()
@@ -69,6 +69,8 @@ def Rerank(NPlayers):
 				continue
 			PlayersDict[User1]["TotalGames"] = PlayersDict[User1]["TotalGames"] + MatchesDict[User1][User2]["Games"]
 			PlayersDict[User1]["TotalScore"] = PlayersDict[User1]["TotalScore"] + MatchesDict[User1][User2]["Score"][0]
+		if PlayersDict[User1]["TotalGames"] == 0:
+			print(f"{Index1}. {User1} has no games!")
 	#PlayerRatingSequence = [[Players[x]["Highest"]] for x in range(NPlayers)]
 	
 	# Run iterations
@@ -142,13 +144,14 @@ def Rerank(NPlayers):
 
 	with open("E:\\GitHub\\lichess\\ladder\\bullet\\__ranking-new-all.txt", "w") as MatchFile:
 		SortedDict = sorted(PlayersDict.items(), key = lambda item: item[1]["RealRating"], reverse = True)
-		MatchFile.write("   # (RTNG)                  USERNAME   ( Games :  Score )\n------------------------------------------------------------\n")
+		MatchFile.write("   # (RTNG:MAXM)     USERNAME                    ( Games :  Score )\n---------------------------------------------------------------------\n")
 		for Index1, (User1, Dic) in enumerate(SortedDict):
 			if Index1 >= NPlayers:
 				break
-			print(f"{Index1+1:>4}. {Dic['Username']:<26} -- {round(Dic['RealRating'])} ({Dic['BulletMax']})")
-			MatchFile.write(f"{Index1+1:>4} ({round(Dic['RealRating'])}) {Dic['Username']:>25}   ({Dic['TotalGames']:>6} : {Dic['TotalScore']:>7})\n")
+			OutString = f"{Index1+1:>4} ({round(Dic['RealRating'])}:{Dic['BulletMax']}) {Dic['Title']:>3} {Dic['Username']:<25}   ({Dic['TotalGames']:>6} : {Dic['TotalScore']:>7})"
+			print(OutString)
+			MatchFile.write(f"{OutString}\n")
 	
 
-Rerank(235)
+Rerank(345)
 

@@ -14,7 +14,7 @@ with open("E:\\lichess\\APIToken.txt", "r") as TokenFile:
 
 # Load list of players in order of relevance
 PlayersDict = dict()
-with open("2021-06--bullet-ladder-tweak.ndjson", "r") as PlayerListFile:
+with open("2021-06--bullet-ladder-newer.ndjson", "r") as PlayerListFile:
 	for Line in PlayerListFile:
 		Dictio = json.loads(Line)
 		PlayerID = Dictio["Username"].lower()
