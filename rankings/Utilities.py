@@ -15,6 +15,19 @@ from typing import List, Union
 from matplotlib.ticker import PercentFormatter
 from itertools import product
 
+RootWindows = f"E:{os.sep}"
+RootLinux = f"{os.sep}media{os.sep}thijs{os.sep}SED{os.sep}"
+Root = RootLinux
+
+DriveRootPath = f"lichess{os.sep}"
+DriveRoot = Root + DriveRootPath
+
+WebRootPath = f"GitHub{os.sep}lichess{os.sep}rankings{os.sep}"
+WebRoot = Root + WebRootPath
+
+LogoRootPath = f"GitHub{os.sep}lichess{os.sep}"
+LogoRoot = Root + LogoRootPath
+
 #######################################################################################################################################################################################
 #######################################################################################################################################################################################
 #######################################################################################################################################################################################
@@ -66,19 +79,19 @@ AllEvents["all"] = 	{"Name": "All",					"RGB": (200,200,200),	"WebOrder": 0,		"C
 #######################################################################################################################################################################################
 
 # https://www.materialui.co/colors - the "100", "200", "500", "800" (16 each), and "A100", "A200", "A400" (19 each) color sets, from left to right
-Colors100 =		[(255,205,210), (248,187,208), (225,190,231), (209,196,233), (197,202,233), (187,222,251), (179,229,252), (178,235,242), (178,223,219), (200,230,201), 
+Colors100 =		[(255,205,210), (248,187,208), (225,190,231), (209,196,233), (197,202,233), (187,222,251), (179,229,252), (178,235,242), (178,223,219), (200,230,201),
 				 (220,237,200), (240,244,195), (255,249,196), (255,236,179), (255,224,178), (255,204,188), (215,204,200), (245,245,245), (207,216,220)]
-Colors200 =		[(239,154,154), (244,143,177), (206,147,216), (179,157,219), (159,168,218), (144,202,249), (129,212,250), (128,222,234), (128,203,196), (165,214,167), 
+Colors200 =		[(239,154,154), (244,143,177), (206,147,216), (179,157,219), (159,168,218), (144,202,249), (129,212,250), (128,222,234), (128,203,196), (165,214,167),
 				 (197,225,165), (230,238,156), (255,245,157), (255,224,130), (255,204,128), (255,171,145), (188,170,164), (238,238,238), (176,190,197)]
-Colors500 = 	[(244, 67, 54), (233, 30, 99), (156, 39,176), (103, 58,183), ( 63, 81,181), ( 33,150,243), (  3,169,244), (  0,188,212), (  0,150,136), ( 76,175, 80), 
+Colors500 = 	[(244, 67, 54), (233, 30, 99), (156, 39,176), (103, 58,183), ( 63, 81,181), ( 33,150,243), (  3,169,244), (  0,188,212), (  0,150,136), ( 76,175, 80),
 				 (139,195, 74), (205,220, 57), (255,235, 59), (255,193,  7), (255,152,  0), (255, 87, 34), (121, 85, 72), (158,158,158), ( 96,125,139)]
-Colors800 =		[(198, 40, 40), (173, 20, 87), (106, 27,154), ( 69, 39,160), ( 40, 53,147), ( 21,101,192), (  2,119,189), (  0,131,143), (  0,105, 92), ( 46,125, 50), 
+Colors800 =		[(198, 40, 40), (173, 20, 87), (106, 27,154), ( 69, 39,160), ( 40, 53,147), ( 21,101,192), (  2,119,189), (  0,131,143), (  0,105, 92), ( 46,125, 50),
 				 ( 85,139, 47), (158,157, 36), (249,168, 37), (255,143,  0), (239,108,  0), (216, 67, 21), ( 78, 52, 46), ( 66, 66, 66), ( 55, 71, 79)]
-ColorsA100 =	[(255,138,128), (255,128,171), (234,128,252), (179,136,255), (140,158,255), (130,177,255), (128,216,255), (132,255,255), (167,255,235), (185,246,202), 
+ColorsA100 =	[(255,138,128), (255,128,171), (234,128,252), (179,136,255), (140,158,255), (130,177,255), (128,216,255), (132,255,255), (167,255,235), (185,246,202),
 				 (204,255,144), (244,255,129), (255,255,141), (255,229,127), (255,209,128), (255,158,128)]
-ColorsA200 =	[(255, 82, 82), (255, 64,129), (224, 64,251), (124, 77,255), ( 83,109,254), ( 68,138,255), ( 64,196,255), ( 24,255,255), (100,255,218), (105,240,174), 
-				 (178,255, 89), (238,255, 65), (255,255,  0), (255,215, 64), (255,171, 64), (255,110, 64)]		
-ColorsA400 =	[(255, 23, 68), (245,  0, 87), (213,  0,249), (101, 31,255), ( 61, 90,254), ( 41,121,255), (  0,176,255), (  0,229,255), ( 29,233,182), (  0,230,118), 
+ColorsA200 =	[(255, 82, 82), (255, 64,129), (224, 64,251), (124, 77,255), ( 83,109,254), ( 68,138,255), ( 64,196,255), ( 24,255,255), (100,255,218), (105,240,174),
+				 (178,255, 89), (238,255, 65), (255,255,  0), (255,215, 64), (255,171, 64), (255,110, 64)]
+ColorsA400 =	[(255, 23, 68), (245,  0, 87), (213,  0,249), (101, 31,255), ( 61, 90,254), ( 41,121,255), (  0,176,255), (  0,229,255), ( 29,233,182), (  0,230,118),
 				 (118,255,  3), (198,255,  0), (255,234,  0), (255,196,  0), (255,145,  0), (255, 61,  0)]
 
 # Variants: Use A100 series, skip 12th entry
@@ -96,7 +109,7 @@ for E in PureEvents:
 def strf(num, type):
 	if num > 10000000000:
 		return f"<span class='info' title='{str(num)[:-9]},{str(num)[-9:-6]},{str(num)[-6:-3]},{str(num)[-3:]} {type}'>{round(num / 1000000000)}B</span>"
-	elif num > 1000000000: 
+	elif num > 1000000000:
 		return f"<span class='info' title='{str(num)[:-9]},{str(num)[-9:-6]},{str(num)[-6:-3]},{str(num)[-3:]} {type}'>{round(num / 100000000) / 10}B</span>"
 	elif num > 10000000:
 		return f"<span class='info' title='{str(num)[-9:-6]},{str(num)[-6:-3]},{str(num)[-3:]} {type}'>{round(num / 1000000)}M</span>"
@@ -108,37 +121,37 @@ def strf(num, type):
 		return f"<span class='info' title='{str(num)[-6:-3]},{str(num)[-3:]} {type}'>{round(num / 100) / 10}K</span>"
 	else:
 		return str(num)
-		
+
 Months = {"01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr", "05": "May", "06": "Jun", "07": "Jul", "08": "Aug", "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"}
 def DateString(dstr):
 	# dstr: "2020-02-27"
 	return f"{Months[dstr[5:7]]} {dstr[8:10]}, {dstr[0:4]}"
-		
-		
+
+
 # Temporary function to fix points, which was corrupted for some mixed categories (name changed from "Points" to "TotalPoints" at some point)
 def FixPoints():
 	for V in AllVariants:
 		for E in AllEvents:
-			if os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json") and os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_arenas.ndjson"):
+			if os.path.exists(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_ranking.json") and os.path.exists(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_arenas.ndjson"):
 				print(f"Fixing {V} / {E}.")
 				TotalPoints = 0
-				with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_arenas.ndjson", "r") as ArenaFile:
+				with open(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_arenas.ndjson", "r") as ArenaFile:
 					for Line in ArenaFile:
 						ArenaData = json.loads(Line)
 						TotalPoints = TotalPoints + ArenaData["TotalPoints"]
-				with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json", "r") as CatStatFile:
+				with open(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_ranking.json", "r") as CatStatFile:
 					CatStats = json.load(CatStatFile)
 				print(f"New total for {V} / {E}: from {CatStats['TotalPoints']} to {TotalPoints}.")
 				CatStats["TotalPoints"] = TotalPoints
 				if "Points" in CatStats:
 					del CatStats["Points"]
-				with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json", "w") as CatStatFile:
+				with open(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_ranking.json", "w") as CatStatFile:
 					CatStatFile.write(json.dumps(CatStats))
 
 
 # Website: index page
 def BuildIndexPage():
-	
+
 	# Pie charts
 	SomePieChart(lambda RankingInfo: RankingInfo["Participants"], "participants", "Total participants in each arena category")
 	SomePieChart(lambda RankingInfo: RankingInfo["Events"], "events", "Total events in each arena category")
@@ -154,7 +167,7 @@ def BuildIndexPage():
 	SomeBoxPlot(lambda ArenaData: 100. * ArenaData["Berserks"] / max(1.0, ArenaData["Games"]) / 2., "berserk", "Berserk rates in hourly arenas")
 	SomeBoxPlot(lambda ArenaData: 100. * (ArenaData["Games"] - ArenaData["WhiteWins"] - ArenaData["BlackWins"]) / max(1.0, ArenaData["Games"]), "draws", "Draw rates in hourly arenas")
 	SomeBoxPlot(lambda ArenaData: 100. * (ArenaData["WhiteWins"] + 0.5 * (ArenaData["Games"] - ArenaData["WhiteWins"] - ArenaData["BlackWins"])) / max(1.0, ArenaData["Games"]), "white", "White's score in hourly arenas")
-	
+
 	FilePlayersSorts = {
 		"points": 		{"Name": "Players by total points",		"Plot": "Total points"},
 		"trophies": 	{"Name": "Players by trophies",			"Plot": "Tournament victories"},
@@ -177,7 +190,7 @@ def BuildIndexPage():
 	}
 
 	# Build actual webpage
-	with open("E:\\GitHub\\lichess\\rankings\\index.html", "w") as File:
+	with open(f"{WebRoot}index.html", "w") as File:
 		File.write("<!DOCTYPE html>\n")
 		File.write("<html lang='en-US'>\n")
 		File.write("<!-- Rankings built using the Lichess API (https://lichess.org/api) and some manual (python-based) tournament scraping. -->\n")
@@ -197,25 +210,25 @@ def BuildIndexPage():
 		File.write("</head>\n\n")
 		File.write("<body>\n")
 		File.write(f"<div class=\"title\">Lichess Arena Rankings &middot; Information</div>\n")
-		
+
 		# Begin menu
 		File.write("<div class='menu'>\n")
-		
+
 		# Information icon
 		File.write("\t<span class='VariantIcon' style='font-size: 16pt; position: absolute; left: 0px;'><a href='index.html'>&#xe005;</a></span>\n")
-		
+
 		# Variants menu
 		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 185px; max-width: 185px;'>\n")
 		for V, Val in sorted(AllVariants.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Variant' value='rankings/{V}' id='variant-{V}'{' checked' if V == 'all' else ''}><label class='V{V}' for='variant-{V}'><span class='VariantIcon'>{AllVariants[V]['Icon']}</span> {AllVariants[V]['Name'] if V != 'all' else 'All variants'}</label>\n")
 		File.write("\t</span>\n")
-		
+
 		# Events menu
 		File.write("\t<span class='dropdown-el' style='left: 225px; min-width: 180px; max-width: 180px;'>\n")
 		for E, Val in sorted(AllEvents.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Event' value='{E}' id='events-{E}'{' checked' if E == 'all' else ''}><label class='E{E}' for='events-{E}'>{AllEvents[E]['Name'] + ' Arenas' if E not in ['marathon', 'liga'] else ('Marathons' if E == 'marathon' else 'Bundesliga')}</label>\n")
 		File.write("\t</span>\n")
-		
+
 		# Sorting menu
 		File.write("\t<span class='dropdown-el' style='left: 415px; min-width: 255px; max-width: 255px;'>\n")
 		for O in FilePlayersSorts:
@@ -223,22 +236,22 @@ def BuildIndexPage():
 		for O in FileArenasSorts:
 			File.write(f"\t\t<input type='radio' name='Page' value='arenas_{O}' id='arenas_{O}'><label for='arenas_{O}'>{FileArenasSorts[O]['Name']}</label>\n")
 		File.write("\t</span>\n")
-		
+
 		# List or graph?
 		File.write("\t<span class='dropdown-el' style='left: 680px; min-width: 120px; max-width: 120px;'>\n")
 		File.write(f"\t\t<input type='radio' name='Type' value='list' id='list' checked><label for='list'><span class='VariantIcon'>?</span> List</label>\n")
 		File.write(f"\t\t<input type='radio' name='Type' value='graph' id='graph'><label for='graph'><span class='VariantIcon'>9</span> Graph</label>")
 		File.write("\t</span>\n")
-		
-		File.write("</div>\n\n")				
+
+		File.write("</div>\n\n")
 		# End menu
-		
+
 		File.write("<span class='maincontent'>\n")
 		File.write("<!-- START OF ACTUAL CONTENT -->\n\n")
-		
+
 		File.write("The rankings on this webpage are based on all official regularly-scheduled arenas played on <a href='https://lichess.org'>lichess.org</a> (hourly, <2000, <1700, <1600, <1500, <1300, thematic, daily, weekly, monthly, yearly, eastern, elite, and shield arenas) as well as the seasonal 24h marathons, the titled arenas, and the bundesliga events. These rankings exclude custom arenas created by users. In total these rankings cover over 400.000 events, in which over 200.000.000 games were played by over 80.000.000 arena participants (over 1.500.000 unique users), and together in all these games the users made over 14.000.000.000 moves. <br/><br/>\n\n")
 		File.write("Some additional, detailed statistics about the rankings can be found below.")
-		
+
 		File.write("<img src='density_participants.png' class='Graph'>\n")
 		File.write("<img src='density_players.png' class='Graph'>\n")
 		File.write("<img src='density_events.png' class='Graph'>\n")
@@ -252,13 +265,13 @@ def BuildIndexPage():
 		File.write("<img src='density_rating.png' class='Graph'>\n")
 		File.write("<img src='density_maxusers.png' class='Graph'>\n")
 		File.write("<img src='density_highscore.png' class='Graph'>\n")
-		
+
 		File.write("<img src='pie_participants.png' class='Graph'>\n")
 		File.write("<img src='pie_events.png' class='Graph'>\n")
 		File.write("<img src='pie_games.png' class='Graph'>\n")
 		File.write("<img src='pie_moves.png' class='Graph'>\n")
 		File.write("<img src='pie_points.png' class='Graph'>\n")
-		
+
 		File.write("<img src='box_participants.png' class='Graph'>\n")
 		File.write("<img src='box_rating.png' class='Graph'>\n")
 		File.write("<img src='box_moves.png' class='Graph'>\n")
@@ -266,20 +279,20 @@ def BuildIndexPage():
 		File.write("<img src='box_berserk.png' class='Graph'>\n")
 		File.write("<img src='box_draws.png' class='Graph'>\n")
 		File.write("<img src='box_white.png' class='Graph'>\n")
-		
-		
-		
+
+
+
 		File.write("<!-- END OF ACTUAL CONTENT -->\n")
 		File.write("</span>\n")
 		File.write("<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>\n")
 		File.write("<script src='../menu.js'></script>\n")
 		File.write("</body>\n")
 		File.write("</html>\n")
-	
+
 
 # For the index page: Pie charts
 def SomePieChart(Function, Filename, Title):
-	
+
 	mpl.close()
 	mpl.figure()
 	valout = list()
@@ -288,31 +301,31 @@ def SomePieChart(Function, Filename, Title):
 	valin = list()
 	colin = list()
 	labin = list()
-	
+
 	#key = "Games"
 	NewPureVariants = PureVariants.copy()
 	NewPureVariants = dict(sorted(NewPureVariants.items(), key = lambda item: item[1]["WebOrder"]))
 	for V in NewPureVariants:
 		for E in PureEvents:
-			if os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json"):
-				with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json", "r") as CatStatFile:
+			if os.path.exists(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_ranking.json"):
+				with open(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_ranking.json", "r") as CatStatFile:
 					CatStats = json.load(CatStatFile)
-				newval = Function(CatStats)	
+				newval = Function(CatStats)
 			else:
 				newval = 0
 			valin.append(newval)
 			colin.append(tuple(x/255. for x in PureEvents[E]["RGB"]))
 			labin.append(PureEvents[E]["Code"])
-		if os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\all\\{V}_all_ranking.json"):
-			with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\all\\{V}_all_ranking.json", "r") as CatStatFile:
+		if os.path.exists(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}all{os.sep}{V}_all_ranking.json"):
+			with open(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}all{os.sep}{V}_all_ranking.json", "r") as CatStatFile:
 				CatStats = json.load(CatStatFile)
-			newval = Function(CatStats)	
+			newval = Function(CatStats)
 		else:
 			newval = 0
 		valout.append(newval)
 		colout.append(tuple(x/255. for x in NewPureVariants[V]["RGB"]))
 		labout.append(NewPureVariants[V]["Name"])
-		
+
 	fig1, ax1 = mpl.subplots()
 	ax1.pie(valout, radius=1, colors=colout, labels=labout, rotatelabels=True, labeldistance=1.05, textprops={'fontsize': 10}, wedgeprops=dict(width=0.4, linewidth=0.5, edgecolor=(0.5,0.5,0.5)))
 	#ax1.pie(valin, radius=0.6, colors=colin, labels=labin, labeldistance=1.1, textprops={'fontsize': 0}, wedgeprops=dict(width=0.3, edgecolor='w'))
@@ -320,10 +333,10 @@ def SomePieChart(Function, Filename, Title):
 	ax1.set(aspect="equal")
 	ax1.set_title(Title, fontdict={'fontsize': 14})
 	mpl.tight_layout()
-	mpl.savefig(f"E:\\GitHub\\lichess\\rankings\\pie_{Filename}.png")
+	mpl.savefig(f"{WebRoot}pie_{Filename}.png")
 	print(f"Saving pie_{Filename}.png")
-	mpl.clf()	
-	
+	mpl.clf()
+
 
 # For the index page: box plots
 def SomeBoxPlot(Function, Filename, Title):
@@ -334,14 +347,14 @@ def SomeBoxPlot(Function, Filename, Title):
 	col = list()
 	lab = list()
 	fig1, ax1 = mpl.subplots()
-	
+
 	#key = "Games"
 	NewPureVariants = PureVariants.copy()
 	NewPureVariants = dict(sorted(NewPureVariants.items(), key = lambda item: item[1]["WebOrder"]))
 	for Index, V in enumerate(NewPureVariants):
 		newlist = list()
-		if os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\hourly\\{V}_hourly_arenas_newest.ndjson"):
-			with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\hourly\\{V}_hourly_arenas_newest.ndjson", "r") as ArenaFile:
+		if os.path.exists(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}hourly{os.sep}{V}_hourly_arenas_newest.ndjson"):
+			with open(f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}hourly{os.sep}{V}_hourly_arenas_newest.ndjson", "r") as ArenaFile:
 				for Line in ArenaFile:
 					#print(V)
 					ArenaData = json.loads(Line)
@@ -354,7 +367,7 @@ def SomeBoxPlot(Function, Filename, Title):
 			mpl.setp(bp[element], color=col1)
 		mpl.setp(bp['fliers'], markeredgecolor=col2)
 		mpl.setp(bp['boxes'], facecolor=col2)
-		
+
 	mpl.xticks(range(15), list(NewPureVariants[x]['Name'] for x in NewPureVariants))
 	if Filename in {"draws", "white", "berserk"}:
 		mpl.gca().yaxis.set_major_formatter(PercentFormatter(decimals = 0))
@@ -366,9 +379,9 @@ def SomeBoxPlot(Function, Filename, Title):
 	ax1.set_title(Title, fontdict={'fontsize': 14})
 	ax1.yaxis.grid(True) # Show the horizontal gridlines
 	mpl.tight_layout()
-	mpl.savefig(f"E:\\GitHub\\lichess\\rankings\\box_{Filename}.png")
+	mpl.savefig(f"{WebRoot}box_{Filename}.png")
 	print(f"Saving box_{Filename}.png")
-	mpl.clf()	
+	mpl.clf()
 
 
 #######################################################################################################################################################################################
@@ -395,7 +408,7 @@ mpl.rcParams.update({
 })
 
 # Load horsey background for plots
-LichessLogo = mpl.imread("E:\\GitHub\\lichess\\logo.png")
+LichessLogo = mpl.imread(f"{LogoRoot}logo.png")
 
 # User plot colors: Use 500 series
 UserPlotColors = Colors500 + Colors800
@@ -431,14 +444,14 @@ ArenaCategory object: controls local data and update functions for a combination
 Internally has functions for e.g. loading rankings, updating the rankings, the cumulative player rankings, plots, website.
 '''
 class ArenaCategory:
-	
+
 	# Initializing the category. Input: variant and event.
 	def __init__(self, Variant: str, Event: str):
-	
+
 		# Check for correct input
 		assert(Variant in AllVariants), f"Incorrect variant description."
 		assert(Event in AllEvents), f"Incorrect event description."
-		
+
 		# Set variant, event
 		self._V = Variant
 		self._E = Event
@@ -454,7 +467,7 @@ class ArenaCategory:
 			self._Es = list(PureEvents.keys())
 		else:
 			self._Es = [self._E]
-			
+
 		# Name of category for displays
 		if self._E == "marathon":
 			self._Name = f"{AllVariants[self._V]['Name']} Marathons"
@@ -466,17 +479,17 @@ class ArenaCategory:
 			self._Name = f"{AllVariants[self._V]['Name']} {AllEvents[self._E]['Name']} Arenas"
 		else:
 			self._Name = f"{AllEvents[self._E]['Name']} {AllVariants[self._V]['Name']} Arenas"
-			
+
 		# Files stored locally in the data directory
-		self._PathData = f"E:\\lichess\\tournaments\\data\\"
+		self._PathData = f"{DriveRoot}tournaments{os.sep}data{os.sep}"
 		if self._Pure:
 			self._FileDataList = f"{self._PathData}{self._Prefix}.txt"
 			self._FileDataDetailedList = f"{self._PathData}{self._Prefix}.ndjson"
-		
+
 		# Files stored locally in the rankings directory
-		self._PathRanking = f"E:\\lichess\\tournaments\\rankings\\{self._V}\\{self._E}\\"
-		self._FileRankingInfo = f"{self._PathRanking}{self._Prefix}_ranking.json"	
-	
+		self._PathRanking = f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{self._V}{os.sep}{self._E}{os.sep}"
+		self._FileRankingInfo = f"{self._PathRanking}{self._Prefix}_ranking.json"
+
 		# Sorted partial rankings of players
 		self._FilePlayersFull = f"{self._PathRanking}{self._Prefix}_players.ndjson"
 		self._FilePlayersSorts = {
@@ -487,9 +500,9 @@ class ArenaCategory:
 			"maximum":		{"Function": self._SortPlayersMaximum,		"Reverse": True,	"Name": "Players by high score",		"Plot": "High score"},
 			"title":		{"Function": self._SortPlayersTitle,		"Reverse": True,	"Name": "Players by title",				"Plot": "Titled players by points"}
 		}
-	
+
 		# Sorted partial rankings of arenas
-		self._FileArenasFull = f"{self._PathRanking}{self._Prefix}_arenas.ndjson"	
+		self._FileArenasFull = f"{self._PathRanking}{self._Prefix}_arenas.ndjson"
 		self._FileArenasSorts = {
 			"newest": 		{"Function": self._SortArenasNewest, 		"Reverse": True, 	"Name": "Arenas by date",				"Plot": "Cumulative arenas"},
 			"players": 		{"Function": self._SortArenasPlayers, 		"Reverse": True, 	"Name": "Arenas by participants",		"Plot": "Participants"},
@@ -500,17 +513,17 @@ class ArenaCategory:
 			"maximum":		{"Function": self._SortArenasMaximum,		"Reverse": True,	"Name": "Arenas by high score",			"Plot": "High score"},
 			"berserk":		{"Function": self._SortArenasBerserk,		"Reverse": True,	"Name": "Arenas by berserk rate",		"Plot": "Berserk rate"}
 		}
-		
+
 		# Files stored locally about player cumulative scores over time (for plots)
-		self._PathPlayers = f"{self._PathRanking}players\\"
+		self._PathPlayers = f"{self._PathRanking}players{os.sep}"
 		self._FilePlayerList = f"{self._PathPlayers}{self._Prefix}.txt"
-		
+
 		# ALl files stored locally and externally in the website directory
-		self._PathWeb = f"E:\\GitHub\\lichess\\rankings\\{self._V}\\{self._E}\\"
-		self._PathWebRoot = f"E:\\GitHub\\lichess\\"
-		self._PathFigures = f"E:\\GitHub\\lichess\\rankings\\{self._V}\\{self._E}\\figures\\"
+		self._PathWeb = f"{WebRoot}{self._V}{os.sep}{self._E}{os.sep}"
+		self._PathWebRoot = f"{LogoRoot}"
+		self._PathFigures = f"{WebRoot}{self._V}{os.sep}{self._E}{os.sep}figures{os.sep}"
 		self._WebListLength = 200
-		
+
 		# Initialize data maintenance parameters
 		self._DataList = OrderedDict()			# All arena IDs:		{"jf03alf3": {"Number": 1, "ID": "jf03alf3", "Players": 23, "Variant": "bullet", "Event": "hourly", ...}, "dkweo3kX", ...}
 		self._NewList = OrderedDict()			# IDs not in ranking:	["jf03alf3": {...}, ...]
@@ -521,28 +534,28 @@ class ArenaCategory:
 		self._PlayerListTop = OrderedDict()		# Players actually used for plots:	["DrNykterstein", "penguingim1", ...]
 		self._PlayerStatus = OrderedDict()			# Latest player status:	{"thijscom": {..., "CumTrophies": [13, 11, 15], "CumEvents": 210, "CumTopScore": ...}, ...}
 		self._UpToDate = False
-		
+
 		# Initialize some directories if they do not exist yet
 		for Path in {self._PathData, self._PathRanking, self._PathPlayers, self._PathWeb, self._PathFigures}:
 			if not os.path.exists(Path):
 				self.PrintMessage(f"Creating directory {Path}.")
 				os.makedirs(Path)
-				
+
 		# Load API token for Lichess API queries
-		with open(f"E:\\lichess\\APIToken.txt", "r") as TokenFile:
+		with open(f"{DriveRoot}APItoken.txt", "r") as TokenFile:
 			for Line in TokenFile:
 				self._APIToken = Line.strip()
 				assert(len(self._APIToken) == 16), f"API token not of length 16."
 
-	
+
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
-	
+
 	'''
 	Functionalities implemented:
-	
-	1. LoadRankings(self)						 (P	/ M)	
+
+	1. LoadRankings(self)						 (P	/ M)
 	 a. _LoadDataList(self)						# P	/ M	#	Load list of IDs for which data has been fetched -- assumption is that FetchData.py finished and updated the data files
 	 b. _LoadRankingInfo(self)					# P	/ M	#	Loads information about rankings to date
 	 c. _LoadRankingList(self)					# P	/ M	#	Loads list of IDs previously included in rankings
@@ -551,28 +564,28 @@ class ArenaCategory:
 	 f. _FixPlayers(self)						# P / M #	If no list of players exists, fix this and make up to date lists
 	 g. _LoadPlayerStatus(self)					# P / M #	Loads latest player statuses for cumulative updates
 	 h. _LoadMissingList(self)					# P	/ M	#	Generates list of missing IDs and detailed info for later
-	
+
 	2. UpdateRankings(self)						 (P	/ M)
 	 a. _UpdateRankingPlayer(self, ...)			# P	/ M	#	For a given player and tournament result, update their ranking
 	 b. _UpdateRankingStats(self, ArenaData)	# P	/ M	#	Update the ranking info based on the stats of one new tournament
 	 c. _StorePlayerRankings(self)				# P	/ M	#	Store the player rankings to files, the full list and partial lists in different orders
 	 d. _StoreArenaRankings(self)				# P	/ M	#	Store the list of arenas to files, the full list and partial lists in different orders
-	
-	3. UpdatePlots(self)						 (P	/ M)	
-	 a. _UpdatePlayerPlots(self)				# P	/ M	#	Generate plots of top 10 players in these lists over time	
+
+	3. UpdatePlots(self)						 (P	/ M)
+	 a. _UpdatePlayerPlots(self)				# P	/ M	#	Generate plots of top 10 players in these lists over time
 	 b. _UpdateArenaPlots(self)					# P	/ M	#	Generate plots of the arena statistics over time (individual and moving average)
-	 
-		
-	4. UpdateWebsite(self)						 (P / M)	
+
+
+	4. UpdateWebsite(self)						 (P / M)
 	 a. _WritePre(self, ...)					# P	/ M	#	The part of the website before the main content (menu, styles, etc.)
 	 b. _WritePost(self, ...)					# P	/ M	#	The part of the website after the main content (menu script, closing)
-	 
+
 	'''
-	
+
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
-	
+
 	# Functions for sorting player rankings
 	def _SortPlayersFull(self, item):
 		return item["Score"]
@@ -592,7 +605,7 @@ class ArenaCategory:
 			return 0
 		else:
 			return self._TitleMapping[item["Title"]]
-	
+
 	# Functions for sorting arena rankings
 	def _SortArenasFull(self, item):
 		return item["Start"]
@@ -612,17 +625,17 @@ class ArenaCategory:
 		return item["TopScore"]
 	def _SortArenasBerserk(self, item):
 		return item["Berserks"] / max(1, item["Games"])
-		
+
 	# Printing a message to the command line, when running in verbose mode.
 	def PrintMessage(self, Message: str):
-		print(f"{self._V:<11} - {self._E:<8} - {Message}")	
-		
+		print(f"{self._V:<11} - {self._E:<8} - {Message}")
+
 	# Converting a date string to something that can be displayed
 	_Months = {"01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr", "05": "May", "06": "Jun", "07": "Jul", "08": "Aug", "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"}
 	def DateString(self, Date):
 		# DateString: "2020-02-27"
 		return f"<span class='info' title='{self._Months[Date[5:7]]} {Date[8:10]}, {Date[0:4]} at {Date[11:16]} UTC'>{self._Months[Date[5:7]]} {Date[8:10]}, {Date[0:4]}</span>"
-	
+
 	# Time range for when a user has been active in this category
 	def TimeRange1(self, Date):
 		return f"<span class='info' title='{self._Months[Date[5:7]]} {Date[8:10]}, {Date[0:4]} at {Date[11:16]} UTC'>{self._Months[Date[5:7]]}'{Date[2:4]}</span>"
@@ -632,10 +645,10 @@ class ArenaCategory:
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
-	
+
 	# 1. Load all data in memory
 	def LoadRankings(self):
-		self.PrintMessage("1. Loading...")	
+		self.PrintMessage("1. Loading...")
 		self._LoadDataList()			# Up to date data that has been fetched
 		self._LoadRankingInfo()			# Current global information about rankings
 		if len(self._DataList) == self._RankingInfo["Events"]:
@@ -660,15 +673,15 @@ class ArenaCategory:
 			self._LoadPlayerList()		# Top players for cumulative scores
 			self._LoadPlayerStatus()	# For those top players, load most recent info
 			self._LoadMissingList()		# Make a list of detailed arena info for updates
-		# self._FIXUSERFILES()		# TEMPORARY FIX	
-	
-	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
-		
+		# self._FIXUSERFILES()		# TEMPORARY FIX
+
+	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 	# 1a. Load all IDs till now from a file (both IDs included in the ranking and those not yet in the ranking).
 	def _LoadDataList(self):
 		for V, E in product(self._Vs, self._Es):
-			if os.path.exists(f"{self._PathData}{V}\\{E}\\{V}_{E}.txt") and os.path.exists(f"{self._PathData}{V}\\{E}\\{V}_{E}.ndjson"):
-				with open(f"{self._PathData}{V}\\{E}\\{V}_{E}.ndjson", "r") as FileDataDetailedList:
+			if os.path.exists(f"{self._PathData}{V}{os.sep}{E}{os.sep}{V}_{E}.txt") and os.path.exists(f"{self._PathData}{V}{os.sep}{E}{os.sep}{V}_{E}.ndjson"):
+				with open(f"{self._PathData}{V}{os.sep}{E}{os.sep}{V}_{E}.ndjson", "r") as FileDataDetailedList:
 					for Line in FileDataDetailedList:
 						ArenaData = json.loads(Line)
 						self._DataList[ArenaData["ID"]] = ArenaData
@@ -678,13 +691,13 @@ class ArenaCategory:
 
 	# 1b. Load ranking information from JSON file.
 	def _LoadRankingInfo(self):
-		if os.path.exists(self._FileRankingInfo): 
+		if os.path.exists(self._FileRankingInfo):
 			with open(self._FileRankingInfo, "r") as FileRankingInfo:
 				self._RankingInfo = json.load(FileRankingInfo)
 			if self._RankingInfo["Events"] == 0:
 				os.remove(self._FileRankingInfo)
 		else:
-			
+
 			self._RankingInfo = {"Events": 0, "Participants": 0, "Games": 0, "Moves": 0, "WhiteWins": 0, "BlackWins": 0, "Berserks": 0, "TotalPoints": 0, "TotalRating": 0, "FirstStart": "2030-01-01T00:00:00.000Z", "FirstID": "XXXXXXXX", "LastStart": "2010-01-01T00:00:00.000Z", "LastID": "YYYYYYYY", "MaxUsers": 0, "MaxUsersID": "ZZZZZZZZ", "TopScore": 0, "TopScoreID": "WWWWWWWW", "TopUser": "-", "Players": 0}
 			if len(self._DataList) > 0:
 				for ID in self._DataList:
@@ -694,13 +707,13 @@ class ArenaCategory:
 			with open(self._FileRankingInfo, "w") as FileRankingInfo:
 				FileRankingInfo.write(json.dumps(self._RankingInfo))
 
-		assert(self._RankingInfo["Events"] <= len(self._DataList)), f"Ranking information shows more events than the more up to date list of IDs!" 		
+		assert(self._RankingInfo["Events"] <= len(self._DataList)), f"Ranking information shows more events than the more up to date list of IDs!"
 
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	# 1c. Load ranking list of arenas from file (subset of all IDs, namely those that have been processed).
 	def _LoadRankingList(self):
-		if os.path.exists(self._FileArenasFull):	
+		if os.path.exists(self._FileArenasFull):
 			with open(self._FileArenasFull, "r") as FileRankingList:
 				for Line in FileRankingList:
 					ArenaData = json.loads(Line)
@@ -710,13 +723,13 @@ class ArenaCategory:
 		else:
 			self.PrintMessage(f"No file with detailed arena statistics found.")
 
-		assert(self._RankingInfo["Events"] == len(self._RankingList)), f"Ranking information shows a different number of events than the detailed ranking list."	
+		assert(self._RankingInfo["Events"] == len(self._RankingList)), f"Ranking information shows a different number of events than the detailed ranking list."
 
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	# 1d. If we need to update rankings, then we need to load the rankings data.
 	def _LoadRankingData(self):
-		if os.path.exists(self._FilePlayersFull):	
+		if os.path.exists(self._FilePlayersFull):
 			with open(self._FilePlayersFull, "r") as FileRankingData:
 				for Line in FileRankingData:
 					UserRank = json.loads(Line)
@@ -733,9 +746,9 @@ class ArenaCategory:
 			assert(self._RankingInfo["Events"] == len(self._RankingList)), "Inconsistent ranking files. Unequal number of events."
 			assert(self._RankingInfo["FirstID"] in self._RankingList), "Inconsistent ranking files. Unequal first IDs."
 			assert(self._RankingInfo["LastID"] in self._RankingList), "Inconsistent ranking files. Unequal last IDs."
-		
+
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	# 1e. Load players for cumulative rankings from file.
 	def _LoadPlayerList(self):
 		if not os.path.exists(self._FilePlayerList):
@@ -751,7 +764,7 @@ class ArenaCategory:
 			self.PrintMessage(f"Loaded {len(self._PlayerList)} users from file for chronological rankings.")
 
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	# 1f. In case no player files exist yet, generate them now from past tournaments.
 	def _FixPlayers(self):
 		# First build list of relevant players to maintain, say top 100
@@ -770,7 +783,7 @@ class ArenaCategory:
 						break
 		self.PrintMessage(f"Loaded {len(self._PlayerList)} users into a list.")
 		self._PlayerList = OrderedDict(sorted(self._PlayerList.items(), key = lambda item: item[0]))
-		
+
 		# Initialize empty JSON and NDJSON files
 		UserJSON = dict()
 		UserNDJSON = dict()
@@ -787,19 +800,19 @@ class ArenaCategory:
 			UserJSON[UserID]["CumEvents"] = 0
 			UserJSON[UserID]["CumTopScore"] = 0
 			UserNDJSON[UserID] = []
-		
+
 		# Then fetch data from arenas already in rankings and update
 		self.PrintMessage(f"Updating the users based on past events.")
 		for Index, ID in enumerate(self._RankingList):
 			V = self._RankingList[ID]["Variant"]
 			E = self._RankingList[ID]["Event"]
-			with open(f"{self._PathData}{V}\\{E}\\{V}_{E}_{ID}.ndjson", "r") as ResultsFile:
+			with open(f"{self._PathData}{V}{os.sep}{E}{os.sep}{V}_{E}_{ID}.ndjson", "r") as ResultsFile:
 				for Line in ResultsFile:
 					UserResult = json.loads(Line)
 					if UserResult["score"] == 0:
 						break
 					if UserResult["username"].lower() in self._PlayerList and UserResult["score"] > 0:
-						
+
 						# Update JSON stats
 						UserID = UserResult["username"].lower()
 						if UserJSON[UserID]["FirstID"] == "-":
@@ -815,7 +828,7 @@ class ArenaCategory:
 						UserJSON[UserID]["CumPoints"] = UserJSON[UserID]["CumPoints"] + UserResult["score"]
 						UserJSON[UserID]["CumEvents"] = UserJSON[UserID]["CumEvents"] + 1
 						UserJSON[UserID]["CumTopScore"] = max(UserJSON[UserID]["CumTopScore"], UserResult["score"])
-						
+
 						# Update NSJSON stats
 						newdict = dict()
 						newdict["ID"] = ID
@@ -825,11 +838,11 @@ class ArenaCategory:
 						newdict["CumEvents"] = UserJSON[UserID]["CumEvents"]
 						newdict["CumTopScore"] = UserJSON[UserID]["CumTopScore"]
 						UserNDJSON[UserID].append(newdict)
-			
+
 			# Intermediate progress update
 			if Index % 1000 == 999:
 				self.PrintMessage(f"Finished processing {Index + 1} events. (Nothing saved...)")
-		
+
 		# Final dump
 		self.PrintMessage(f"Storing cumulative player scores after {len(self._RankingList)} past events.")
 		for UserID in self._PlayerList:
@@ -838,51 +851,51 @@ class ArenaCategory:
 			with open(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.ndjson", "w") as NDJSONFile:
 				for Index in range(len(UserNDJSON[UserID])):
 					NDJSONFile.write(json.dumps(UserNDJSON[UserID][Index]) + "\n")
-					
+
 		# Print list of usernames to file
 		self._PlayerList = OrderedDict(sorted(self._PlayerList.items(), key = lambda item: item[0]))
 		with open(f"{self._PathPlayers}{self._V}_{self._E}.txt", "w") as UsernameFile:
 			for Username in self._PlayerList:
 				UsernameFile.write(Username.lower() + "\n")
-				
+
 		# Print list of tournament IDs to file
 		SortedIDList = OrderedDict(sorted(self._RankingList.items(), key = lambda item: item[0]))
 		with open(f"{self._PathPlayers}{self._V}_{self._E}__events.txt", "w") as ListFile:
 			for ID in SortedIDList:
 				ListFile.write(ID + "\n")
-					
+
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	# 1g. In case no player files exist yet, generate them now from past tournaments.
-	def _LoadPlayerStatus(self):	
+	def _LoadPlayerStatus(self):
 		#assert(len(self._PlayerList) > 100), "How is this possible?"
 		for UserID in self._PlayerList:
 			assert(os.path.exists(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.json")), "What?"
 			assert(os.path.exists(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.ndjson")), "What??"
 			with open(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.json", "r") as JSONFile:
-				self._PlayerStatus[UserID] = json.load(JSONFile)	
+				self._PlayerStatus[UserID] = json.load(JSONFile)
 
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	# 1h. Find list of missing events
 	def _LoadMissingList(self):
 		for ID in self._DataList:
 			if ID not in self._RankingList:
 				self._NewList[ID] = self._DataList[ID].copy()
 		self._NewList = OrderedDict(sorted(self._NewList.items(), key = lambda Arena: Arena[1]["Start"]))
-	
+
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
-	
+
 	# 2. Updating the rankings
 	def UpdateRankings(self):
-	
+
 		self.PrintMessage("2. Updating rankings...")
 		if self._UpToDate:
 			self.PrintMessage("Nothing to do! Already up to date.")
 			return
-		
+
 		# Checks for internal consistency of existing rankings
 		if len(self._RankingList) > 0:
 			for ID in self._DataList:
@@ -895,7 +908,7 @@ class ArenaCategory:
 			assert(self._RankingInfo["Events"] == len(self._RankingList)), f"Inconsistent ranking files. Unequal number of events. {self._RankingInfo['Events']} != {len(self._RankingList)}"
 			#assert(self._RankingInfo["FirstID"] in self._RankingList), "Inconsistent ranking files. Unequal first IDs."
 			assert(self._RankingInfo["LastID"] in self._RankingList), "Inconsistent ranking files. Unequal last IDs."
-	
+
 		# Go through all new events
 		for Index, ID in enumerate(self._NewList):
 			ArenaData = self._NewList[ID]
@@ -903,26 +916,26 @@ class ArenaCategory:
 			E = ArenaData["Event"]
 			self.PrintMessage(f"New event: {ID}.")
 			assert(ArenaData["ID"] not in self._RankingList), "Inconsistent rankings. New tournament ID already included."
-			
+
 			# Load tournament results
-			with open(f"{self._PathData}{V}\\{E}\\{V}_{E}_{ID}.ndjson", "r") as ResultsFile:
+			with open(f"{self._PathData}{V}{os.sep}{E}{os.sep}{V}_{E}_{ID}.ndjson", "r") as ResultsFile:
 				for Line in ResultsFile:
 					UserResult = json.loads(Line)
 					# UserResult: {"rank": 1, "score": 36, "rating": 2267, "username": "kasparovsabe", "title": "FM", "performance": 2454}
 					UserID = UserResult["username"].lower()
-					
+
 					if UserID not in self._Ranking:
 						# New player
 						self._Ranking[UserID] = dict()
 						self._RankingInfo["Players"] = self._RankingInfo.get("Players", 0) + 1
-					
+
 					# Update player information
 					self._UpdateRankingPlayer(UserID, UserResult, ArenaData)
 					self._Ranking[UserID]["Username"] = UserResult["username"].lower()
-					
+
 					# For special players, add new cumulative score to files
 					if UserID in self._PlayerList and UserResult["score"] > 0:
-						
+
 						# Update JSON stats
 						self._PlayerStatus[UserID]["LastID"] = ID
 						if UserResult["rank"] == 1:
@@ -934,11 +947,11 @@ class ArenaCategory:
 						self._PlayerStatus[UserID]["CumPoints"] = self._PlayerStatus[UserID]["CumPoints"] + UserResult["score"]
 						self._PlayerStatus[UserID]["CumEvents"] = self._PlayerStatus[UserID]["CumEvents"] + 1
 						self._PlayerStatus[UserID]["CumTopScore"] = max(self._PlayerStatus[UserID]["CumTopScore"], UserResult["score"])
-						
+
 						# Save new entry to user files
 						with open(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.json", "w") as JSONFile:
-							json.dump(self._PlayerStatus[UserID], JSONFile)	
-						
+							json.dump(self._PlayerStatus[UserID], JSONFile)
+
 						# Save new entry to user files
 						with open(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.ndjson", "a+") as NDJSONFile:
 							newdict = dict()
@@ -952,37 +965,37 @@ class ArenaCategory:
 
 			# Update global statistics
 			self._UpdateRankingInfo(ArenaData)
-				
+
 			# Update newly processed events, and do intermediate data dumps
 			if Index % 1000 == 0 and Index > 0:
 				self.PrintMessage(f"Processed {Index} new events.")
 
 		# Wrap up
-		self.PrintMessage(f"Final dump after {len(self._NewList)} new events.")	
+		self.PrintMessage(f"Final dump after {len(self._NewList)} new events.")
 		self._StorePlayerRankings()
-		
+
 		# Print information to json
 		with open(self._FileRankingInfo, "w") as RankInfoFile:
 			RankInfoFile.write(json.dumps(self._RankingInfo))
-		
+
 		# Store new user JSON status in files
 		for UserID in self._PlayerList:
 			with open(f"{self._PathPlayers}{self._V}_{self._E}_{UserID}.json", "w") as JSONFile:
-				json.dump(self._PlayerStatus[UserID], JSONFile)	
-		
+				json.dump(self._PlayerStatus[UserID], JSONFile)
+
 		# Sort all events by date (should be unnecessary) and store them in a file
 		self._DataList = OrderedDict(sorted(self._DataList.items(), key = lambda Arena: Arena[1]["Start"]))
 		with open(self._FileArenasFull, "w") as RankListFile:
 			for Index, (ID, Arena) in enumerate(self._DataList.items()):
 				Arena["Number"] = Index + 1
-				RankListFile.write(json.dumps(Arena) + "\n")	
+				RankListFile.write(json.dumps(Arena) + "\n")
 		with open(f"{self._PathPlayers}{self._V}_{self._E}__events.txt", "w") as ArenaIDFile:
 			for ID in self._DataList:
 				ArenaIDFile.write(ID + "\n")
-		
+
 		# Also store arenas in different orders
 		self._StoreArenaRankings()
-		
+
 		# Finally, now that we have a list of top players, see if we need to go back and make cumulative user rankings
 		if not os.path.exists(self._FilePlayerList) and len(self._RankingList) > 0:
 			self.PrintMessage(f"Rankings stored but no list of players yet. Making one based on rankings...")
@@ -1041,22 +1054,22 @@ class ArenaCategory:
 			self._RankingInfo["TopScore"] = ArenaData["TopScore"]
 			self._RankingInfo["TopScoreID"] = ArenaData["ID"]
 			self._RankingInfo["TopUser"] = ArenaData["#1"]
-		
+
 		# Also update list of events included in rankings
 		self._RankingList[ArenaData["ID"]] = ArenaData
-	
+
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
+
 	# 2c. Sort and store rankings to files
 	def _StorePlayerRankings(self):
-		
+
 		# Store full rankings
 		self._Ranking = OrderedDict(sorted(self._Ranking.items(), key = lambda item: self._SortPlayersFull(item[1]), reverse = True))
 		with open(self._FilePlayersFull, "w") as UserFile:
 			for Index, UserID in enumerate(self._Ranking):
 				self._Ranking[UserID]["Ranking"] = Index + 1
-				UserFile.write(json.dumps(self._Ranking[UserID]) + "\n")					
-		
+				UserFile.write(json.dumps(self._Ranking[UserID]) + "\n")
+
 		# Store partial rankings in different orders
 		for SortPlayerOrder in self._FilePlayersSorts:
 			self._Ranking = OrderedDict(sorted(self._Ranking.items(), key = lambda item: self._SortPlayersFull(item[1]), reverse = True))
@@ -1064,18 +1077,18 @@ class ArenaCategory:
 			with open(f"{self._PathRanking}{self._Prefix}_players_{SortPlayerOrder}.ndjson", "w") as UserFile:
 				for Index, UserID in enumerate(self._Ranking):
 					self._Ranking[UserID]["Ranking"] = Index + 1
-					UserFile.write(json.dumps(self._Ranking[UserID]) + "\n")					
+					UserFile.write(json.dumps(self._Ranking[UserID]) + "\n")
 					if Index == 999:
 						break
-		
+
 		# Restore list in proper order
 		self._Ranking = OrderedDict(sorted(self._Ranking.items(), key = lambda item: self._SortPlayersFull(item[1]), reverse = True))
 		for Index, UserID in enumerate(self._Ranking):
 			self._Ranking[UserID]["Ranking"] = Index + 1
-		
+
 	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	# 2d. Sort and store lists of arenas to files		
+
+	# 2d. Sort and store lists of arenas to files
 	def _StoreArenaRankings(self):
 
 		# Store full rankings
@@ -1083,8 +1096,8 @@ class ArenaCategory:
 		with open(self._FileArenasFull, "w") as ArenaFile:
 			for Index, ArenaID in enumerate(self._RankingList):
 				self._RankingList[ArenaID]["Number"] = Index + 1
-				ArenaFile.write(json.dumps(self._RankingList[ArenaID]) + "\n")	
-				
+				ArenaFile.write(json.dumps(self._RankingList[ArenaID]) + "\n")
+
 		# Store partial rankings in different orders
 		for SortArenaOrder in self._FileArenasSorts:
 			self._RankingList = OrderedDict(sorted(self._RankingList.items(), key = lambda item: self._SortArenasFull(item[1]), reverse = False))
@@ -1092,19 +1105,19 @@ class ArenaCategory:
 			with open(f"{self._PathRanking}{self._Prefix}_arenas_{SortArenaOrder}.ndjson", "w") as ArenaFile:
 				for Index, ArenaID in enumerate(self._RankingList):
 					self._RankingList[ArenaID]["Number"] = Index + 1
-					ArenaFile.write(json.dumps(self._RankingList[ArenaID]) + "\n")					
+					ArenaFile.write(json.dumps(self._RankingList[ArenaID]) + "\n")
 					if Index == 999:
-						break		
+						break
 
 		# Restore list in proper order
 		self._RankingList = OrderedDict(sorted(self._RankingList.items(), key = lambda item: self._SortArenasFull(item[1]), reverse = False))
 		for Index, ArenaID in enumerate(self._RankingList):
 			self._RankingList[ArenaID]["Number"] = Index + 1
-		
+
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
-	
+
 	# 3. Making plots for the website
 	def UpdatePlots(self):
 		self.PrintMessage("3. Updating plots...")
@@ -1116,20 +1129,20 @@ class ArenaCategory:
 
 	# 3a. Plots of the top user statistics over time
 	def _UpdatePlayerPlots(self):
-	
+
 		# Load arenas list into temporary object
 		if not os.path.exists(f"{self._PathRanking}{self._Prefix}_players.ndjson"):
 			self.PrintMessage("Nothing to do...")
-			return	
-		
+			return
+
 		# Process each sort order
 		for SortPlayerOrder in self._FilePlayersSorts:
-				
+
 			# Initialize plotting procedure
 			mpl.close()
 			mpl.figure()
 			Legend = []
-	
+
 			# Open rankings to find top 10 players
 			TopPlayers = []
 			with open(f"{self._PathRanking}{self._Prefix}_players_{SortPlayerOrder}.ndjson", "r") as RankFile:
@@ -1139,7 +1152,7 @@ class ArenaCategory:
 					Legend.append(RankEntry["Username"].lower())
 					if RankEntry["Ranking"] == 10:
 						break
-				
+
 			# For each of the top 10 players
 			for Index in range(10):
 				UserID = TopPlayers[Index]
@@ -1180,36 +1193,36 @@ class ArenaCategory:
 							CumTopScore = UserEntry["CumTopScore"]
 				# Add plot to mpl
 				UserColor, UserStyle, UserMarker = UserHash(UserID)
-				mpl.plot(X, Y, antialiased = True, color = UserColor, linestyle = UserStyle, marker = UserMarker, markevery = 0.1)	
-	
+				mpl.plot(X, Y, antialiased = True, color = UserColor, linestyle = UserStyle, marker = UserMarker, markevery = 0.1)
+
 			# Processing plot
 			mpl.gca().set_ylim([0, None])
-			mpl.legend(Legend, loc = 'upper left', fontsize = 11, title = "Top 10 players", title_fontsize = 11)	
-			
-			# Post-processing for all plots	
+			mpl.legend(Legend, loc = 'upper left', fontsize = 11, title = "Top 10 players", title_fontsize = 11)
+
+			# Post-processing for all plots
 			mpl.xticks(rotation = 45)
 			mpl.grid(alpha = 0.5)
 			mpl.title(f"{self._Name} • {self._FilePlayersSorts[SortPlayerOrder]['Plot']}")
 			mpl.tight_layout()
-			
+
 			# Add lichess logo as background, and fix aspect ratio to 1
 			XMin, XMax = mpl.gca().get_xlim()
 			YMin, YMax = mpl.gca().get_ylim()
 			mpl.gca().imshow(LichessLogo, extent = [XMin, XMax, YMin, YMax], aspect = 'auto', alpha = 0.1)
 			mpl.gca().set_aspect(abs((XMax - XMin) / (YMax - YMin)))
-			
+
 			# Export figure to file
 			mpl.savefig(f"{self._PathFigures}{self._Prefix}_players_{SortPlayerOrder}.png")
 			self.PrintMessage(f"Saved file {self._Prefix}_players_{SortPlayerOrder}.png.")
 			mpl.clf()
-		
+
 	# 3b. Plots of arena statistics over time
 	def _UpdateArenaPlots(self):
 
 		# Load arenas list into temporary object
 		if not os.path.exists(f"{self._PathRanking}{self._Prefix}_arenas.ndjson"):
 			self.PrintMessage("Nothing to do...")
-			return	
+			return
 		self._LoadRankingList()
 		if len(self._RankingList) == 0:
 			self.PrintMessage("Nothing to do...")
@@ -1217,7 +1230,7 @@ class ArenaCategory:
 
 		# Process each sort order
 		for SortArenaOrder in self._FileArenasSorts:
-			
+
 			# Initialize plotting procedure
 			mpl.close()
 			mpl.figure()
@@ -1244,14 +1257,14 @@ class ArenaCategory:
 				elif SortArenaOrder == "maximum":
 					Y.append(ArenaInfo["TopScore"])
 				elif SortArenaOrder == "berserk":
-					Y.append(100. * ArenaInfo["Berserks"] / max(1, ArenaInfo["Games"]) / 2.)	
-			
+					Y.append(100. * ArenaInfo["Berserks"] / max(1, ArenaInfo["Games"]) / 2.)
+
 			# Scatter plot of data
 			PointSize = min(20., max(0.3, 1000./len(X)))
 			mpl.scatter(X, Y, s = [PointSize] * len(X), color = tuple(x/510. for x in AllVariants[self._V]["RGB"]))
-			Legend.insert(0, "All arenas")	
-				
-			# For big data sets, compute a moving average mean graph to plot as well	
+			Legend.insert(0, "All arenas")
+
+			# For big data sets, compute a moving average mean graph to plot as well
 			Thresholds = [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000]
 			# Moving average based on windows of 2% of the data, with step size 1%
 			if len(X) > 200 and SortArenaOrder != "newest":
@@ -1271,15 +1284,15 @@ class ArenaCategory:
 				#mpl.scatter(XMean, YMean, s = [PointSizeMean] * len(XMean), color = tuple(x/255. for x in AllVariants[self._V]["RGB"]))
 				mpl.plot(XMean, YMean, color = tuple(x/255. for x in AllVariants[self._V]["RGB"]))
 				Legend.insert(0, f"Moving average")
-			
+
 			lgnd = mpl.legend(Legend, markerscale = 3./PointSize, fontsize = 11, loc = 'upper left')
-			
+
 			#lgnd = mpl.legend(Legend, markerscale = 3./PointSize, fontsize = 10)
 			for handle in lgnd.legendHandles:
 				if str(handle) != 'Line2D(_line0)':
 					handle.set_sizes([6.0])
 				break
-			
+
 			# Add percent sign to y-axis for percentages
 			if SortArenaOrder == "results" or SortArenaOrder == "berserk":
 				mpl.gca().yaxis.set_major_formatter(PercentFormatter(decimals = 0))
@@ -1290,22 +1303,22 @@ class ArenaCategory:
 			mpl.grid(alpha = 0.5)
 			mpl.title(f"{self._Name} • {self._FileArenasSorts[SortArenaOrder]['Plot']}")
 			mpl.tight_layout()
-			
+
 			# Add lichess logo as background, and fix aspect ratio to 1
 			XMin, XMax = mpl.gca().get_xlim()
 			YMin, YMax = mpl.gca().get_ylim()
 			mpl.gca().imshow(LichessLogo, extent = [XMin, XMax, YMin, YMax], aspect = 'auto', alpha = 0.1)
 			mpl.gca().set_aspect(abs((XMax - XMin) / (YMax - YMin)))
-			
-			# Export figure to file				
+
+			# Export figure to file
 			mpl.savefig(f"{self._PathFigures}{self._Prefix}_arenas_{SortArenaOrder}.png")
 			self.PrintMessage(f"Saved file {self._Prefix}_arenas_{SortArenaOrder}.png.")
-			mpl.clf()	
-		
+			mpl.clf()
+
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
 	#######################################################################################################################################################################################
-		
+
 	# 4. Building the website for publication
 	def UpdateWebsite(self):
 		self.PrintMessage("4. Updating webpages...")
@@ -1314,7 +1327,7 @@ class ArenaCategory:
 		self._UpdatePlayerPages()
 		self._UpdateArenaPages()
 		#self._MakeRedirects()
-		
+
 	# 4a. Update pages of lists/graphs of top players
 	def _UpdatePlayerPages(self):
 
@@ -1324,36 +1337,36 @@ class ArenaCategory:
 			# Figure page
 			with open(f"{self._PathWeb}graph_players_{SortPlayerOrder}.html", "w") as WebFile:
 				self._WritePre(WebFile, "players_" + SortPlayerOrder, "graph")
-				
+
 				if len(self._DataList) == 0:
 					WebFile.write("No rankings.")
 				else:
 					WebFile.write(f"<img src='figures/{self._V}_{self._E}_players_{SortPlayerOrder}.png' class='Graph'>")
-					
+
 				self._WritePost(WebFile)
 
 			# List page
 			with open(f"{self._PathWeb}list_players_{SortPlayerOrder}.html", "w") as WebFile:
-				
+
 				# Write preamble
 				self._WritePre(WebFile, "players_" + SortPlayerOrder, "list")
-						
+
 				if len(self._DataList) == 0:
 					WebFile.write("No rankings.")
-				
+
 				else:
 					# Start of ranking list
 					WebFile.write(f"This ranking is based on {strf(len(self._DataList), 'events')} events held between <a title='First event' href='https://lichess.org/tournament/{self._RankingInfo['FirstID']}'>{DateString(self._RankingInfo['FirstStart'][0:10])}</a> and <a title='Last event' href='https://lichess.org/tournament/{self._RankingInfo['LastID']}'>{DateString(self._RankingInfo['LastStart'][0:10])}</a>.\n\n")
 
 					WebFile.write(f"In total, these arenas featured {strf(self._RankingInfo['Games'], 'games')} games (with {strf(self._RankingInfo['Moves'], 'moves')} moves), and the {strf(self._RankingInfo['Participants'], 'participants')} participants ({strf(self._RankingInfo['Players'], 'players')} unique players) scored a total of {strf(self._RankingInfo['TotalPoints'], 'points')} arena points.\n\n")
-					
+
 					WebFile.write(f"In these games, white scored <span class='info' title='{self._RankingInfo['WhiteWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['WhiteWins'] / self._RankingInfo['Games'])}%</span> wins, <span class='info' title='{self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * (self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']) / self._RankingInfo['Games'])}%</span> draws, and <span class='info' title='{self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['BlackWins'] / self._RankingInfo['Games'])}%</span> losses.\n\n")
-					
+
 					WebFile.write(f"The average berserk rate is <span class='info' title='{self._RankingInfo['Berserks']} berserks in {self._RankingInfo['Games']} games'>{round(500. * self._RankingInfo['Berserks'] / self._RankingInfo['Games']) / 10}%</span>, and the average rating is <span class='info' title='{self._RankingInfo['TotalRating']} over {self._RankingInfo['Participants']} participants'>{round(self._RankingInfo['TotalRating'] / self._RankingInfo['Participants'])}</span>.\n\n")
 
 					if (len(self._E) > 3) and (self._E)[3] == "0":
 						WebFile.write(f"<a href='list_players_{SortPlayerOrder}_clean.html'>Rankings without closed/marked users</a>.\n\n")
-						
+
 					WebFile.write("<table class='PlayersList'>\n")
 					WebFile.write("\t<thead>\n")
 					WebFile.write("\t<tr height='30px'>\n")
@@ -1371,7 +1384,7 @@ class ArenaCategory:
 					WebFile.write("\t</tr>\n")
 					WebFile.write("\t</thead>\n")
 					WebFile.write("\t<tbody>\n")
-					
+
 					with open(f"{self._PathRanking}{self._Prefix}_players_{SortPlayerOrder}.ndjson", "r") as PlayersFile:
 						for Index, Line in enumerate(PlayersFile):
 							PlayerData = json.loads(Line)
@@ -1393,10 +1406,10 @@ class ArenaCategory:
 							WebFile.write("\t</tr>\n")
 							if Index == self._WebListLength - 1:
 								break
-					
+
 					WebFile.write("\t</tbody>\n")
 					WebFile.write("</table>\n")
-			
+
 				# Write after-code
 				self._WritePost(WebFile)
 
@@ -1405,29 +1418,29 @@ class ArenaCategory:
 			if (len(self._E) < 4) or (self._E)[3] != "0":
 				continue
 
-			
+
 			# Special list page for <XXXX rankings, to only show non-marked players -- then actually make the clean rankings
 			with open(f"{self._PathWeb}list_players_{SortPlayerOrder}_clean.html", "w") as WebFile:
-				
+
 				# Write preamble
 				self._WritePre(WebFile, "players_" + SortPlayerOrder, "list")
-						
+
 				if len(self._DataList) == 0:
 					WebFile.write("No rankings.")
-				
+
 				else:
 					# Start of ranking list
 					WebFile.write(f"This ranking is based on {strf(len(self._DataList), 'events')} events held between <a title='First event' href='https://lichess.org/tournament/{self._RankingInfo['FirstID']}'>{DateString(self._RankingInfo['FirstStart'][0:10])}</a> and <a title='Last event' href='https://lichess.org/tournament/{self._RankingInfo['LastID']}'>{DateString(self._RankingInfo['LastStart'][0:10])}</a>.\n\n")
 
 					WebFile.write(f"In total, these arenas featured {strf(self._RankingInfo['Games'], 'games')} games (with {strf(self._RankingInfo['Moves'], 'moves')} moves), and the {strf(self._RankingInfo['Participants'], 'participants')} participants ({strf(self._RankingInfo['Players'], 'players')} unique players) scored a total of {strf(self._RankingInfo['TotalPoints'], 'points')} arena points.\n\n")
-					
+
 					WebFile.write(f"In these games, white scored <span class='info' title='{self._RankingInfo['WhiteWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['WhiteWins'] / self._RankingInfo['Games'])}%</span> wins, <span class='info' title='{self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * (self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']) / self._RankingInfo['Games'])}%</span> draws, and <span class='info' title='{self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['BlackWins'] / self._RankingInfo['Games'])}%</span> losses.\n\n")
-					
+
 					WebFile.write(f"The average berserk rate is <span class='info' title='{self._RankingInfo['Berserks']} berserks in {self._RankingInfo['Games']} games'>{round(500. * self._RankingInfo['Berserks'] / self._RankingInfo['Games']) / 10}%</span>, and the average rating is <span class='info' title='{self._RankingInfo['TotalRating']} over {self._RankingInfo['Participants']} participants'>{round(self._RankingInfo['TotalRating'] / self._RankingInfo['Participants'])}</span>.\n\n")
-					
+
 					if (len(self._E) > 3) and (self._E)[3] == "0":
 						WebFile.write(f"<a href='list_players_{SortPlayerOrder}.html'>Regular rankings with all users</a>.\n\n")
-					
+
 					WebFile.write("<table class='PlayersList'>\n")
 					WebFile.write("\t<thead>\n")
 					WebFile.write("\t<tr height='30px'>\n")
@@ -1445,16 +1458,16 @@ class ArenaCategory:
 					WebFile.write("\t</tr>\n")
 					WebFile.write("\t</thead>\n")
 					WebFile.write("\t<tbody>\n")
-					
+
 					# Load bad users
 					BadUsers = dict()
-					with open("E:\\GitHub\\lichess\\PlayersTOS.txt", "r") as BadPlayersFile:
+					with open(f"{LogoRoot}PlayersTOS.txt", "r") as BadPlayersFile:
 						for Line in BadPlayersFile:
 							BadUsers[Line.strip().lower()] = 1
-					with open("E:\\GitHub\\lichess\\PlayersClosed.txt", "r") as BadPlayersFile2:
+					with open(f"{LogoRoot}PlayersClosed.txt", "r") as BadPlayersFile2:
 						for Line in BadPlayersFile2:
 							BadUsers[Line.strip().lower()] = 1
-					
+
 					with open(f"{self._PathRanking}{self._Prefix}_players_{SortPlayerOrder}.ndjson", "r") as PlayersFile:
 						Listed = 0
 						for Index, Line in enumerate(PlayersFile):
@@ -1462,9 +1475,9 @@ class ArenaCategory:
 							UserID = PlayerData["Username"]
 							if UserID.lower() in BadUsers:
 								continue
-								
+
 							Listed = Listed + 1
-							
+
 							WebFile.write("\t<tr>\n")
 							WebFile.write(f"\t\t<td>{Index + 1}.</td>\n")
 							WebFile.write(f"\t\t<td>{PlayerData.get('Title', '')}</td>\n")
@@ -1483,10 +1496,10 @@ class ArenaCategory:
 							WebFile.write("\t</tr>\n")
 							if Listed == self._WebListLength:
 								break
-					
+
 					WebFile.write("\t</tbody>\n")
 					WebFile.write("</table>\n")
-			
+
 				# Write after-code
 				self._WritePost(WebFile)
 
@@ -1494,35 +1507,35 @@ class ArenaCategory:
 	def _UpdateArenaPages(self):
 		# Building list-pages of arenas
 		for SortArenaOrder in self._FileArenasSorts:
-		
+
 			# Figure page
 			with open(f"{self._PathWeb}graph_arenas_{SortArenaOrder}.html", "w") as WebFile:
-				
+
 				self._WritePre(WebFile, "arenas_" + SortArenaOrder, "graph")
 				if len(self._DataList) == 0:
 					WebFile.write("No rankings.")
 				else:
 					WebFile.write(f"<img src='figures/{self._V}_{self._E}_arenas_{SortArenaOrder}.png' class='Graph'>")
 				self._WritePost(WebFile)
-			
+
 			# List page
 			with open(f"{self._PathWeb}list_arenas_{SortArenaOrder}.html", "w") as WebFile:
-				
+
 				# Write preamble
 				self._WritePre(WebFile, "arenas_" + SortArenaOrder, "list")
-				
+
 				if len(self._DataList) == 0:
 					WebFile.write("No rankings.")
-				
+
 				else:
-			
+
 					# Start of ranking list
 					WebFile.write(f"This ranking is based on {strf(len(self._DataList), 'events')} events held between <a title='First event' href='https://lichess.org/tournament/{self._RankingInfo['FirstID']}'>{DateString(self._RankingInfo['FirstStart'][0:10])}</a> and <a title='Last event' href='https://lichess.org/tournament/{self._RankingInfo['LastID']}'>{DateString(self._RankingInfo['LastStart'][0:10])}</a>.\n\n")
 
 					WebFile.write(f"In total, these arenas featured {strf(self._RankingInfo['Games'], 'games')} games (with {strf(self._RankingInfo['Moves'], 'moves')} moves), and the {strf(self._RankingInfo['Participants'], 'participants')} participants ({strf(self._RankingInfo['Players'], 'players')} unique players) scored a total of {strf(self._RankingInfo['TotalPoints'], 'points')} arena points.\n\n")
-					
+
 					WebFile.write(f"In these games, white scored <span class='info' title='{self._RankingInfo['WhiteWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['WhiteWins'] / self._RankingInfo['Games'])}%</span> wins, <span class='info' title='{self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * (self._RankingInfo['Games'] - self._RankingInfo['WhiteWins'] - self._RankingInfo['BlackWins']) / self._RankingInfo['Games'])}%</span> draws, and <span class='info' title='{self._RankingInfo['BlackWins']} out of {self._RankingInfo['Games']} games'>{round(100 * self._RankingInfo['BlackWins'] / self._RankingInfo['Games'])}%</span> losses.\n\n")
-					
+
 					WebFile.write(f"The average berserk rate is <span class='info' title='{self._RankingInfo['Berserks']} berserks in {self._RankingInfo['Games']} games'>{round(500. * self._RankingInfo['Berserks'] / self._RankingInfo['Games']) / 10}%</span>, and the average rating is <span class='info' title='{self._RankingInfo['TotalRating']} over {self._RankingInfo['Participants']} participants'>{round(self._RankingInfo['TotalRating'] / self._RankingInfo['Participants'])}</span>.\n\n")
 
 					WebFile.write("<table class='ArenasList'>\n")
@@ -1544,7 +1557,7 @@ class ArenaCategory:
 					WebFile.write("\t</tr>\n")
 					WebFile.write("\t</thead>\n")
 					WebFile.write("\t<tbody>\n")
-					
+
 					with open(f"{self._PathRanking}{self._Prefix}_arenas_{SortArenaOrder}.ndjson", "r") as ArenasFile:
 						for Index, Line in enumerate(ArenasFile):
 							ArenaData = json.loads(Line)
@@ -1568,14 +1581,14 @@ class ArenaCategory:
 							WebFile.write("\t</tr>\n")
 							if Index == self._WebListLength - 1:
 								break
-					
+
 					WebFile.write("\t</tbody>\n")
 					WebFile.write("</table>\n")
-			
+
 				# Write after-code
-				self._WritePost(WebFile)		
-				
-				
+				self._WritePost(WebFile)
+
+
 	# 4c. Write the global preamble independent of content (but checked boxes depending on current page)
 	def _WritePre(self, File, Page, Type):
 		File.write("<!DOCTYPE html>\n")
@@ -1597,25 +1610,25 @@ class ArenaCategory:
 		File.write("</head>\n\n")
 		File.write("<body>\n")
 		File.write(f"<div class=\"title\">Lichess Arena Rankings &middot; {self._Name}</div>\n")
-		
+
 		# Begin menu
 		File.write("<div class='menu'>\n")
-		
+
 		# Information icon
 		File.write("\t<span class='VariantIcon' style='font-size: 16pt; position: absolute; left: 0px;'><a href='../../index.html'>&#xe005;</a></span>\n")
-		
+
 		# Variants menu
 		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 185px; max-width: 185px;'>\n")
 		for V, Val in sorted(AllVariants.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Variant' value='{V}' id='variant-{V}'{' checked' if V == self._V else ''}><label class='V{V}' for='variant-{V}'><span class='VariantIcon'>{AllVariants[V]['Icon']}</span> {AllVariants[V]['Name'] if V != 'all' else 'All variants'}</label>\n")
 		File.write("\t</span>\n")
-		
+
 		# Events menu
 		File.write("\t<span class='dropdown-el' style='left: 225px; min-width: 180px; max-width: 180px;'>\n")
 		for E, Val in sorted(AllEvents.items(), key = lambda item: item[1]["WebOrder"]):
 			File.write(f"\t\t<input type='radio' name='Event' value='{E}' id='events-{E}'{' checked' if E == self._E else ''}><label class='E{E}' for='events-{E}'>{AllEvents[E]['Name'] + ' Arenas' if E not in ['marathon', 'liga'] else ('Marathons' if E == 'marathon' else 'Bundesliga')}</label>\n")
 		File.write("\t</span>\n")
-		
+
 		# Sorting menu
 		File.write("\t<span class='dropdown-el' style='left: 415px; min-width: 255px; max-width: 255px;'>\n")
 		for O in self._FilePlayersSorts:
@@ -1623,30 +1636,30 @@ class ArenaCategory:
 		for O in self._FileArenasSorts:
 			File.write(f"\t\t<input type='radio' name='Page' value='arenas_{O}' id='arenas_{O}'{' checked' if ('arenas_' + O) == Page else ''}><label for='arenas_{O}'>{self._FileArenasSorts[O]['Name']}</label>\n")
 		File.write("\t</span>\n")
-		
+
 		# List or graph?
 		File.write("\t<span class='dropdown-el' style='left: 680px; min-width: 120px; max-width: 120px;'>\n")
 		File.write(f"\t\t<input type='radio' name='Type' value='list' id='list'{' checked' if Type == 'list' else ''}><label for='list'><span class='VariantIcon'>?</span> List</label>\n")
 		File.write(f"\t\t<input type='radio' name='Type' value='graph' id='graph'{' checked' if Type == 'graph' else ''}><label for='graph'><span class='VariantIcon'>9</span> Graph</label>\n")
 		File.write("\t</span>\n")
-		
-		File.write("</div>\n\n")				
+
+		File.write("</div>\n\n")
 		# End menu
-		
+
 		File.write("<span class='maincontent'>\n")
 		File.write("<!-- START OF ACTUAL CONTENT -->\n")
-		
-		
+
+
 	# 4d. Write after-code regardless of content
 	def _WritePost(self, File):
-	
+
 		File.write("<!-- END OF ACTUAL CONTENT -->\n")
 		File.write("</span>\n")
 		File.write("<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>\n")
 		File.write("<script src='../../../menu.js'></script>\n")
 		File.write("</body>\n")
 		File.write("</html>\n")
-		
+
 	# 4e. Write color scheme to file
 	def _MakeColorCSS(self):
 		self.PrintMessage("Saving new color scheme!")
@@ -1665,7 +1678,7 @@ class ArenaCategory:
 	def _MakeRedirects(self):
 		self.PrintMessage("Building redirect pages...")
 		Redirects = {
-			"trophies.html": 	f"list_players_trophies.html", 
+			"trophies.html": 	f"list_players_trophies.html",
 			"index.html":		f"list_players_points.html",
 			"events.html":		f"list_players_events.html",
 			"maximum.html":		f"list_players_maximum.html",
@@ -1683,4 +1696,3 @@ class ArenaCategory:
 				WebFile.write("Redirecting to new page...\n")
 				WebFile.write("</body>\n")
 				WebFile.write("</html>")
-				

@@ -13,6 +13,11 @@ from matplotlib.colors import BoundaryNorm, LogNorm
 from matplotlib.ticker import MaxNLocator
 import numpy as np
 
+PathWindows = f"E:{os.sep}"
+PathLinux = f"{os.sep}media{os.sep}thijs{os.sep}SED{os.sep}"
+Path = PathLinux + f"lichess{os.sep}tournaments{os.sep}rankings{os.sep}"
+
+
 mpl.style.use(['dark_background'])
 mpl.rcParams.update({
 	"axes.facecolor": 		(0.2, 0.2, 0.2, 1.0),  # green with alpha = 50%
@@ -97,11 +102,11 @@ def Participants(dict):
 # Total people ever participated
 def TotalPlayers(dict):
 	return dict["Players"]
-	
+
 # Total events ever happened
 def TotalEvents(dict):
 	return dict["Events"]
-	
+
 # Total events ever happened
 def TotalGames(dict):
 	return dict["Games"]
@@ -117,7 +122,7 @@ def TimeRange(dict):
 
 def TopScore(dict):
 	return dict["TopScore"]
-	
+
 # Total events ever happened
 def MovesPerGame(dict):
 	return dict["Moves"] / dict["Games"] / 2.
@@ -125,7 +130,7 @@ def MovesPerGame(dict):
 # Total events ever happened
 def PointsPerPlayer(dict):
 	return dict["TotalPoints"] / dict["Participants"]
-	
+
 # Total events ever happened
 def MaxUsers(dict):
 	return dict["MaxUsers"]
@@ -166,10 +171,10 @@ def MakePlot(params):
 		V = va[i]
 		for j in range(len(PureEvents)):
 			E = ev[j]
-			if not os.path.exists(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_players.ndjson"):
+			if not os.path.exists(f"{Path}{V}{os.sep}{E}{os.sep}{V}_{E}_players.ndjson"):
 				Z[j][i] = None
 			else:
-				with open(f"E:\\lichess\\tournaments\\rankings\\{V}\\{E}\\{V}_{E}_ranking.json") as File:
+				with open(f"{Path}{V}{os.sep}{E}{os.sep}{V}_{E}_ranking.json") as File:
 					dict = json.load(File)
 				#Z[j][i] = 1. * dict["WhiteWins"] / dict["Games"]
 				#Z[j][i] = TotalPlayers(dict)
@@ -182,7 +187,7 @@ def MakePlot(params):
 
 
 	fig, ax = mpl.subplots()
-	
+
 	if params[3]:
 		im = ax.pcolormesh(x, y, Z, cmap = params[4], norm = LogNorm(vmin = minZ + 0.01, vmax=maxZ), alpha = 0.5, antialiased = False, linewidth = 0.0, rasterized = True)
 	else:
@@ -201,7 +206,7 @@ def MakePlot(params):
 
 	#mpl.show()
 
-	mpl.savefig(f"E:\\GitHub\\lichess\\rankings\\density_{params[2]}.png")
+	mpl.savefig(f"{Path}density_{params[2]}.png")
 	print(f"Saving density_{params[2]}.png")
 
 
@@ -230,5 +235,3 @@ paramsets = [
 
 for params in paramsets:
 	MakePlot(params)
-
-

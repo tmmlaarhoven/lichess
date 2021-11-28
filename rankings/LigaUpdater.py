@@ -1,15 +1,20 @@
 import json
+import os
 import requests
 import datetime
 
+DriveRootWindows = "E:\\lichess\\"
+DriveRootLinux = "/media/thijs/SED/lichess/"
+DriveRoot = DriveRootLinux
+
 APIToken = ""
-with open("E:\\lichess\\APIToken.txt", "r") as TokenFile:
+with open(f"{DriveRoot}APItoken.txt", "r") as TokenFile:
 	for Line in TokenFile:
 		APIToken = Line.strip()
 
 
 def PrintMessage(Message: str):
-	print(f"{'all':<11} - {'liga':<8} - {Message}", end = "")	
+	print(f"{'all':<11} - {'liga':<8} - {Message}", end = "")
 
 SuperBlitzList = dict()
 BlitzList = dict()
@@ -18,16 +23,16 @@ print("\n=== Starting LigaUpdater.py ===\n")
 
 # Load previous IDs
 
-with open("E:\\lichess\\tournaments\\data\\superblitz\\liga\\superblitz_liga.txt", "r") as SuperBlitzFile:
+with open(f"{DriveRoot}tournaments{os.sep}data{os.sep}superblitz{os.sep}liga{os.sep}superblitz_liga.txt", "r") as SuperBlitzFile:
 	for Line in SuperBlitzFile:
 		SuperBlitzList[Line.strip()] = 1
 
 print(f"Currently {len(SuperBlitzList)} superblitz ligas in ranking.")
 
-with open("E:\\lichess\\tournaments\\data\\blitz\\liga\\blitz_liga.txt", "r") as BlitzFile:
+with open(f"{DriveRoot}tournaments{os.sep}data{os.sep}blitz{os.sep}liga{os.sep}blitz_liga.txt", "r") as BlitzFile:
 	for Line in BlitzFile:
 		BlitzList[Line.strip()] = 1
-	
+
 print(f"Currently {len(BlitzList)} blitz ligas in ranking.")
 
 
@@ -39,11 +44,11 @@ with s.get("https://lichess.org/api/user/jeffforever/tournament/created", header
 	for Line in Response.iter_lines():
 		dict = json.loads(Line)
 		PrintMessage(f"New ID ({dict.get('id', 'Nothing')}) at {datetime.datetime.fromtimestamp(dict['startsAt']/1000).strftime('%Y-%m-%d %H:%M:%S. ')}")
-		
+
 		if ("liga" not in dict["fullName"].lower()):
 			print("Skipping (not bundesliga).")
 			continue
-		
+
 		if ("secondsToStart" in dict) or ("secondsToFinish" in dict):
 			print("Skipping (future ID).")
 			continue
@@ -57,7 +62,7 @@ with s.get("https://lichess.org/api/user/jeffforever/tournament/created", header
 				Collisions = Collisions + 1
 		else:
 			if dict["id"] not in BlitzList:
-				BlitzList[dict["id"]] = 1	
+				BlitzList[dict["id"]] = 1
 				print("New blitz arena!")
 			else:
 				print("Skipping (already in blitz list).")
@@ -74,7 +79,7 @@ TempList = []
 for ID in SuperBlitzList:
 	TempList.append(ID)
 TempList.sort()
-with open("E:\\lichess\\tournaments\\data\\superblitz\\liga\\superblitz_liga.txt", "w") as SuperBlitzFile:
+with open(f"{DriveRoot}tournaments{os.sep}data{os.sep}superblitz{os.sep}liga{os.sep}superblitz_liga.txt", "w") as SuperBlitzFile:
 	for ID in TempList:
 		SuperBlitzFile.write(ID + "\n")
 
@@ -83,8 +88,8 @@ TempList = []
 for ID in BlitzList:
 	TempList.append(ID)
 TempList.sort()
-with open("E:\\lichess\\tournaments\\data\\blitz\\liga\\blitz_liga.txt", "w") as BlitzFile:
+with open(f"{DriveRoot}tournaments{os.sep}data{os.sep}blitz{os.sep}liga{os.sep}blitz_liga.txt", "w") as BlitzFile:
 	for ID in TempList:
 		BlitzFile.write(ID + "\n")
-		
+
 print("\n=== Finished LigaUpdater.py ===\n")
