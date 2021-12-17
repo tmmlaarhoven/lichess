@@ -1,5 +1,5 @@
 #!/bin/bash
-date_stamp=$(date +"%F-%H-%M-%S")
+date_stamp=$(date +"%F %H:%M:%S")
 git pull
 # python3 ScanPlayers.py
 #python3 LigaUpdater.py
