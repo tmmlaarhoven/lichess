@@ -53,11 +53,11 @@ AllVariants = dict(PureVariants)
 AllVariants["all"] = {"Name": "All",				"RGB": (200,200,200),	"WebOrder": 0,		"Code": "al",	"Icon": "O"}
 
 PureEvents = {
-	"1300": 		{"Name": "<1300",				"RGB": (  0,158,115),	"WebOrder": 1,		"Code": "13"},
-	"1500": 		{"Name": "<1500",				"RGB": (  0,158,115),	"WebOrder": 2,		"Code": "15"},
-	"1600": 		{"Name": "<1600",				"RGB": (  0,158,115),	"WebOrder": 3,		"Code": "16"},
-	"1700": 		{"Name": "<1700",				"RGB": (  0,158,115),	"WebOrder": 4,		"Code": "17"},
-	"2000": 		{"Name": "<2000",				"RGB": (  0,158,115),	"WebOrder": 5,		"Code": "20"},
+	"1300": 		{"Name": "≤1300",			"RGB": (  0,158,115),	"WebOrder": 1,		"Code": "13"},
+	"1500": 		{"Name": "≤1500",			"RGB": (  0,158,115),	"WebOrder": 2,		"Code": "15"},
+	"1600": 		{"Name": "≤1600",			"RGB": (  0,158,115),	"WebOrder": 3,		"Code": "16"},
+	"1700": 		{"Name": "≤1700",			"RGB": (  0,158,115),	"WebOrder": 4,		"Code": "17"},
+	"2000": 		{"Name": "≤2000",			"RGB": (  0,158,115),	"WebOrder": 5,		"Code": "20"},
 	"thematic":		{"Name": "Thematic",			"RGB": (  0,158,115),	"WebOrder": 6,		"Code": "th"},
 	"eastern": 		{"Name": "Eastern",				"RGB": (  0,158,115),	"WebOrder": 7,		"Code": "ea"},
 	"hourly": 		{"Name": "Hourly",				"RGB": (  0,158,115),	"WebOrder": 8,		"Code": "ho"},

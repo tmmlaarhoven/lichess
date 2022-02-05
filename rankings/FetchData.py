@@ -43,11 +43,11 @@ Variants = {
 }
 
 Events = {
-	"1300": "&lt;1300",
-	"1500": "&lt;1500",
-	"1600": "&lt;1600",
-	"1700": "&lt;1700",
-	"2000": "&lt;2000",
+	"1300": "≤1300",
+	"1500": "≤1500",
+	"1600": "≤1600",
+	"1700": "≤1700",
+	"2000": "≤2000",
 	"thematic": "Thematic",
 	"hourly": "Hourly",
 	"daily": "Daily",
@@ -140,7 +140,7 @@ for E in Events:
 					IDs = re.findall(f"/tournament/[0-9a-zA-Z]{{8}}\"><span class=\"name\">.{{0,40}} {Variants[V]} Arena", r.text)
 
 					for ID in IDs:
-						if any(x in ID[41:-6] for x in {"Hourly", "&lt;1300", "&lt;1500", "&lt;1600", "&lt;1700", "&lt;2000"}):
+						if any(x in ID[41:-6] for x in {"Hourly", "≤1300", "≤1500", "≤1600", "≤1700", "≤2000"}):
 							continue
 						#print(f"{ID[41:-6]} is a {V} arena!")
 						if not ID[12:20] in ArenaIDs[V][E]:
