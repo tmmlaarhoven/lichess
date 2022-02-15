@@ -522,7 +522,7 @@ class ArenaCategory:
 		self._PathWeb = f"{WebRoot}{self._V}{os.sep}{self._E}{os.sep}"
 		self._PathWebRoot = f"{LogoRoot}"
 		self._PathFigures = f"{WebRoot}{self._V}{os.sep}{self._E}{os.sep}figures{os.sep}"
-		self._WebListLength = 200
+		self._WebListLength = 200 if self._Pure else 1000
 
 		# Initialize data maintenance parameters
 		self._DataList = OrderedDict()			# All arena IDs:		{"jf03alf3": {"Number": 1, "ID": "jf03alf3", "Players": 23, "Variant": "bullet", "Event": "hourly", ...}, "dkweo3kX", ...}
