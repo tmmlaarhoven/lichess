@@ -41,15 +41,18 @@ import json
 import ndjson
 import matplotlib.pyplot as mpl
 import datetime
-from scipy import stats
 
-from scipy.spatial import ConvexHull, convex_hull_plot_2d
+# For API calls, use following file with API token
+api_token_filename = "/media/thijs/SED/lichess/APItoken.txt"
+
+# from scipy import stats
+# from scipy.spatial import ConvexHull, convex_hull_plot_2d
 
 # Set global plot settings
 mpl.style.use(['dark_background'])
 mpl.rcParams.update({
-	"axes.facecolor": 		(0.2, 0.2, 0.2, 1.0),  # green with alpha = 50%
-	"savefig.facecolor": 	(0.0, 0.0, 1.0, 0.0),  # blue  with alpha = 20%
+	"axes.facecolor": 		(0.2, 0.2, 0.2, 1.0),
+	"savefig.facecolor": 	(0.0, 0.0, 1.0, 0.0),
 	"figure.figsize": 		(4.5, 4.5),
 	"axes.labelsize": 		12,
 	"xtick.labelsize": 		11,
@@ -76,7 +79,7 @@ players = dict()
 for sub_dir, dir, files in os.walk("."):
 
 	# Skip documents/scripts in root
-	if sub_dir == "." or sub_dir == "./sheets" or sub_dir == "./plots":
+	if sub_dir == "." or sub_dir == "./sheets" or sub_dir == "./plots" or sub_dir == "./api":
 		continue
 
 	print(sub_dir)
@@ -152,7 +155,7 @@ def GetPlayerPages():
 
 	# Get API token
 	api_token = ""
-	with open(f"/media/thijs/SED/lichess/APItoken.txt", "r") as token_file:
+	with open(api_token_filename, "r") as token_file:
 		for line in token_file:
 			api_token = line.strip()
 
@@ -563,9 +566,14 @@ def PlotGamesRating():
 			mpl.close(fig)
 
 
+# Data fetching/processing
 #GetPlayerPages()
-UpdateResults()
+#UpdateResults()
+
+# Text-form list of players by trophies
 ShowTrophyRankings()
+
+# Generating various types of plots
 PlotPlayers()
 PlotTrophyPoints()
 PlotTrophyPointsTC()
