@@ -1,4 +1,6 @@
-*Note: The images in this blog post were generated with a dark background, and are best viewed in dark mode. To switch to dark mode, click your name in the top right corner, click "Background", and select "Dark" or "Dark Board".*
+*Note: The images in this blog post are best viewed in dark mode. To switch to dark mode, click your name in the top right corner, click "Background", and select "Dark" or "Dark Board".*
+
+*Acknowledgements: Thanks to [DevDarshanTK](https://lichess.org/@/DevDarshanTK) for pointing out that in the first two marathons, trophies were awarded only to top-50 finishers. This does not change the trophy rankings, but the text has been adjusted accordingly.*
 
 ## Introduction
 
@@ -18,8 +20,7 @@ Although some other topics will also be discussed, the main focus is on the mara
 
 For analyzing these marathons, let us first look at the data. The results of the following 29 marathons were used, which includes all marathons played to date, between the inaugural [Summer 2015 marathon](https://lichess.org/tournament/summer15) and the recently concluded [Summer 2022 marathon](https://lichess.org/tournament/summer22).
 
-#### Marathons
-
+**Marathons**
 The list below gives an overview of these arenas, the different time controls of these arenas, the number of participants, the average rating of the players, and the overall berserk rates. Various additional statistics about these arenas can also be found at [my Lichess statistics page](https://lichess.thijs.com/rankings/all/marathon/list_arenas_newest.html).
 
 | **#** | **Arena ID** | **TC** | **Date** | **Players** | **Avg Rtng** | **Berserk** |
@@ -54,8 +55,7 @@ The list below gives an overview of these arenas, the different time controls of
 | 2. | [autumn15](https://lichess.org/tournament/autumn15) | 3+0 | Oct 24, 2015 | 2802 | 1632 | 12% |
 | 1. | [summer15](https://lichess.org/tournament/summer15) | 5+0 | Aug 01, 2015 | 2258 | 1572 | 13% |
 
-#### Time controls
-
+**Time controls**
 As we can see above, the marathons have been played at 6 different time controls so far:
 
 * 1+0 (3 events)
@@ -67,8 +67,7 @@ As we can see above, the marathons have been played at 6 different time controls
 
 As different time controls are mostly incomparable, we will extract various statistics for each time control separately, focusing on the first five time controls above - for the 5+3 time control there is only one marathon with this time control, making it impossible to draw any worthwhile conclusions for future 5+3 marathons.
 
-#### Data queries
-
+**Data queries**
 To get as much data as possible, the data that was used was all the data that could be obtained via the following Lichess API queries:
 
 * `https://lichess.org/api/tournament/{id}` (general tournament info);
@@ -81,23 +80,25 @@ More information could be obtained via `https://lichess.org/api/tournament/{id}/
 
 Let us now get down to the juicy parts. What can we say about the data obtained via the API?
 
-### Participants per marathon
+### **Participants per marathon**
 
 First, a simple question: how did the number of participants evolve over time? The following figure shows the number of participants over time, showing a steady increase (as Lichess and online chess gained in popularity) until early 2020. Then, when the COVID-19 pandemic hit and lockdowns started happening across the world, we saw a surge in popularity of online chess, and also a strong increase in the participation of Lichess marathons.
 
 Similar spikes in participation can be seen during the fall and winter of the Northern hemisphere of 2020 and 2021, when further lockdowns got more people sitting inside, entertaining themselves by playing chess online. In 2022, with most lockdowns having been lifted around the world, we see that the participation numbers are somewhat consistent with the previous 2015-2020 growth of Lichess marathon participation, extrapolated to 2022 - the increase in popularity due to COVID-19 seems to have mostly disappeared. This suggests that the linear trend, as drawn with the dashed line in the figure below, is a reasonably accurate depiction of the "regular" Lichess growth, when pandemics do not play a role, and how one might expect the number of players per marathon to develop in the future.
 
-![image](https://lichess.thijs.com/marathons/players.png)
+![image](https://lichess.thijs.com/marathons/plots/players.png)
 
 ### **Trophy winners**
 
-What has perhaps inspired most players to play seriously in these marathons is the prospect of winning one of the rare Lichess trophies associated with finishing high enough in one of the marathons. Ever since the first marathon, all top-100 finishers received a special trophy for display on their profile, with even fancier trophies for those finishing in the top 50, the top 10, and winning the marathon.
+What has perhaps inspired most players to play seriously in these marathons is the prospect of winning one of the rare Lichess trophies associated with finishing high enough in one of the marathons. Ever since the first marathon, all top-50 finishers received a special trophy for display on their profile, with even fancier trophies for those finishing in the the top 10 and winning the marathon.
 
-After Lichess started growing more and more, and finishing in the top 100 was becoming too hard for most players, Lichess decided to add a new trophy for top-500 finishers as well. These new trophies have been handed out since the [Summer 2021 marathon](https://lichess.org/tournament/summer21), and have *not* been awarded retroactively for past events - anyone finishing between positions 101 and 500 did not get any trophy before this marathon.
+After the second marathon, trophies were added for top-100 finishers as well, and after Lichess started growing more and more, and even finishing in the top 100 was becoming too hard for most players, Lichess decided to add a new trophy for top-500 finishers as well. These new trophies have been handed out since the [Summer 2021 marathon](https://lichess.org/tournament/summer21), and have *not* been awarded retroactively for past events - anyone finishing between positions 101 and 500 did not get any trophy before this marathon (nor did players finishing between 51 and 100 in the first two marathons).
 
 Regarding tournament victories, as one can also see on [my Lichess arena statistics page](https://lichess.thijs.com/rankings/all/marathon/list_players_trophies.html), the legendary [Lance5500](https://lichess.org/@/Lance5500) has dominated the early marathons, giving him a big lead in the number of marathon victories over the rest of the field. In second place we have [Kastorcito](https://lichess.org/@/Kastorcito), [Valera\_B5](https://lichess.org/@/Valera_B5), and [Kolian222](https://lichess.org/@/Kolian222) with two marathon victories each.
 
 Looking at the ranking of players according only to the *number* of trophies (with trophies for higher positions only being used to break ties), rather than tournament victories, we obtain the following different ranking. Here we also see [Lance5500](https://lichess.org/@/Lance5500) dominating the trophy count rankings, but some other community favorites are in the top as well, such as [Kingscrusher-YouTube](https://lichess.org/@/Kingscrusher-YouTube) (3), [penguingim1](https://lichess.org/@/penguingim1) (6), [EricRosen](https://lichess.org/@/EricRosen) (32), and everyone's favorite statistics-collector, [thijscom](https://lichess.org/@/thijscom) (23).
+
+*EDIT: Due to cheaters being removed from the standings after the marathons finished, both [Alexr58](https://lichess.org/@/Alexr58) (#99 in [Winter 2020](https://lichess.org/tournament/winter20)) and [arvids\_andrejevs](https://lichess.org/@/arvids_andrejevs) (#99 in [Spring 2021](https://lichess.org/tournament/spring21)) missed out on one top-100 trophy. With this additional trophy, both would rank higher in the top 100, with Alexr58 taking #20 below.*
 
 | **#** | **User** | **Trophies** | **#1** | **#10** | **#50** | **#100** | **#500** |
 | --- | ---- | -------- | --- | --- | --- | ---- | ---- |
@@ -146,100 +147,88 @@ Looking at the ranking of players according only to the *number* of trophies (wi
 
 As the number of points varies greatly for different time controls, let us look at the number of points needed to obtain certain trophies, grouped by the different time controls.
 
-#### 1+0
-
+**1+0**
 First, for the most recent 1+0 marathons, we observe that the scores needed for top 50 and top 100 have been mostly unchanged over the past two years. The number of points required to reach the top 500 has gone up ever since the Summer 2021 marathon, where trophies for top 500 finishers were first introduced. For the marathon winners, we can only acknowledge the outstanding accomplishment of [Elda64](https://lichess.org/@/Elda64), who scored over 2000 points in the recent [Summer 2022 marathon](https://lichess.org/tournament/summer22), improving upon the point count of the previous 1+0 marathon winners by a considerable margin.
 
-![image](https://lichess.thijs.com/marathons/1+0_top.png)
+![image](https://lichess.thijs.com/marathons/plots/1+0_top.png)
 
-#### 2+1
-
+**2+1**
 In this semi-bullet time control, we again see a similar trend of scores for top 10, top 50, and top 100 being mostly consistent over the past two years, with a slight increase for the top-500 threshold due to the introduction of new trophies for top-500 finishers. We further see an increase in the number of points of the winners, showing that the prestige of the marathons is attracting strong players who are willing to invest a lot of time to win these events.
 
-![image](https://lichess.thijs.com/marathons/2+1_top.png)
+![image](https://lichess.thijs.com/marathons/plots/2+1_top.png)
 
-#### 3+0
-
+**3+0**
 For one of the most popular blitz time controls, where marathons date back all the way to 2015, we observe similar trends as above, with increasing points for each trophy ever since the marathons started. With the introduction of top-500 trophies, the scores for top 50 and top 100 seem to have stabilized here as well, while the threshold to reach the top 500 is much higher than before.
 
-![image](https://lichess.thijs.com/marathons/3+0_top.png)
+![image](https://lichess.thijs.com/marathons/plots/3+0_top.png)
 
-#### 3+2
-
+**3+2**
 For the 3+2 time control, we again observe similar patterns, with the thresholds for each trophy having increase quite considerably since the early days of Lichess. We further see a spike in the winner's score in [the Autumn 2019 marathon](https://lichess.org/tournament/autumn19) with the winner [Valera\_B5](https://lichess.org/@/Valera_B5) scoring a yet unsurpassed 800 points to win the event. The scores for each of the trophies has further gone up considerably when comparing pre-COVID and post-COVID numbers.
 
-![image](https://lichess.thijs.com/marathons/3+2_top.png)
+![image](https://lichess.thijs.com/marathons/plots/3+2_top.png)
 
-#### 5+0
-
+**5+0**
 Finally, for the traditional 5+0 time control, we notice how in the [Spring 2016 marathon](https://lichess.org/tournament/spring16), the winner [BahadirOzen](https://lichess.org/@/BahadirOzen) managed to score an astonishing 980 points, beating the then-#2 [Lance5500](https://lichess.org/@/Lance5500) by over 300 points! Trend-wise we again see a steady increase in the point thresholds needed to obtain each trophy, with significant gaps between the pre-COVID thresholds and the most recent score thresholds in the [Spring 2021 marathon](https://lichess.org/tournament/spring21).
 
-![image](https://lichess.thijs.com/marathons/5+0_top.png)
+![image](https://lichess.thijs.com/marathons/plots/5+0_top.png)
 
 ### **Ratings for trophies**
 
 Besides the number of points that were needed to obtain certain trophies, let us also inspect the distribution of ratings for each trophy, to get an idea what trophies one might aim for with certain ratings. The ratings below are in the rating category corresponding to the marathon (bullet for 1+0 and 2+1, and blitz for 3+0, 3+2, and 5+0). The below analyses have been performed only on the most recent marathons in each time control, as these are likely the best predictors for future events.
 
-#### 1+0
-
+**1+0**
 The most recent [Summer 2022 marathon](https://lichess.org/tournament/summer22) had the following characteristics in terms of the rating distributions among the different trophies. We note that all top 10 finishers were 2700 or higher (with the bulk being 2800+), that most top-50 and top-100 finishers were 2600+, and that the top 500 mostly consists of players in the rating range 2200-2500. No one rated below 2000 made it to any of the trophies in the most recent marathon.
 
-![image](https://lichess.thijs.com/marathons/summer22_rating_violin.png)
+![image](https://lichess.thijs.com/marathons/plots/summer22_rating_violin.png)
 
-#### 2+1
-
+**2+1**
 In the 2+1 [Spring 2022 marathon](https://lichess.org/tournament/spring22), which also falls under the bullet category, we notice that ratings were overall considerably lower. The ratings of the top-10 finishers were considerably lower than for the [Summer 2022 marathon](https://lichess.org/tournament/summer22), and to an extent this is also true for the other trophy categories. One explanation may be that most serious chess players dislike 2+1 as a (bullet) time control, whereas 1+0 gets even the best players excited to participate. Another explanation may be that in 2+1 it is relatively hard to berserk and win, due to the loss of increment, which makes it harder for strong players to make it to the top positions with a small number of games (and a high berserk percentage).
 
-![image](https://lichess.thijs.com/marathons/spring22_rating_violin.png)
+![image](https://lichess.thijs.com/marathons/plots/spring22_rating_violin.png)
 
-#### 3+0
-
+**3+0**
 For the blitz-rated 3+0 [Winter 2021 marathon](https://lichess.org/tournament/winter21), the ratings were overall quite high, considering that blitz ratings generally tend to be a bit lower than bullet ratings. This may again be related to 3+0 being a popular blitz time control among top players, and therefore attracting many strong players as well. We notice that also here, players rated below 2000 were not able to take any of the trophies, while everyone in the top 10 was rated 2550+.
 
-![image](https://lichess.thijs.com/marathons/winter21_rating_violin.png)
+![image](https://lichess.thijs.com/marathons/plots/winter21_rating_violin.png)
 
-#### 3+2
+**3+2**
 Similar to 2+1 and 1+0, we observe that 3+2 seems to be less popular among strong players than 3+0, with lower-rated players winning a larger number of trophies compared to 3+0 marathons. Some players rated below 2000 (blitz) were even able to win top 500 trophies in the [Autumn 2021 marathon](https://lichess.org/tournament/autumn21), and the winner [Kolian222](https://lichess.org/@/Kolian222) had a relatively low rating compared to the winner of the 3+0 [Winter 2021 marathon](https://lichess.org/tournament/winter21).
 
-![image](https://lichess.thijs.com/marathons/autumn21_rating_violin.png)
+![image](https://lichess.thijs.com/marathons/plots/autumn21_rating_violin.png)
 
-#### 5+0
-
+**5+0**
 Finally, as 5+0 is also a community favorite for blitz chess, we again see relatively high ratings for top trophy winners in the [Spring 2021 marathon](https://lichess.org/tournament/spring21). We note that for this marathon, trophies did not yet exist for top 500 finishers, which may explain why the ratings were relatively low and spread out in the top 500 distribution. For the upcoming [Autumn 2022 marathon](https://lichess.org/tournament/autumn22) the latter distribution may therefore look very different, as more higher-rated players may push harder to win that trophy, taking away the trophies from lower-rated players.
 
-![image](https://lichess.thijs.com/marathons/spring21_rating_violin.png)
+![image](https://lichess.thijs.com/marathons/plots/spring21_rating_violin.png)
 
 ### Games per trophy (per rating)
 
 Let us also take a look at how many games one has to play to win a trophy, and how the number of games correlates with the rating of the player winning the trophy. We will again work with the most recent marathons in the corresponding time controls to illustrate these relations.
 
-#### 1+0
+**1+0**
 As the following figure shows, unsurprisingly one generally needs more games to win any of the trophies when rated lower. For higher trophies one needs to play even more games, and/or be rated even higher. We observe that the winner [Elda64](https://lichess.org/@/Elda64) of the [Summer 2022 marathon](https://lichess.org/tournament/summer22) played over 800 games, making them one of the players in the top 500 with the most games played. Together with their high rating, this led to the impressive score of >2000 points.
 
-![image](https://lichess.thijs.com/marathons/summer22_rating_games.png)
+![image](https://lichess.thijs.com/marathons/plots/summer22_rating_games.png)
 
-#### 2+1
+**2+1**
 For 2+1 we see similar relations as in the 1+0 time control, with higher-rated players needing fewer games to win each of the different trophies. We notice one outlier in the number of games: [cheetosss](https://lichess.org/@/cheetosss) played 532 games to finish 32nd with a rating of "only" 2221, showing that dedication to win these trophies sometimes does pay off! The highest-rated player of the top 500, [HomayooonT](https://lichess.org/@/HomayooonT), managed to win the marathon, needing only a moderate number of games (296 games) to do this.
 
-![image](https://lichess.thijs.com/marathons/spring22_rating_games.png)
+![image](https://lichess.thijs.com/marathons/plots/spring22_rating_games.png)
 
-#### 3+0
-
+**3+0**
 For the 3+0 [Winter 2021 marathon](https://lichess.org/tournament/winter21) we again see similar trends in terms of higher trophies requiring more games and higher ratings to achieve them. We notice one yellow (top 10) outlier, needing only 239 games to make it to the top 10: with a final sprint and 99% berserking, [Lance5500](https://lichess.org/@/Lance5500) barely made it into the top 10 to win that extra trophy!
 
-![image](https://lichess.thijs.com/marathons/winter21_rating_games.png)
+![image](https://lichess.thijs.com/marathons/plots/winter21_rating_games.png)
 
-#### 3+2
-
+**3+2**
 For the 3+2 time control we again observe similar patterns, with only few outliers this time. The highest-rated player, making it into the top 50 with only 108 games, was [NeverEnough](https://lichess.org/@/NeverEnough). The winner [Kolian222](https://lichess.org/@/Kolian222) had the lowest rating out of the top 10, but also played the most games out of the top-10 finishers to take the top prize.
 
-![image](https://lichess.thijs.com/marathons/autumn21_rating_games.png)
+![image](https://lichess.thijs.com/marathons/plots/autumn21_rating_games.png)
 
-#### 5+0
-
+**5+0**
 In the [Spring 2021 marathon](https://lichess.org/tournament/spring21) we again see familiar trends. The two people rated below 1900 and making it to the top 500 had to play around 300 games to do it, compared to a few players rated 2600+ and playing less than 100 games to make it to the top 500. The winner [Kastorcito](https://lichess.org/@/Kastorcito) found the right balance between playing the best and the most chess, with a high rating and a large number of games.
 
-![image](https://lichess.thijs.com/marathons/spring21_rating_games.png)
+![image](https://lichess.thijs.com/marathons/plots/spring21_rating_games.png)
 
 ## Predictions
 
