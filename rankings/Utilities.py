@@ -290,6 +290,155 @@ def BuildIndexPage():
 		File.write("</html>\n")
 
 
+
+# Website: index page
+def BuildPlayerIndex():
+
+	PlayerIndex = dict()
+	for V, Prop in sorted(AllVariants.items(), key=lambda item: item[1]["WebOrder"]):
+		for E, Prop in sorted(AllEvents.items(), key=lambda item: item[1]["WebOrder"]):
+			print(V, E)
+			for O in {"trophies", "points", "events", "maximum"}:
+				fname = f"{DriveRoot}tournaments{os.sep}rankings{os.sep}{V}{os.sep}{E}{os.sep}{V}_{E}_players_{O}.ndjson"
+				if os.path.exists(fname):
+					with open(fname, "r") as PlayersFile:
+						for Index, Line in enumerate(PlayersFile):
+							if Index >= 100:
+								break
+							PlayerData = json.loads(Line)
+							if PlayerData["Username"] not in PlayerIndex:
+								PlayerIndex[PlayerData["Username"]] = {"Username": PlayerData['Username'].lower(), "Title": PlayerData.get('Title', ''), "Entries": 1, "Rankings": [(V, E, O, Index + 1)]}
+							else:
+								PlayerIndex[PlayerData["Username"]]["Entries"] += 1
+								PlayerIndex[PlayerData["Username"]]["Rankings"].append((V, E, O, Index + 1))
+
+	with open(f"{WebRoot}player_index.ndjson", "w") as OutFile:
+		for Username, Entry in sorted(PlayerIndex.items(), key=lambda item: item[1]["Entries"], reverse=True):
+			OutFile.write(json.dumps(Entry) + "\n")
+
+
+	FilePlayersSorts = {
+		"points": 		{"Name": "Players by total points",		"Plot": "Total points"},
+		"trophies": 	{"Name": "Players by trophies",			"Plot": "Tournament victories"},
+		"events":		{"Name": "Players by events",			"Plot": "Events participated"},
+		#"average":		{"Name": "Players by average score",	"Plot": "Average score"},
+		"maximum":		{"Name": "Players by high score",		"Plot": "High score"},
+		"title":		{"Name": "Players by title",			"Plot": "Titled players by points"}
+	}
+
+	# Sorted partial rankings of arenas
+	FileArenasSorts = {
+		"newest": 		{"Name": "Arenas by date",				"Plot": "Cumulative arenas"},
+		"players": 		{"Name": "Arenas by participants",		"Plot": "Participants"},
+		"points": 		{"Name": "Arenas by points per player",	"Plot": "Points per player"},
+		#"games":		{"Name": "Arenas by games per player",	"Plot": "Games per player"},
+		"moves":		{"Name": "Arenas by moves per game",	"Plot": "Moves per player per game"},
+		"rating":		{"Name": "Arenas by average rating",	"Plot": "Average rating"},
+		"maximum":		{"Name": "Arenas by high score",		"Plot": "High score"},
+		"berserk":		{"Name": "Arenas by berserk rate",		"Plot": "Berserk rate"}
+	}
+
+	# # Build actual webpage
+	with open(f"{WebRoot}player_index.html", "w") as File:
+		File.write("<!DOCTYPE html>\n")
+		File.write("<html lang='en-US'>\n")
+		File.write("<!-- Rankings built using the Lichess API (https://lichess.org/api) and some manual (python-based) tournament scraping. -->\n")
+		File.write("<!-- Source code available at https://github.com/tmmlaarhoven/lichess -->\n")
+		File.write("<head>\n")
+		File.write(f"<title>Lichess Arena Rankings &middot; Player Index</title>\n")
+		File.write("<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>\n")
+		File.write("<link rel='icon' type='image/png' href='../favicon.ico'>\n")
+		File.write("<link rel='stylesheet' href='../style-new.css'>\n")
+		File.write("<link rel='stylesheet' href='../style-colors.css'>\n")
+		File.write("<meta property='og:type' content='website'>\n")
+		File.write("<meta property='og:title' content='Lichess Arena Rankings' />\n")
+		File.write("<meta property='og:description' content='Statistics and rankings built from official Lichess arenas, ranging from hourly bullet arenas to titled arenas to bundesliga events. See who scored the most tournament victories, who played in the most events, who holds the all-time record for the highest score in each type of arena, and more!' />\n")
+		File.write("<meta property='og:url' content='https://tmmlaarhoven.github.io/lichess/rankings' />\n")
+		File.write("<meta property='og:image' content='https://tmmlaarhoven.github.io/lichess/rankings/box_rating.png' />\n")
+		#File.write("<link rel='stylesheet' href='style-new.css'>\n")
+		File.write("</head>\n\n")
+		File.write("<body>\n")
+		File.write(f"<div class=\"title\">Lichess Arena Rankings &middot; Player Index</div>\n")
+
+		# Begin menu
+		File.write("<div class='menu'>\n")
+
+		# Information icon
+		File.write("\t<span class='VariantIcon' style='font-size: 16pt; position: absolute; left: 0px;'><a href='index.html'>&#xe005;</a></span>\n")
+
+		# Variants menu
+		File.write("\t<span class='dropdown-el' style='left: 30px; min-width: 185px; max-width: 185px;'>\n")
+		for V, Val in sorted(AllVariants.items(), key = lambda item: item[1]["WebOrder"]):
+			File.write(f"\t\t<input type='radio' name='Variant' value='rankings/{V}' id='variant-{V}'{' checked' if V == 'all' else ''}><label class='V{V}' for='variant-{V}'><span class='VariantIcon'>{AllVariants[V]['Icon']}</span> {AllVariants[V]['Name'] if V != 'all' else 'All variants'}</label>\n")
+		File.write("\t</span>\n")
+
+		# Events menu
+		File.write("\t<span class='dropdown-el' style='left: 225px; min-width: 180px; max-width: 180px;'>\n")
+		for E, Val in sorted(AllEvents.items(), key = lambda item: item[1]["WebOrder"]):
+			File.write(f"\t\t<input type='radio' name='Event' value='{E}' id='events-{E}'{' checked' if E == 'all' else ''}><label class='E{E}' for='events-{E}'>{AllEvents[E]['Name'] + ' Arenas' if E not in ['marathon', 'liga'] else ('Marathons' if E == 'marathon' else 'Bundesliga')}</label>\n")
+		File.write("\t</span>\n")
+
+		# Sorting menu
+		File.write("\t<span class='dropdown-el' style='left: 415px; min-width: 255px; max-width: 255px;'>\n")
+		for O in FilePlayersSorts:
+			File.write(f"\t\t<input type='radio' name='Page' value='players_{O}' id='players_{O}'{' checked' if ('players_' + O) == 'players_trophies' else ''}><label for='players_{O}'>{FilePlayersSorts[O]['Name']}</label>\n")
+		for O in FileArenasSorts:
+			File.write(f"\t\t<input type='radio' name='Page' value='arenas_{O}' id='arenas_{O}'><label for='arenas_{O}'>{FileArenasSorts[O]['Name']}</label>\n")
+		File.write("\t</span>\n")
+
+		# List or graph?
+		File.write("\t<span class='dropdown-el' style='left: 680px; min-width: 120px; max-width: 120px;'>\n")
+		File.write(f"\t\t<input type='radio' name='Type' value='list' id='list' checked><label for='list'><span class='VariantIcon'>?</span> List</label>\n")
+		File.write(f"\t\t<input type='radio' name='Type' value='graph' id='graph'><label for='graph'><span class='VariantIcon'>9</span> Graph</label>")
+		File.write("\t</span>\n")
+
+		File.write("</div>\n\n")
+		# End menu
+
+		File.write("<span class='maincontent'>\n")
+		File.write("<!-- START OF ACTUAL CONTENT -->\n\n")
+
+		File.write("The player index below contains all users who are in one of the top 100 lists sorted by trophies, points, maximum score, or events participated. The players are sorted by their number of entries on these webpages.\n\n")
+
+		File.write("<table class='IndexList'>\n")
+		File.write("\t<thead>\n")
+		File.write("\t<tr height='30px'>\n")
+		File.write("\t\t<td width='30px'><span class='info' title='Ranking'><b>#</b></span></td>\n")
+		File.write("\t\t<td width='30px'></td>\n")
+		File.write("\t\t<td width='30px'><b>Username</b></td>\n")
+		File.write("\t\t<td width='30px'><span class='info' title='Total top 100 entries'><b>Entries</b></span></td>\n")
+		File.write("\t\t<td width='600px'><span class='info' title='List of all top 100 entries'><b>Complete list</b></span></td>\n")
+		File.write("\t</tr>\n")
+		File.write("\t</thead>\n")
+		File.write("\t<tbody>\n")
+
+		for Index, (Username, PlayerData) in enumerate(sorted(PlayerIndex.items(), key=lambda item: item[1]["Entries"], reverse=True)):
+			File.write("\t<tr>\n")
+			File.write(f"\t\t<td>{Index + 1}.</td>\n")
+			File.write(f"\t\t<td>{PlayerData.get('Title', '')}</td>\n")
+			File.write(f"\t\t<td><a href='https://lichess.org/@/{PlayerData['Username'].lower()}'>{PlayerData['Username'].lower()}</a></td>\n")
+			File.write(f"\t\t<td>{PlayerData['Entries']}</td>\n")
+			File.write(f"\t\t<td>\n")
+			for R in PlayerData["Rankings"]:
+				File.write(f"<a href='{R[0]}/{R[1]}/list_players_{R[2]}.html'>{R[0][0]}{R[1][0]}{R[2][0]}{R[3]}</a> ")
+			File.write(f"\n\t\t</td>\n")
+			File.write("\t</tr>\n")
+
+		File.write("\t</tbody>\n")
+		File.write("</table>\n")
+
+
+
+		File.write("<!-- END OF ACTUAL CONTENT -->\n")
+		File.write("</span>\n")
+		File.write("<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>\n")
+		File.write("<script src='../menu.js'></script>\n")
+		File.write("</body>\n")
+		File.write("</html>\n")
+
+
+
+
 # For the index page: Pie charts
 def SomePieChart(Function, Filename, Title):
 

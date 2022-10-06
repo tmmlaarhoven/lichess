@@ -14,6 +14,7 @@ print("\n=== Starting Caller.py ===\n")
 DrawPlots = False
 
 BuildIndexPage()
+BuildPlayerIndex()
 
 Cat = dict()
 for V in AllVariants:

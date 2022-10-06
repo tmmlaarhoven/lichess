@@ -10,10 +10,10 @@
 	--ListOdd: 			#262626;
 	--ListEven: 		#303030;
 	--ListHover: 		#404040;
-	
+
 	/* From Lichess */
 	/*--CVall: 			#BABABA;
-	
+
 	--CV3check: 		rgb(204, 121, 167);
 	--CVantichess: 		rgb(223, 83, 83);
 	--CVatomic: 		rgb(102, 85, 140);
@@ -35,7 +35,7 @@
 /* Load lichess family for icons */
 @font-face {
 	font-family: 'lichess';
-	src: url('lichess.woff2') format('woff2'), url('lichess.woff') format('woff'); 
+	src: url('lichess.woff2') format('woff2'), url('lichess.woff') format('woff');
 }
 
 /* General body styling */
@@ -132,32 +132,32 @@ div.title {
 
 
 span.maincontent {
-	position: absolute; 
-	left: 50%; 
-	display: block; 
-	overflow-y: scroll; 
-	top: 105px; 
-	scrollbar-color: #333333 #111111 !important; 
-	height: calc(100vh - 110px); 
-	transform: translateX(-50%); 
-	min-width: 820px; 
-	max-width: 820px; 
+	position: absolute;
+	left: 50%;
+	display: block;
+	overflow-y: scroll;
+	top: 105px;
+	scrollbar-color: #333333 #111111 !important;
+	height: calc(100vh - 110px);
+	transform: translateX(-50%);
+	min-width: 820px;
+	max-width: 820px;
 	border: 0px #FF0000 solid;
 	text-align: left;
 	font-size: 10pt;
 }
 
 span.laddercontent {
-	position: absolute; 
-	left: 50%; 
-	display: block; 
-	overflow-y: scroll; 
-	top: 65px; 
-	scrollbar-color: #333333 #111111 !important; 
-	height: calc(100vh - 70px); 
-	transform: translateX(-50%); 
-	min-width: 820px; 
-	max-width: 820px; 
+	position: absolute;
+	left: 50%;
+	display: block;
+	overflow-y: scroll;
+	top: 65px;
+	scrollbar-color: #333333 #111111 !important;
+	height: calc(100vh - 70px);
+	transform: translateX(-50%);
+	min-width: 820px;
+	max-width: 820px;
 	border: 0px #FF0000 solid;
 	text-align: left;
 	font-size: 10pt;
@@ -174,13 +174,13 @@ img.RankingPlot {
 }
 
 /* ========================
-	PLAYERS LIST TABLE 
+	PLAYERS LIST TABLE
 ======================== */
 
 table.LadderList {
 	background: #262421;
-	border: 0px #000000 solid; 
-	border-spacing: 0px; 
+	border: 0px #000000 solid;
+	border-spacing: 0px;
 	padding: 0px;
 	margin-top: 10px;
 	margin-left: auto;
@@ -203,7 +203,7 @@ table.LadderList tbody tr:hover:nth-child(1n+1) {
 	background: var(--ListHover);
 }
 
-table.LadderList tr td:nth-child(1), 
+table.LadderList tr td:nth-child(1),
 table.LadderList tr th:nth-child(1) {	/* Column 1: Ranking */
 	min-width: 30px;
 	max-width: 30px;
@@ -211,17 +211,17 @@ table.LadderList tr th:nth-child(1) {	/* Column 1: Ranking */
 	padding-left: 10px;
 }
 
-table.LadderList tr td:nth-child(2), 
+table.LadderList tr td:nth-child(2),
 table.LadderList tr th:nth-child(2) {	/* Column 2: Title */
-	min-width: 35px; 
-	max-width: 35px; 
+	min-width: 35px;
+	max-width: 35px;
 	color: var(--TitleGold);
 	font-weight: bold;
 	text-align: right;
 	padding-right: 5px;
 }
 
-table.LadderList tr td:nth-child(3), 
+table.LadderList tr td:nth-child(3),
 table.LadderList tr th:nth-child(3) {	/* Column 3: Username */
 	min-width: 130px;
 	max-width: 130px;
@@ -231,72 +231,72 @@ table.LadderList tr th:nth-child(3) {	/* Column 3: Username */
 	white-space: nowrap;
 }
 
-table.LadderList tr td:nth-child(4), 
+table.LadderList tr td:nth-child(4),
 table.LadderList tr th:nth-child(4) {	/* Column 4: Ladder ranking */
-	min-width: 45px; 
-	max-width: 45px; 
+	min-width: 45px;
+	max-width: 45px;
 	color: var(--TrophyGold);
 	font-weight: bold;
 	text-align: center;
 }
 
-table.LadderList tr td:nth-child(5), 
+table.LadderList tr td:nth-child(5),
 table.LadderList tr th:nth-child(5) {	/* Column 5: Bullet maximum */
-	min-width: 45px; 
+	min-width: 45px;
 	max-width: 45px;
 	color: var(--TrophySilver);
 	text-align: center;
 }
 
-table.LadderList tr td:nth-child(6), 
+table.LadderList tr td:nth-child(6),
 table.LadderList tr th:nth-child(6) {	/* Column 6: Latest bullet */
-	min-width: 45px; 
+	min-width: 45px;
 	max-width: 45px;
 	color: var(--TrophyBronze);
 	text-align: center;
 }
 
-table.LadderList tr td:nth-child(7), 
+table.LadderList tr td:nth-child(7),
 table.LadderList tr th:nth-child(7) {	/* Column 7: Total games */
-	min-width: 50px; 
-	max-width: 50px; 
-	color: #629924; 
+	min-width: 50px;
+	max-width: 50px;
+	color: #629924;
 	text-align: right;
 	font-weight: bold;
 }
 
-table.LadderList tr td:nth-child(8), 
+table.LadderList tr td:nth-child(8),
 table.LadderList tr th:nth-child(8) {	/* Column 8: Top games */
-	min-width: 60px; 
-	max-width: 60px; 
+	min-width: 60px;
+	max-width: 60px;
 	text-align: left;
 	padding-left: 5px;
 	dclor: var(--TrophySilver);
 }
 
-table.LadderList tr td:nth-child(9), 
+table.LadderList tr td:nth-child(9),
 table.LadderList tr th:nth-child(9) {	/* Column 9: First - Last */
-	min-width: 90px; 
-	max-width: 90px; 
+	min-width: 90px;
+	max-width: 90px;
 	padding-left: 5px;
 	text-align: center;
 }
 
-table.LadderList tr td:nth-child(10), 
+table.LadderList tr td:nth-child(10),
 table.LadderList tr th:nth-child(10) {	/* Column 11: Percentage */
-	min-width: 60px; 
-	max-width: 60px; 
+	min-width: 60px;
+	max-width: 60px;
 	text-align: center;
 }
 
 /* ========================
-	PLAYERS LIST TABLE 
+	PLAYERS LIST TABLE
 ======================== */
 
 table.PlayersList {
 	background: #262421;
-	border: 0px #000000 solid; 
-	border-spacing: 0px; 
+	border: 0px #000000 solid;
+	border-spacing: 0px;
 	padding: 0px;
 	margin-top: 10px;
 	margin-left: auto;
@@ -319,7 +319,7 @@ table.PlayersList tbody tr:hover:nth-child(1n+1) {
 	background: var(--ListHover);
 }
 
-table.PlayersList tr td:nth-child(1), 
+table.PlayersList tr td:nth-child(1),
 table.PlayersList tr th:nth-child(1) {	/* Column 1: Ranking */
 	min-width: 30px;
 	max-width: 30px;
@@ -327,17 +327,17 @@ table.PlayersList tr th:nth-child(1) {	/* Column 1: Ranking */
 	padding-left: 10px;
 }
 
-table.PlayersList tr td:nth-child(2), 
+table.PlayersList tr td:nth-child(2),
 table.PlayersList tr th:nth-child(2) {	/* Column 2: Title */
-	min-width: 35px; 
-	max-width: 35px; 
+	min-width: 35px;
+	max-width: 35px;
 	color: var(--TitleGold);
 	font-weight: bold;
 	text-align: right;
 	padding-right: 5px;
 }
 
-table.PlayersList tr td:nth-child(3), 
+table.PlayersList tr td:nth-child(3),
 table.PlayersList tr th:nth-child(3) {	/* Column 3: Username */
 	min-width: 130px;
 	max-width: 130px;
@@ -347,62 +347,62 @@ table.PlayersList tr th:nth-child(3) {	/* Column 3: Username */
 	white-space: nowrap;
 }
 
-table.PlayersList tr td:nth-child(4), 
+table.PlayersList tr td:nth-child(4),
 table.PlayersList tr th:nth-child(4) {	/* Column 4: Gold medals */
-	min-width: 40px; 
-	max-width: 40px; 
+	min-width: 40px;
+	max-width: 40px;
 	color: var(--TrophyGold);
 	text-align: center;
 }
 
-table.PlayersList tr td:nth-child(5), 
+table.PlayersList tr td:nth-child(5),
 table.PlayersList tr th:nth-child(5) {	/* Column 5: Silver medals */
-	min-width: 40px; 
-	max-width: 40px; 
+	min-width: 40px;
+	max-width: 40px;
 	color: var(--TrophySilver);
 	text-align: center;
 }
 
-table.PlayersList tr td:nth-child(6), 
+table.PlayersList tr td:nth-child(6),
 table.PlayersList tr th:nth-child(6) {	/* Column 6: Bronze medals */
-	min-width: 40px; 
-	max-width: 40px; 
+	min-width: 40px;
+	max-width: 40px;
 	color: var(--TrophyBronze);
 	text-align: center;
 }
 
-table.PlayersList tr td:nth-child(7), 
+table.PlayersList tr td:nth-child(7),
 table.PlayersList tr th:nth-child(7) {	/* Column 7: Points */
-	min-width: 50px; 
-	max-width: 50px; 
+	min-width: 50px;
+	max-width: 50px;
 	text-align: right;
-	color: #629924; 
+	color: #629924;
 	font-weight: bold;
 }
 
-table.PlayersList tr td:nth-child(8), 
+table.PlayersList tr td:nth-child(8),
 table.PlayersList tr th:nth-child(8) {	/* Column 8: Events */
-	min-width: 60px; 
-	max-width: 60px; 
+	min-width: 60px;
+	max-width: 60px;
 	padding-left: 5px;
 	text-align: left;
 }
 
-table.PlayersList tr td:nth-child(9), 
+table.PlayersList tr td:nth-child(9),
 table.PlayersList tr th:nth-child(9) {	/* Column 9: First-Last */
-	min-width: 90px; 
-	max-width: 90px; 
+	min-width: 90px;
+	max-width: 90px;
 	text-align: center;
 }
 
-table.PlayersList tr td:nth-child(10), 
+table.PlayersList tr td:nth-child(10),
 table.PlayersList tr th:nth-child(10) {	/* Column 10: Average */
 	min-width: 40px;
 	max-width: 40px;
 	text-align: right;
 }
 
-table.PlayersList tr td:nth-child(11), 
+table.PlayersList tr td:nth-child(11),
 table.PlayersList tr th:nth-child(11) {	/* Column 11: Maximum */
 	min-width: 50px;
 	max-width: 50px;
@@ -411,13 +411,13 @@ table.PlayersList tr th:nth-child(11) {	/* Column 11: Maximum */
 }
 
 /* ========================
-	ARENAS LIST TABLE 
+	ARENAS LIST TABLE
 ======================== */
 
 table.ArenasList {
 	background: #262421;
-	border: 0px #000000 solid; 
-	border-spacing: 0px; 
+	border: 0px #000000 solid;
+	border-spacing: 0px;
 	padding: 0px;
 	margin-top: 10px;
 	margin-left: auto;
@@ -428,8 +428,8 @@ table.ArenasList {
 	font-size: 11pt;
 }
 
-/*table.ArenasList thead th { 
-	background: 
+/*table.ArenasList thead th {
+	background:
 }*/
 
 table.ArenasList tbody tr:nth-child(odd) {
@@ -444,7 +444,7 @@ table.ArenasList tbody tr:hover:nth-child(1n+1) {
 	background: var(--ListHover);
 }
 
-table.ArenasList tr td:nth-child(1), 
+table.ArenasList tr td:nth-child(1),
 table.ArenasList tr th:nth-child(1) {	/* Column 1: Ranking */
 	min-width: 30px;
 	max-width: 30px;
@@ -452,16 +452,16 @@ table.ArenasList tr th:nth-child(1) {	/* Column 1: Ranking */
 	padding-left: 10px;
 }
 
-table.ArenasList tr td:nth-child(2), 
+table.ArenasList tr td:nth-child(2),
 table.ArenasList tr th:nth-child(2) {	/* Column 2: Arena ID */
-	min-width: 70px; 
+	min-width: 70px;
 	max-width: 70px;
 	text-align: right;
 	padding-right: 5px;
 	font-family: monospace;
 }
 
-table.ArenasList tr td:nth-child(3), 
+table.ArenasList tr td:nth-child(3),
 table.ArenasList tr th:nth-child(3) {	/* Column 3: Type */
 	min-width: 50px;
 	max-width: 50px;
@@ -469,45 +469,45 @@ table.ArenasList tr th:nth-child(3) {	/* Column 3: Type */
 	font-family: monospace;
 }
 
-table.ArenasList tr td:nth-child(4), 
+table.ArenasList tr td:nth-child(4),
 table.ArenasList tr th:nth-child(4) {	/* Column 4: Date */
-	min-width: 90px; 
-	max-width: 90px; 
+	min-width: 90px;
+	max-width: 90px;
 	text-align: right;
 }
 
-table.ArenasList tr td:nth-child(5), 
+table.ArenasList tr td:nth-child(5),
 table.ArenasList tr th:nth-child(5) {	/* Column 5: Participants */
-	min-width: 50px; 
-	max-width: 50px; 
+	min-width: 50px;
+	max-width: 50px;
 	color: var(--TrophyGold);
 	text-align: right;
 }
 
-table.ArenasList tr td:nth-child(6), 
+table.ArenasList tr td:nth-child(6),
 table.ArenasList tr th:nth-child(6) {	/* Column 6: Average rating */
-	min-width: 50px; 
-	max-width: 50px; 
+	min-width: 50px;
+	max-width: 50px;
 	color: var(--TrophyBronze);
 	text-align: right;
 }
 
-table.ArenasList tr td:nth-child(7), 
+table.ArenasList tr td:nth-child(7),
 table.ArenasList tr th:nth-child(7) {	/* Column 7: Points */
-	min-width: 40px; 
+	min-width: 40px;
 	max-width: 40px;
 	text-align: right;
-	color: #629924; 
+	color: #629924;
 }
 
-/*table.ArenasList tr td:nth-child(8), 
+/*table.ArenasList tr td:nth-child(8),
 table.ArenasList tr th:nth-child(8) {	/* Column 8: Games */
-/*	width: 40px; 
+/*	width: 40px;
 	max-width: 40px;
 	text-align: right;
 }*/
 
-table.ArenasList tr td:nth-child(8), 
+table.ArenasList tr td:nth-child(8),
 table.ArenasList tr th:nth-child(8) {	/* Column 9: Moves */
 	min-width: 40px;
 	max-width: 40px;
@@ -515,7 +515,7 @@ table.ArenasList tr th:nth-child(8) {	/* Column 9: Moves */
 	color: var(--TrophySilver);
 }
 
-table.ArenasList tr td:nth-child(9), 
+table.ArenasList tr td:nth-child(9),
 table.ArenasList tr th:nth-child(9) {	/* Column 10: Berserk */
 	min-width: 40px;
 	max-width: 40px;
@@ -523,7 +523,7 @@ table.ArenasList tr th:nth-child(9) {	/* Column 10: Berserk */
 	padding-right: 10px;
 }
 
-table.ArenasList tr td:nth-child(10), 
+table.ArenasList tr td:nth-child(10),
 table.ArenasList tr th:nth-child(10) {	/* Column 10: Winner */
 	min-width: 130px;
 	max-width: 130px;
@@ -533,7 +533,7 @@ table.ArenasList tr th:nth-child(10) {	/* Column 10: Winner */
 	white-space: nowrap;
 }
 
-table.ArenasList tr td:nth-child(11), 
+table.ArenasList tr td:nth-child(11),
 table.ArenasList tr th:nth-child(11) {	/* Column 10: Maximum */
 	min-width: 30px;
 	max-width: 30px;
@@ -542,9 +542,78 @@ table.ArenasList tr th:nth-child(11) {	/* Column 10: Maximum */
 }
 
 
+/* ========================
+	INDEX LIST TABLE
+======================== */
 
+table.IndexList {
+	background: #262421;
+	border: 0px #000000 solid;
+	border-spacing: 0px;
+	padding: 0px;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 800px;
+	max-width: 800px;
+	table-layout: fixed;
+	font-size: 11pt;
+}
 
+table.IndexList tbody tr:nth-child(odd) {
+	background: var(--ListOdd);
+}
 
+table.IndexList tbody tr:nth-child(even) {
+	background: var(--ListEven);
+}
+
+table.IndexList tbody tr:hover:nth-child(1n+1) {
+	background: var(--ListHover);
+}
+
+table.IndexList tr td:nth-child(1),
+table.IndexList tr th:nth-child(1) {	/* Column 1: Ranking */
+	min-width: 30px;
+	max-width: 30px;
+	text-align: right;
+	padding-left: 10px;
+}
+
+table.IndexList tr td:nth-child(2),
+table.IndexList tr th:nth-child(2) {	/* Column 2: Title */
+	min-width: 35px;
+	max-width: 35px;
+	color: var(--TitleGold);
+	font-weight: bold;
+	text-align: right;
+	padding-right: 5px;
+}
+
+table.IndexList tr td:nth-child(3),
+table.IndexList tr th:nth-child(3) {	/* Column 3: Username */
+	min-width: 130px;
+	max-width: 130px;
+	text-align: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+table.IndexList tr td:nth-child(4),
+table.IndexList tr th:nth-child(4) {	/* Column 4: Entries */
+	min-width: 50px;
+	max-width: 50px;
+	text-align: center;
+}
+
+table.IndexList tr td:nth-child(5),
+table.IndexList tr th:nth-child(5) {	/* Column 5: List */
+	min-width: 420px;
+	max-width: 420px;
+	font-size: 8pt;
+	text-align: left;
+}
 
 
 
@@ -556,7 +625,7 @@ span.title {
 	color: #BF811D;
 }
 span.dgreen {
-	color: #629924; 
+	color: #629924;
 }
 
 
@@ -644,15 +713,15 @@ td.statslast {
 }
 
 table.minitable {
-	margin-left: auto; 
+	margin-left: auto;
 	margin-right: auto;
-	border-spacing: 10px 2px; 
-	border-collapse: collapse; 
+	border-spacing: 10px 2px;
+	border-collapse: collapse;
 	padding: 50px;
 	width: 235px;
 }
 th.minitable {
-	text-align: center; 
+	text-align: center;
 	padding-top: 5px;
 	color: #BF811D;
 	font-weight: bold;
@@ -680,7 +749,7 @@ td.minitablescore {
 	max-width: 50px;
 }
 td.minitablefoot {
-	color: #888888; 
+	color: #888888;
 	font-size: 10pt;
 	text-align: center;
 	font-style: italic;
@@ -695,7 +764,7 @@ td.minitablefoot {
 /* Fixing scrollbars on different platforms */
 
 ::-webkit-scrollbar {
-  width: 10px; 
+  width: 10px;
   height: 7px;
 }
 
@@ -802,19 +871,19 @@ td.minitablefoot {
 	top: 0.35em;
 }
 .VariantIcon {
-	float: left; 
-	font-family: lichess; 
+	float: left;
+	font-family: lichess;
 	font-size: 14pt;
 	padding-right: 5px;
 	top: 7px;
 }
 
 div.menu {
-	width: 800px; 
-	margin-top: 0px; 
-	border: 0px #FF0000 solid; 
-	position: relative; 
-	left: 50%; 
-	transform: translateX(-50%); 
+	width: 800px;
+	margin-top: 0px;
+	border: 0px #FF0000 solid;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
 	z-index: 99 !important;
 }
