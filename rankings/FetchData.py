@@ -110,13 +110,15 @@ for E in Events:
 
 		for Page in range(1, 100000):
 
+			print(f"Starting request for page {Page}")
 			if E == "elite":	# Special URL for elite tournaments
-				r = requests.get(f"https://lichess.org/tournament/history/weekend?page={Page}", headers = {"Authorization": f"Bearer {APIToken}"})		# pages start at 1
+				r = requests.get(f"https://lichess.org/tournament/history/weekend?page={Page}")		# pages start at 1
 			elif E[3] == "0" or E == "thematic": 	# Rating-restricted hourly events, thematic events
-				r = requests.get(f"https://lichess.org/tournament/history/hourly?page={Page}", headers = {"Authorization": f"Bearer {APIToken}"})	# pages start at 1
+				r = requests.get(f"https://lichess.org/tournament/history/hourly?page={Page}")	# pages start at 1
 			else:				# All other events
-				r = requests.get(f"https://lichess.org/tournament/history/{E}?page={Page}", headers = {"Authorization": f"Bearer {APIToken}"})	# pages start at 1
-
+				r = requests.get(f"https://lichess.org/tournament/history/{E}?page={Page}")	# pages start at 1
+			print(f"Finished request for page {Page}")
+			
 			# In the unlikely/impossible Events of rate limit, just indicate this and stop until the user notices
 			if r.status_code == 429:
 				print("RATE LIMIT!")
