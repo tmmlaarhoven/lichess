@@ -39,6 +39,7 @@ print(f"Currently {len(BlitzList)} blitz ligas in ranking.")
 # Load new IDs and stop when e.g. 100 Collisions
 
 Collisions = 0
+requests.packages.urllib3.util.connection.HAS_IPV6 = False
 s = requests.Session()
 with s.get("https://lichess.org/api/user/jeffforever/tournament/created", headers = {"Authorization": f"Bearer {APIToken}"}, stream = True) as Response:
 	for Line in Response.iter_lines():

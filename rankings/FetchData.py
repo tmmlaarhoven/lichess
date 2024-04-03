@@ -75,6 +75,8 @@ def PrintMessage(V, E, Message):
 # Process each event type separately
 #=========================================================================
 
+requests.packages.urllib3.util.connection.HAS_IPV6 = False
+
 ArenaIDs = dict()
 for V in Variants:
 	ArenaIDs[V] = dict()
@@ -111,11 +113,11 @@ for E in Events:
 		for Page in range(1, 100000):
 
 			if E == "elite":	# Special URL for elite tournaments
-				r = requests.get(f"https://lichess.org/tournament/history/weekend?page={Page}", timeout=1)		# pages start at 1
+				r = requests.get(f"https://lichess.org/tournament/history/weekend?page={Page}")		# pages start at 1
 			elif E[3] == "0" or E == "thematic": 	# Rating-restricted hourly events, thematic events
-				r = requests.get(f"https://lichess.org/tournament/history/hourly?page={Page}", timeout=1)	# pages start at 1
+				r = requests.get(f"https://lichess.org/tournament/history/hourly?page={Page}")	# pages start at 1
 			else:				# All other events
-				r = requests.get(f"https://lichess.org/tournament/history/{E}?page={Page}", timeout=1)	# pages start at 1
+				r = requests.get(f"https://lichess.org/tournament/history/{E}?page={Page}")	# pages start at 1
 			
 			# In the unlikely/impossible Events of rate limit, just indicate this and stop until the user notices
 			if r.status_code == 429:
@@ -224,7 +226,7 @@ for E in Events:
 			# Download results file
 			if not os.path.exists(f"{PathData}{Folder(V, E)}{Prefix(V, E)}{ID}.ndjson"):
 				PrintMessage(V, E, f"Downloading https://lichess.org/api/tournament/{ID}/results...")
-				r = requests.get(f"https://lichess.org/api/tournament/{ID}/results", headers = {"Authorization": f"Bearer {APIToken}"}, timeout=1)
+				r = requests.get(f"https://lichess.org/api/tournament/{ID}/results", headers = {"Authorization": f"Bearer {APIToken}"})
 				if r.status_code == 429:
 					print("RATE LIMIT!")
 					time.sleep(100000)
@@ -235,7 +237,7 @@ for E in Events:
 			# Download tournament info file
 			if not os.path.exists(f"{PathData}{Folder(V, E)}{Prefix(V, E)}{ID}.json"):
 				PrintMessage(V, E, f"Downloading https://lichess.org/api/tournament/{ID}...")
-				r = requests.get(f"https://lichess.org/api/tournament/{ID}", headers = {"Authorization": f"Bearer {APIToken}"}, timeout=1)
+				r = requests.get(f"https://lichess.org/api/tournament/{ID}", headers = {"Authorization": f"Bearer {APIToken}"})
 				if r.status_code == 429:
 					print("RATE LIMIT!")
 					time.sleep(100000)

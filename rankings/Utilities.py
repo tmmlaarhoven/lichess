@@ -694,7 +694,6 @@ class ArenaCategory:
 		with open(f"{DriveRoot}APItoken.txt", "r") as TokenFile:
 			for Line in TokenFile:
 				self._APIToken = Line.strip()
-				assert(len(self._APIToken) == 16), f"API token not of length 16."
 
 
 	#######################################################################################################################################################################################
