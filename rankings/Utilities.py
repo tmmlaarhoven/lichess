@@ -955,8 +955,12 @@ class ArenaCategory:
 			V = self._RankingList[ID]["Variant"]
 			E = self._RankingList[ID]["Event"]
 			with open(f"{self._PathData}{V}{os.sep}{E}{os.sep}{V}_{E}_{ID}.ndjson", "r") as ResultsFile:
-				for Line in ResultsFile:
-					UserResult = json.loads(Line)
+				for TmpIndex, Line in enumerate(ResultsFile):
+					try:
+						UserResult = json.loads(Line)
+					except:
+						print(f"{V}:{E}:{ID}:L{TmpIndex}: {Line}")
+						raise "Error"
 					if UserResult["score"] == 0:
 						break
 					if UserResult["username"].lower() in self._PlayerList and UserResult["score"] > 0:
@@ -1269,6 +1273,9 @@ class ArenaCategory:
 	# 3. Making plots for the website
 	def UpdatePlots(self):
 		self.PrintMessage("3. Updating plots...")
+		#if self._UpToDate:
+		#	self.PrintMessage("Nothing to do! Already up to date.")
+		#	return
 		self._UpdatePlayerPlots()
 		self._UpdateArenaPlots()
 		return
