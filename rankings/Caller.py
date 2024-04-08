@@ -11,20 +11,16 @@ from Utilities import *
 print("\n=== Starting Caller.py ===\n")
 
 # Default: No plots
-DrawPlots = True
+DrawPlots = False
 
 BuildIndexPage()
 BuildPlayerIndex()
 
 Cat = dict()
 for V in AllVariants:
-	if V in {"3check", "antichess", "atomic", "blitz", "bullet", "chess960", "classical", "crazyhouse", "horde", "hyperbullet", "koth", "racingkings", "rapid", "superblitz", "ultrabullet"}:
-		continue
-		
 	Cat[V] = dict()
 	for E in AllEvents:
 
-		
 		# Always first update everything else
 		Cat[V][E] = ArenaCategory(V, E)
 		Cat[V][E].LoadRankings()
